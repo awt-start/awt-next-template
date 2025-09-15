@@ -1,0 +1,35 @@
+{
+  "name": "next-template-app",
+  "version": "0.1-dev",
+  "author": "芒星",
+  "private": true,
+  "scripts": {
+    "dev": "next dev --turbopack",
+    "build": "next build --turbopack",
+    "start": "next start",
+    "lint": "biome check",
+    "format": "biome format --write"
+  },
+  "dependencies": {
+    "@iconify/react": "^6.0.1",
+    "date-fns": "^4.1.0",
+    "date-fns-tz": "^3.2.0",
+    "next": "15.5.3",
+    "next-intl": "^4.3.8",
+    "react": "19.1.0",
+    "react-dom": "19.1.0",
+    "zod": "^4.1.8"
+  },
+  "devDependencies": {
+    "@biomejs/biome": "2.2.0",
+    "@tailwindcss/postcss": "^4",
+    "@types/date-fns": "^2.6.3",
+    "@types/node": "^20",
+    "@types/react": "^19",
+    "@types/react-dom": "^19",
+    "clsx": "^2.1.1",
+    "tailwind-merge": "^3.3.1",
+    "tailwindcss": "^4",
+    "typescript": "^5"
+  }
+}

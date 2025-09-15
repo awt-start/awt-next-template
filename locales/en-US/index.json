@@ -1,0 +1,49 @@
+{
+  "common": {
+    "loading": "Loading...",
+    "error": "Error occurred",
+    "retry": "Retry",
+    "cancel": "Cancel",
+    "confirm": "Confirm",
+    "save": "Save",
+    "delete": "Delete",
+    "edit": "Edit",
+    "add": "Add",
+    "search": "Search",
+    "clear": "Clear",
+    "close": "Close",
+    "back": "Back",
+    "next": "Next",
+    "previous": "Previous",
+    "submit": "Submit",
+    "reset": "Reset",
+    "welcome": "Welcome",
+    "currentLanguage": "Current Language",
+    "cookieStatus": "Cookie Status",
+    "notSet": "Not set",
+    "switchLanguage": "Switch Language",
+    "resetToDefault": "Reset to Default",
+    "howItWorks": "How It Works",
+    "cookieModeDescription1": "Language settings are saved in browser cookies",
+    "cookieModeDescription2": "Page refresh automatically reads language settings from cookies",
+    "cookieModeDescription3": "No URL prefix needed, keeping URLs clean and simple"
+  },
+  "nav": {
+    "home": "Home",
+    "about": "About",
+    "contact": "Contact",
+    "settings": "Settings"
+  },
+  "language": {
+    "switch": "Switch Language",
+    "zh-CN": "中文",
+    "en-US": "English"
+  },
+  "error": {
+    "404": "Page not found",
+    "500": "Server error",
+    "network": "Network connection failed"
+  },
+  "hello": "Hello, World!",
+  "welcome": "Welcome to Next.js Template"
+}
