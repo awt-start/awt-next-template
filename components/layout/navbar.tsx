@@ -36,10 +36,10 @@ export function Navbar({ className }: NavbarProps) {
   }, []);
 
   const navItems = [
-    { key: "home", href: "#", icon: "lucide:home" },
-    { key: "features", href: "#features", icon: "lucide:sparkles" },
-    { key: "about", href: "#about", icon: "lucide:info" },
-    { key: "contact", href: "#contact", icon: "lucide:mail" },
+    { key: "home", href: "/", icon: "lucide:home" },
+    { key: "features", href: "/#features", icon: "lucide:sparkles" },
+    { key: "company", href: "/company", icon: "lucide:building-2" },
+    { key: "contact", href: "/company/contact", icon: "lucide:mail" },
   ];
 
   return (

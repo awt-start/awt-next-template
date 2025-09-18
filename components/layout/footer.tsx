@@ -28,10 +28,9 @@ const footerLinks = {
     { name: "API 参考", href: "#api" },
   ],
   company: [
-    { name: "关于我们", href: "#about" },
-    { name: "博客", href: "#blog" },
-    { name: "联系我们", href: "#contact" },
-    { name: "招聘", href: "#careers" },
+    { name: "关于我们", href: "/company/about" },
+    { name: "博客", href: "/company/blog" },
+    { name: "联系我们", href: "/company/contact" },
   ],
   legal: [
     { name: "隐私政策", href: "/privacy/info" },
