@@ -4,6 +4,7 @@
 
 "use client";
 
+import { Navbar } from "@/components/layout/navbar";
 import { motion } from "framer-motion";
 import { LogIn, UserPlus, Mail } from "lucide-react";
 import Link from "next/link";
@@ -43,20 +44,21 @@ export default function AuthIndexPage() {
       transition={{ duration: 0.6, ease: SMOOTH_EASING }}
       className="w-full"
     >
-      {/* 主卡片 */}
-      <div className="backdrop-blur-xl bg-white/80 dark:bg-slate-900/80 rounded-3xl shadow-2xl border border-white/20 dark:border-slate-700/30 p-8 md:p-10">
+
+      {/* 主卡片 - 符合首页设计风格 */}
+      <div className="backdrop-blur-xl bg-background/80 border border-border/50 rounded-2xl shadow-lg shadow-black/5 dark:shadow-black/20 p-8 md:p-10">
         {/* 标题区域 */}
         <div className="text-center mb-8">
-          <motion.h1 
-            className="text-3xl font-bold text-slate-900 dark:text-slate-100 mb-2"
+          <motion.h1
+            className="text-3xl font-bold bg-gradient-to-r from-foreground via-blue-600 to-purple-600 bg-clip-text text-transparent mb-2"
             initial={{ opacity: 0, y: -10 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ delay: 0.1, duration: 0.5, ease: SMOOTH_EASING }}
           >
             现代认证体验
           </motion.h1>
-          <motion.p 
-            className="text-slate-600 dark:text-slate-400"
+          <motion.p
+            className="text-muted-foreground"
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
             transition={{ delay: 0.2, duration: 0.5, ease: SMOOTH_EASING }}
@@ -72,38 +74,38 @@ export default function AuthIndexPage() {
               key={page.href}
               initial={{ opacity: 0, x: -20 }}
               animate={{ opacity: 1, x: 0 }}
-              transition={{ 
-                delay: 0.3 + index * 0.1, 
-                duration: 0.5, 
-                ease: SMOOTH_EASING 
+              transition={{
+                delay: 0.3 + index * 0.1,
+                duration: 0.5,
+                ease: SMOOTH_EASING
               }}
             >
-              <Link 
+              <Link
                 href={page.href}
                 className="group block"
               >
-                <div className="relative p-6 rounded-2xl border border-slate-200/50 dark:border-slate-700/50 bg-white/30 dark:bg-slate-800/30 backdrop-blur-sm hover:bg-white/50 dark:hover:bg-slate-800/50 transition-all duration-500 hover:shadow-lg hover:shadow-slate-200/50 dark:hover:shadow-slate-900/50 hover:-translate-y-1">
+                <div className="relative p-6 rounded-2xl border border-border/50 backdrop-blur-xl bg-background/30 hover:bg-background/50 transition-all duration-500 hover:shadow-lg hover:shadow-black/5 dark:hover:shadow-black/20 hover:-translate-y-1">
                   {/* 渐变背景 */}
                   <div className={`absolute inset-0 rounded-2xl bg-gradient-to-r ${page.color} opacity-0 group-hover:opacity-5 transition-opacity duration-500`} />
-                  
+
                   <div className="relative flex items-start gap-4">
                     {/* 图标 */}
                     <div className={`flex-shrink-0 w-12 h-12 rounded-xl bg-gradient-to-r ${page.color} flex items-center justify-center group-hover:scale-110 transition-transform duration-500`}>
                       <page.icon className="w-6 h-6 text-white" />
                     </div>
-                    
+
                     {/* 内容 */}
                     <div className="flex-1 min-w-0">
-                      <h3 className="text-lg font-semibold text-slate-900 dark:text-slate-100 mb-2 group-hover:text-slate-700 dark:group-hover:text-slate-200 transition-colors">
+                      <h3 className="text-lg font-semibold text-foreground mb-2 group-hover:text-foreground/80 transition-colors">
                         {page.title}
                       </h3>
-                      <p className="text-sm text-slate-600 dark:text-slate-400 leading-relaxed">
+                      <p className="text-sm text-muted-foreground leading-relaxed">
                         {page.description}
                       </p>
                     </div>
-                    
+
                     {/* 箭头 */}
-                    <div className="flex-shrink-0 w-6 h-6 text-slate-400 dark:text-slate-500 group-hover:text-slate-600 dark:group-hover:text-slate-300 group-hover:translate-x-1 transition-all duration-300">
+                    <div className="flex-shrink-0 w-6 h-6 text-muted-foreground group-hover:text-foreground group-hover:translate-x-1 transition-all duration-300">
                       <svg fill="none" stroke="currentColor" viewBox="0 0 24 24">
                         <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5l7 7-7 7" />
                       </svg>
@@ -116,16 +118,16 @@ export default function AuthIndexPage() {
         </div>
 
         {/* 设计特点 */}
-        <motion.div 
+        <motion.div
           className="mt-8 pt-8 border-t border-slate-200/50 dark:border-slate-700/50"
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ delay: 0.8, duration: 0.5, ease: SMOOTH_EASING }}
         >
-          <h3 className="text-lg font-semibold text-slate-900 dark:text-slate-100 mb-4">
+          <h3 className="text-lg font-semibold text-foreground mb-4">
             ✨ 设计亮点
           </h3>
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-4 text-sm text-slate-600 dark:text-slate-400">
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-4 text-sm text-muted-foreground">
             <div className="flex items-start gap-2">
               <span className="text-blue-500">•</span>
               <span>无边框卡片、柔光投影、毛玻璃效果</span>
@@ -146,15 +148,15 @@ export default function AuthIndexPage() {
         </motion.div>
 
         {/* 返回首页 */}
-        <motion.div 
+        <motion.div
           className="text-center mt-8"
           initial={{ opacity: 0 }}
           animate={{ opacity: 1 }}
           transition={{ delay: 1, duration: 0.5, ease: SMOOTH_EASING }}
         >
-          <Link 
+          <Link
             href="/"
-            className="inline-flex items-center gap-2 text-sm text-slate-600 dark:text-slate-400 hover:text-slate-900 dark:hover:text-slate-100 transition-colors"
+            className="inline-flex items-center gap-2 text-sm text-muted-foreground hover:text-foreground transition-colors"
           >
             <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
               <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M10 19l-7-7m0 0l7-7m-7 7h18" />

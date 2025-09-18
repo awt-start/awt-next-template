@@ -157,12 +157,12 @@ export default function RegisterPage() {
       transition={{ duration: 0.6, ease: SMOOTH_EASING }}
       className="w-full"
     >
-      {/* 主注册卡片 */}
-      <div className="backdrop-blur-xl bg-white/80 dark:bg-slate-900/80 rounded-3xl shadow-2xl border border-white/20 dark:border-slate-700/30 p-8 md:p-10">
+      {/* 主注册卡片 - 符合首页设计风格 */}
+      <div className="backdrop-blur-xl bg-background/80 border border-border/50 rounded-2xl shadow-lg shadow-black/5 dark:shadow-black/20 p-8 md:p-10">
         {/* 标题区域 */}
         <div className="text-center mb-8">
           <motion.h1
-            className="text-3xl font-bold text-slate-900 dark:text-slate-100 mb-2"
+            className="text-3xl font-bold bg-gradient-to-r from-foreground via-blue-600 to-purple-600 bg-clip-text text-transparent mb-2"
             initial={{ opacity: 0, y: -10 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ delay: 0.1, duration: 0.5, ease: SMOOTH_EASING }}
@@ -170,7 +170,7 @@ export default function RegisterPage() {
             开始您的旅程
           </motion.h1>
           <motion.p
-            className="text-slate-600 dark:text-slate-400"
+            className="text-muted-foreground"
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
             transition={{ delay: 0.2, duration: 0.5, ease: SMOOTH_EASING }}
@@ -181,38 +181,6 @@ export default function RegisterPage() {
 
         {/* 注册表单 */}
         <form onSubmit={handleSubmit} className="space-y-6">
-          {/* 用户名 */}
-          <motion.div
-            initial={{ opacity: 0, x: -20 }}
-            animate={{ opacity: 1, x: 0 }}
-            transition={{ delay: 0.3, duration: 0.5, ease: SMOOTH_EASING }}
-          >
-            <Input
-              label="用户名"
-              type="text"
-              placeholder="请输入用户名（3-20个字符）"
-              icon={<User className="w-4 h-4" />}
-              rightIcon={
-                isCheckingUsername ? (
-                  <div className="w-4 h-4 border-2 border-blue-500 border-t-transparent rounded-full animate-spin" />
-                ) : validations.username ? (
-                  <Check className="w-4 h-4 text-emerald-500" />
-                ) : formData.username && !errors.username ? (
-                  <X className="w-4 h-4 text-red-500" />
-                ) : null
-              }
-              value={formData.username}
-              onChange={(e) => {
-                setFormData((prev) => ({ ...prev, username: e.target.value }));
-                if (errors.username)
-                  setErrors((prev) => ({ ...prev, username: "" }));
-              }}
-              error={errors.username}
-              success={validations.username ? "用户名可用" : ""}
-              autoComplete="username"
-              autoFocus
-            />
-          </motion.div>
 
           {/* 邮箱 */}
           <motion.div
@@ -236,56 +204,7 @@ export default function RegisterPage() {
           </motion.div>
 
           {/* 手机号（带国际区号） */}
-          <motion.div
-            initial={{ opacity: 0, x: -20 }}
-            animate={{ opacity: 1, x: 0 }}
-            transition={{ delay: 0.5, duration: 0.5, ease: SMOOTH_EASING }}
-          >
-            <div className="space-y-2">
-              <label className="block text-sm font-medium text-slate-700 dark:text-slate-300">
-                手机号
-              </label>
-              <div className="flex gap-3">
-                {/* 国际区号选择器 */}
-                <select
-                  value={formData.countryCode}
-                  onChange={(e) =>
-                    setFormData((prev) => ({
-                      ...prev,
-                      countryCode: e.target.value,
-                    }))
-                  }
-                  className="w-24 rounded-2xl border-0 bg-white/50 dark:bg-slate-800/50 backdrop-blur-sm shadow-sm px-3 py-3 text-slate-900 dark:text-slate-100 focus:outline-none focus:ring-2 focus:ring-blue-500/20 focus:bg-white dark:focus:bg-slate-800"
-                >
-                  {COUNTRY_CODES.map((country) => (
-                    <option key={country.code} value={country.code}>
-                      {country.flag} {country.code}
-                    </option>
-                  ))}
-                </select>
 
-                {/* 手机号输入框 */}
-                <div className="flex-1">
-                  <Input
-                    type="tel"
-                    placeholder="请输入手机号"
-                    icon={<Phone className="w-4 h-4" />}
-                    value={formData.phone}
-                    onChange={(e) => {
-                      setFormData((prev) => ({
-                        ...prev,
-                        phone: e.target.value,
-                      }));
-                      if (errors.phone)
-                        setErrors((prev) => ({ ...prev, phone: "" }));
-                    }}
-                    error={errors.phone}
-                    autoComplete="tel"
-                  />
-                </div>
-              </div>
-            </div>
-          </motion.div>
 
           {/* 密码 */}
           <motion.div
@@ -309,29 +228,6 @@ export default function RegisterPage() {
             />
           </motion.div>
 
-          {/* 确认密码 */}
-          <motion.div
-            initial={{ opacity: 0, x: -20 }}
-            animate={{ opacity: 1, x: 0 }}
-            transition={{ delay: 0.7, duration: 0.5, ease: SMOOTH_EASING }}
-          >
-            <PasswordInput
-              label="确认密码"
-              placeholder="请再次输入密码"
-              icon={<Lock className="w-4 h-4" />}
-              value={formData.confirmPassword}
-              onChange={(e) => {
-                setFormData((prev) => ({
-                  ...prev,
-                  confirmPassword: e.target.value,
-                }));
-                if (errors.confirmPassword)
-                  setErrors((prev) => ({ ...prev, confirmPassword: "" }));
-              }}
-              error={errors.confirmPassword}
-              autoComplete="new-password"
-            />
-          </motion.div>
 
           {/* 用户协议同意 */}
           <motion.div
@@ -405,7 +301,7 @@ export default function RegisterPage() {
             <div className="w-full border-t border-slate-200 dark:border-slate-700" />
           </div>
           <div className="relative flex justify-center text-sm">
-            <span className="px-4 bg-white/80 dark:bg-slate-900/80 text-slate-500 dark:text-slate-400">
+            <span className="px-4 backdrop-blur-sm bg-background/80 text-muted-foreground">
               或使用以下方式快速注册
             </span>
           </div>
@@ -456,7 +352,7 @@ export default function RegisterPage() {
         animate={{ opacity: 1 }}
         transition={{ delay: 1.3, duration: 0.5, ease: SMOOTH_EASING }}
       >
-        <p className="text-xs text-slate-400 dark:text-slate-500">
+        <p className="text-xs text-muted-foreground">
           注册即表示您同意我们的服务条款和隐私政策
         </p>
       </motion.div>

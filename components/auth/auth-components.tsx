@@ -1,6 +1,6 @@
 /**
- * 认证共享组件 - 输入框、按钮、表单验证
- * 实现极简现代设计风格和精致动效
+ * 认证共享组件 - 符合首页设计风格的极简现代设计
+ * 复用首页的毛玻璃效果、渐变色彩和精致动效
  */
 
 "use client";
@@ -15,8 +15,9 @@ import { motion, AnimatePresence } from "framer-motion";
 import { Eye, EyeOff, Check, X, Loader2 } from "lucide-react";
 import { cn } from "@/lib/utils";
 
-// 自定义缓动曲线 - "丝滑如德芙"
-const SMOOTH_EASING = [0.25, 0.46, 0.45, 0.94] as const;
+// 自定义缓动曲线 - 与首页保持一致
+const SMOOTH_SPRING = { type: "spring", stiffness: 300, damping: 30 } as const;
+const SMOOTH_TRANSITION = { duration: 0.5, ease: "easeOut" } as const;
 
 // ============================================================================
 // 输入框组件
@@ -60,10 +61,10 @@ export const Input = forwardRef<HTMLInputElement, InputProps>(
       <div className="space-y-2">
         {label && (
           <motion.label
-            className="block text-sm font-medium text-slate-700 dark:text-slate-300"
+                    className="block text-sm font-medium text-muted-foreground"
             initial={{ opacity: 0.7 }}
             animate={{ opacity: isFocused ? 1 : 0.7 }}
-            transition={{ duration: 0.2, ease: SMOOTH_EASING }}
+                    transition={SMOOTH_TRANSITION}
           >
             {label}
           </motion.label>
@@ -71,7 +72,7 @@ export const Input = forwardRef<HTMLInputElement, InputProps>(
 
         <div className="relative">
           {icon && (
-            <div className="absolute left-3 top-1/2 -translate-y-1/2 text-slate-400 dark:text-slate-500">
+                    <div className="absolute left-3 top-1/2 -translate-y-1/2 text-muted-foreground">
               {icon}
             </div>
           )}
@@ -79,19 +80,20 @@ export const Input = forwardRef<HTMLInputElement, InputProps>(
           <motion.input
             ref={ref}
             className={cn(
-              // 基础样式
-              "w-full rounded-2xl border-0 bg-white/50 dark:bg-slate-800/50",
-              "backdrop-blur-sm shadow-sm",
-              "text-slate-900 dark:text-slate-100",
-              "placeholder:text-slate-400 dark:placeholder:text-slate-500",
-              "transition-all duration-300 ease-out",
+                // 基础样式 - 符合首页风格的毛玻璃效果
+                "w-full rounded-2xl border border-border/50",
+                "backdrop-blur-xl bg-background/80",
+                "shadow-lg shadow-black/5 dark:shadow-black/20",
+                "text-foreground placeholder:text-muted-foreground",
+                "transition-all duration-500 ease-out",
 
-              // 聚焦状态
-              "focus:outline-none focus:ring-2 focus:ring-blue-500/20 focus:bg-white dark:focus:bg-slate-800",
-              "focus:shadow-lg focus:shadow-blue-500/5",
+                // 聚焦状态 - 与首页导航栏一致的效果
+                "focus:outline-none focus:bg-background/95",
+                "focus:shadow-xl focus:shadow-black/10 dark:focus:shadow-black/30",
+                "focus:border-border",
 
               // 悬停状态
-              "hover:shadow-md hover:bg-white/80 dark:hover:bg-slate-800/80",
+                "hover:bg-background/90 hover:shadow-md",
 
               // 尺寸
               sizeClasses[size],
@@ -101,18 +103,18 @@ export const Input = forwardRef<HTMLInputElement, InputProps>(
               rightIcon && "pr-10",
 
               // 错误状态
-              error && "ring-2 ring-red-500/20 bg-red-50/50 dark:bg-red-900/10",
+                error && "border-red-500/50 bg-red-500/5",
 
               // 成功状态
-              success &&
-                "ring-2 ring-emerald-500/20 bg-emerald-50/50 dark:bg-emerald-900/10",
+                success && "border-emerald-500/50 bg-emerald-500/5",
 
               className,
             )}
             onFocus={() => setIsFocused(true)}
             onBlur={() => setIsFocused(false)}
-            animate={isFocused ? { scale: 1.02 } : { scale: 1 }}
-            transition={{ duration: 0.2, ease: SMOOTH_EASING }}
+                    whileHover={{ scale: 1.01 }}
+                    whileFocus={{ scale: 1.02 }}
+                    transition={SMOOTH_SPRING}
             {...(props as any)}
           />
 
@@ -130,19 +132,17 @@ export const Input = forwardRef<HTMLInputElement, InputProps>(
               initial={{ opacity: 0, y: -5 }}
               animate={{ opacity: 1, y: 0 }}
               exit={{ opacity: 0, y: -5 }}
-              transition={{ duration: 0.2, ease: SMOOTH_EASING }}
+                        transition={SMOOTH_TRANSITION}
               className={cn(
-                "text-xs px-1",
+                  "text-xs px-1 flex items-center gap-1",
                 error && "text-red-600 dark:text-red-400",
                 success && "text-emerald-600 dark:text-emerald-400",
-                !error && !success && "text-slate-500 dark:text-slate-400",
+                  !error && !success && "text-muted-foreground",
               )}
-            >
-              <div className="flex items-center gap-1">
-                {error && <X className="w-3 h-3" />}
-                {success && <Check className="w-3 h-3" />}
-                <span>{error || success || hint}</span>
-              </div>
+                    >
+                        {error && <X className="w-3 h-3" />}
+                        {success && <Check className="w-3 h-3" />}
+                        <span>{error || success || hint}</span>
             </motion.div>
           )}
         </AnimatePresence>
@@ -184,9 +184,14 @@ export const PasswordInput = forwardRef<HTMLInputElement, PasswordInputProps>(
     };
 
     const strengthText = ["很弱", "弱", "一般", "强", "很强"][strength];
-    const strengthColor = ["red", "orange", "yellow", "blue", "emerald"][
-      strength
+        const strengthColors = [
+            "red-500",
+            "orange-500",
+            "yellow-500",
+            "blue-500",
+            "emerald-500",
     ];
+        const strengthColor = strengthColors[strength];
 
     return (
       <div className="space-y-2">
@@ -197,15 +202,12 @@ export const PasswordInput = forwardRef<HTMLInputElement, PasswordInputProps>(
             <motion.button
               type="button"
               onClick={() => setShowPassword(!showPassword)}
-              className="text-slate-400 hover:text-slate-600 dark:hover:text-slate-300 transition-colors"
+                  className="text-muted-foreground hover:text-foreground transition-colors"
               whileHover={{ scale: 1.1 }}
               whileTap={{ scale: 0.95 }}
+                  transition={SMOOTH_SPRING}
             >
-              {showPassword ? (
-                <EyeOff className="w-4 h-4" />
-              ) : (
-                <Eye className="w-4 h-4" />
-              )}
+                  {showPassword ? <EyeOff className="w-4 h-4" /> : <Eye className="w-4 h-4" />}
             </motion.button>
           }
           onChange={handlePasswordChange}
@@ -217,13 +219,12 @@ export const PasswordInput = forwardRef<HTMLInputElement, PasswordInputProps>(
           <motion.div
             initial={{ opacity: 0, height: 0 }}
             animate={{ opacity: 1, height: "auto" }}
+                    transition={SMOOTH_SPRING}
             className="space-y-2"
           >
             <div className="flex items-center gap-2">
-              <span className="text-xs text-slate-500">密码强度：</span>
-              <span
-                className={`text-xs font-medium text-${strengthColor}-600 dark:text-${strengthColor}-400`}
-              >
+                        <span className="text-xs text-muted-foreground">密码强度：</span>
+                        <span className={`text-xs font-medium text-${strengthColor}`}>
                 {strengthText}
               </span>
             </div>
@@ -234,8 +235,8 @@ export const PasswordInput = forwardRef<HTMLInputElement, PasswordInputProps>(
                   className={cn(
                     "h-1 flex-1 rounded-full transition-all duration-300",
                     level <= strength
-                      ? `bg-${strengthColor}-500`
-                      : "bg-slate-200 dark:bg-slate-700",
+                          ? `bg-${strengthColor}`
+                          : "bg-border",
                   )}
                   initial={{ scaleX: 0 }}
                   animate={{ scaleX: level <= strength ? 1 : 0.3 }}
@@ -278,17 +279,17 @@ export const Button = forwardRef<HTMLButtonElement, ButtonProps>(
     ref,
   ) => {
     const baseClasses =
-      "inline-flex items-center justify-center gap-2 rounded-2xl font-medium transition-all duration-300 focus:outline-none focus:ring-2 focus:ring-offset-2 disabled:opacity-50 disabled:cursor-not-allowed";
+        "inline-flex items-center justify-center gap-2 rounded-2xl font-medium transition-all duration-500 focus:outline-none focus:ring-2 focus:ring-offset-2 disabled:opacity-50 disabled:cursor-not-allowed";
 
     const variants = {
       primary:
-        "bg-gradient-to-r from-blue-600 to-cyan-600 hover:from-blue-700 hover:to-cyan-700 text-white shadow-lg hover:shadow-xl focus:ring-blue-500/30",
+            "bg-gradient-to-r from-blue-600 via-purple-600 to-pink-600 hover:from-blue-700 hover:via-purple-700 hover:to-pink-700 text-white shadow-lg hover:shadow-xl dark:shadow-black/20 focus:ring-blue-500/30",
       secondary:
-        "bg-slate-100 hover:bg-slate-200 dark:bg-slate-800 dark:hover:bg-slate-700 text-slate-900 dark:text-slate-100 focus:ring-slate-500/30",
+            "backdrop-blur-xl bg-background/80 hover:bg-background/95 border border-border/50 text-foreground shadow-lg hover:shadow-xl dark:shadow-black/20 focus:ring-border/30",
       ghost:
-        "hover:bg-slate-100 dark:hover:bg-slate-800 text-slate-700 dark:text-slate-300 focus:ring-slate-500/30",
+            "hover:bg-accent/50 text-muted-foreground hover:text-foreground focus:ring-border/30",
       outline:
-        "border border-slate-200 dark:border-slate-700 hover:bg-slate-50 dark:hover:bg-slate-800 text-slate-700 dark:text-slate-300 focus:ring-slate-500/30",
+            "border border-border/50 backdrop-blur-sm bg-background/30 hover:bg-background/50 text-foreground focus:ring-border/30",
     };
 
     const sizes = {
@@ -304,10 +305,10 @@ export const Button = forwardRef<HTMLButtonElement, ButtonProps>(
         disabled={disabled || loading}
         whileHover={{
           scale: disabled || loading ? 1 : 1.02,
-          y: disabled || loading ? 0 : -1,
+            y: disabled || loading ? 0 : -2,
         }}
         whileTap={{ scale: disabled || loading ? 1 : 0.98 }}
-        transition={{ duration: 0.15, ease: SMOOTH_EASING }}
+            transition={SMOOTH_SPRING}
         {...(props as any)}
       >
         {loading ? (
@@ -373,7 +374,7 @@ export const OAuthButton: React.FC<OAuthButtonProps> = ({
     <Button
       variant="outline"
       icon={OAuthIcons[provider]}
-      className="bg-white/70 dark:bg-slate-800/70 backdrop-blur-sm border-slate-200/50 dark:border-slate-700/50 hover:bg-white dark:hover:bg-slate-800 hover:shadow-lg"
+          className="backdrop-blur-xl bg-background/60 dark:bg-background/40 border-border/30 hover:bg-background/80 hover:border-border/50 hover:shadow-lg"
       {...props}
     >
       {children || OAuthLabels[provider]}
@@ -406,13 +407,14 @@ export const Checkbox: React.FC<CheckboxProps> = ({
         type="button"
         onClick={() => onChange?.(!checked)}
         className={cn(
-          "flex items-center justify-center w-5 h-5 rounded-lg border-2 transition-all duration-200",
+            "flex items-center justify-center w-5 h-5 rounded-lg border-2 transition-all duration-300",
           checked
-            ? "bg-blue-600 border-blue-600 text-white"
-            : "border-slate-300 dark:border-slate-600 bg-white dark:bg-slate-800",
+                ? "bg-gradient-to-r from-blue-600 to-purple-600 border-blue-600 text-white shadow-lg"
+                : "border-border bg-background/50 backdrop-blur-sm hover:bg-background/80",
         )}
         whileHover={{ scale: 1.05 }}
         whileTap={{ scale: 0.95 }}
+              transition={SMOOTH_SPRING}
       >
         <AnimatePresence>
           {checked && (
@@ -420,7 +422,7 @@ export const Checkbox: React.FC<CheckboxProps> = ({
               initial={{ scale: 0, opacity: 0 }}
               animate={{ scale: 1, opacity: 1 }}
               exit={{ scale: 0, opacity: 0 }}
-              transition={{ duration: 0.15 }}
+                          transition={SMOOTH_SPRING}
             >
               <Check className="w-3 h-3" />
             </motion.div>
@@ -431,7 +433,7 @@ export const Checkbox: React.FC<CheckboxProps> = ({
       {label && (
         <label
           htmlFor={id}
-          className="text-sm text-slate-600 dark:text-slate-400 cursor-pointer flex-1"
+                  className="text-sm text-muted-foreground cursor-pointer flex-1 hover:text-foreground transition-colors"
           onClick={() => onChange?.(!checked)}
         >
           {label}

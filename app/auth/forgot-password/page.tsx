@@ -62,17 +62,17 @@ export default function ForgotPasswordPage() {
         transition={{ duration: 0.6, ease: SMOOTH_EASING }}
         className="w-full"
       >
-        <div className="backdrop-blur-xl bg-white/80 dark:bg-slate-900/80 rounded-3xl shadow-2xl border border-white/20 dark:border-slate-700/30 p-8 md:p-10 text-center">
+            <div className="backdrop-blur-xl bg-background/80 border border-border/50 rounded-2xl shadow-lg shadow-black/5 dark:shadow-black/20 p-8 md:p-10 text-center">
           {/* 成功图标 */}
           <div className="w-16 h-16 mx-auto mb-6 bg-emerald-100 dark:bg-emerald-900/30 rounded-full flex items-center justify-center">
             <Mail className="w-8 h-8 text-emerald-600 dark:text-emerald-400" />
           </div>
 
-          <h1 className="text-2xl font-bold text-slate-900 dark:text-slate-100 mb-4">
+                <h1 className="text-2xl font-bold bg-gradient-to-r from-foreground via-emerald-600 to-blue-600 bg-clip-text text-transparent mb-4">
             邮件已发送
           </h1>
 
-          <p className="text-slate-600 dark:text-slate-400 mb-6">
+                <p className="text-muted-foreground mb-6">
             我们已向{" "}
             <span className="font-medium text-slate-900 dark:text-slate-100">
               {email}
@@ -81,7 +81,7 @@ export default function ForgotPasswordPage() {
           </p>
 
           <div className="space-y-4">
-            <p className="text-sm text-slate-500 dark:text-slate-400">
+                    <p className="text-sm text-muted-foreground">
               没有收到邮件？请检查垃圾邮件文件夹，或者
             </p>
 
@@ -100,7 +100,7 @@ export default function ForgotPasswordPage() {
           <div className="mt-8">
             <Link
               href="/auth/login"
-              className="inline-flex items-center gap-2 text-sm text-slate-600 dark:text-slate-400 hover:text-slate-900 dark:hover:text-slate-100 transition-colors"
+                        className="inline-flex items-center gap-2 text-sm text-muted-foreground hover:text-foreground transition-colors"
             >
               <ArrowLeft className="w-4 h-4" />
               返回登录
@@ -119,11 +119,11 @@ export default function ForgotPasswordPage() {
       className="w-full"
     >
       {/* 主卡片 */}
-      <div className="backdrop-blur-xl bg-white/80 dark:bg-slate-900/80 rounded-3xl shadow-2xl border border-white/20 dark:border-slate-700/30 p-8 md:p-10">
+          <div className="backdrop-blur-xl bg-background/80 border border-border/50 rounded-2xl shadow-lg shadow-black/5 dark:shadow-black/20 p-8 md:p-10">
         {/* 标题区域 */}
         <div className="text-center mb-8">
           <motion.h1
-            className="text-3xl font-bold text-slate-900 dark:text-slate-100 mb-2"
+                      className="text-3xl font-bold bg-gradient-to-r from-foreground via-blue-600 to-purple-600 bg-clip-text text-transparent mb-2"
             initial={{ opacity: 0, y: -10 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ delay: 0.1, duration: 0.5, ease: SMOOTH_EASING }}
@@ -131,7 +131,7 @@ export default function ForgotPasswordPage() {
             忘记密码
           </motion.h1>
           <motion.p
-            className="text-slate-600 dark:text-slate-400"
+                      className="text-muted-foreground"
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
             transition={{ delay: 0.2, duration: 0.5, ease: SMOOTH_EASING }}
@@ -190,7 +190,7 @@ export default function ForgotPasswordPage() {
         >
           <Link
             href="/auth/login"
-            className="inline-flex items-center gap-2 text-sm text-slate-600 dark:text-slate-400 hover:text-slate-900 dark:hover:text-slate-100 transition-colors"
+                      className="inline-flex items-center gap-2 text-sm text-muted-foreground hover:text-foreground transition-colors"
           >
             <ArrowLeft className="w-4 h-4" />
             返回登录
