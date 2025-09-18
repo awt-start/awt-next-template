@@ -16,16 +16,16 @@ interface FooterProps {
 
 const footerLinks = {
   product: [
-    { name: "功能特性", href: "#features" },
-    { name: "技术栈", href: "#tech" },
-    { name: "更新日志", href: "#changelog" },
-    { name: "路线图", href: "#roadmap" },
+    { name: "功能特性", href: "/product/features" },
+    { name: "技术栈", href: "/product/tech" },
+    { name: "更新日志", href: "/product/changelog" },
+    { name: "路线图", href: "/product/roadmap" },
   ],
   resources: [
-    { name: "文档", href: "#docs" },
-    { name: "教程", href: "#tutorials" },
-    { name: "示例", href: "#examples" },
-    { name: "API 参考", href: "#api" },
+    { name: "文档", href: "/resources/docs" },
+    { name: "教程", href: "/resources/tutorials" },
+    { name: "示例", href: "/resources/examples" },
+    { name: "API 参考", href: "/resources/api" },
   ],
   company: [
     { name: "关于我们", href: "/company/about" },

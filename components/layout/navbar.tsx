@@ -14,6 +14,7 @@ import { Button } from "@/components/ui/button";
 import { cn, isClient } from "@/lib/utils";
 import icon from "@/public/images/favicon.ico";
 import { ENV_KEYS, getEnv, publicEnv } from "@/lib/env";
+import Link from "next/link";
 
 interface NavbarProps {
   className?: string;
@@ -35,6 +36,7 @@ export function Navbar({ className }: NavbarProps) {
   const navItems = [
     { key: "home", href: "/", icon: "lucide:home" },
     { key: "features", href: "/#features", icon: "lucide:sparkles" },
+    { key: "product", href: "/product", icon: "lucide:box" },
     { key: "company", href: "/company", icon: "lucide:building-2" },
     { key: "contact", href: "/company/contact", icon: "lucide:mail" },
   ];
@@ -61,37 +63,43 @@ export function Navbar({ className }: NavbarProps) {
         )}
       >
         {/* Logo 区域 */}
-        <motion.div
-          className="flex items-center gap-3"
-          whileHover={{ scale: 1.02 }}
-          transition={{ type: "spring", stiffness: 400, damping: 17 }}
-        >
-          <div className="relative">
-            <motion.div
-              animate={{
-                rotate: 360,
-                boxShadow: [
-                  "0 0 20px rgba(59, 130, 246, 0.3)",
-                  "0 0 30px rgba(59, 130, 246, 0.6)",
-                  "0 0 20px rgba(59, 130, 246, 0.3)",
-                ],
-              }}
-              transition={{
-                rotate: { duration: 20, repeat: Infinity, ease: "linear" },
-                boxShadow: { duration: 2, repeat: Infinity, ease: "easeInOut" },
-              }}
-              className="w-10 h-10 rounded-xl bg-gradient-to-tr from-blue-500 via-purple-500 to-pink-500 flex items-center justify-center"
-            >
-              {/* 更改icon */}
-              <img src={icon.src} alt="logo" className="w-8 h-8" />
-            </motion.div>
-          </div>
-          <div>
-            <h1 className="text-lg font-bold bg-gradient-to-r from-foreground via-foreground/90 to-foreground/70 bg-clip-text text-transparent">
-              {process.env.NEXT_PUBLIC_APP_NAME}
-            </h1>
-          </div>
-        </motion.div>
+        <Link href="/">
+          <motion.div
+            className="flex items-center gap-3"
+            whileHover={{ scale: 1.02 }}
+            transition={{ type: "spring", stiffness: 400, damping: 17 }}
+          >
+            <div className="relative">
+              <motion.div
+                animate={{
+                  rotate: 360,
+                  boxShadow: [
+                    "0 0 20px rgba(59, 130, 246, 0.3)",
+                    "0 0 30px rgba(59, 130, 246, 0.6)",
+                    "0 0 20px rgba(59, 130, 246, 0.3)",
+                  ],
+                }}
+                transition={{
+                  rotate: { duration: 20, repeat: Infinity, ease: "linear" },
+                  boxShadow: {
+                    duration: 2,
+                    repeat: Infinity,
+                    ease: "easeInOut",
+                  },
+                }}
+                className="w-10 h-10 rounded-xl bg-gradient-to-tr from-blue-500 via-purple-500 to-pink-500 flex items-center justify-center"
+              >
+                {/* 更改icon */}
+                <img src={icon.src} alt="logo" className="w-8 h-8" />
+              </motion.div>
+            </div>
+            <div>
+              <h1 className="text-lg font-bold bg-gradient-to-r from-foreground via-foreground/90 to-foreground/70 bg-clip-text text-transparent">
+                {process.env.NEXT_PUBLIC_APP_NAME}
+              </h1>
+            </div>
+          </motion.div>
+        </Link>
 
         {/* 桌面导航菜单 */}
         <div className="hidden lg:flex items-center gap-1">
