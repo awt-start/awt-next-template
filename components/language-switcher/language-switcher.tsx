@@ -6,7 +6,7 @@
 
 import { useState } from 'react';
 import { useTranslations } from 'next-intl';
-import { useLanguageSwitch } from '@/utils/i18n';
+import { useLanguageSwitch } from '@/lib/i18n';
 import { i18nConfig, type Locale } from '@/i18n/config';
 
 export function LanguageSwitcher() {

@@ -32,33 +32,8 @@ function cn(...inputs: ClassValue[]): string {
 // ⏱️ 防抖 Hook（客户端专用）
 // =============================
 
-import { useState, useEffect } from "react";
 
-/**
- * 自定义防抖 Hook
- * @param value - 要防抖的值
- * @param delay - 延迟时间（毫秒）
- * @returns 防抖后的值
- *
- * 示例：
- * const [searchTerm, setSearchTerm] = useState('');
- * const debouncedSearch = useDebounce(searchTerm, 500);
- */
-function useDebounce<T>(value: T, delay: number): T {
-  const [debouncedValue, setDebouncedValue] = useState<T>(value);
 
-  useEffect(() => {
-    const handler = setTimeout(() => {
-      setDebouncedValue(value);
-    }, delay);
-
-    return () => {
-      clearTimeout(handler);
-    };
-  }, [value, delay]);
-
-  return debouncedValue;
-}
 
 // =============================
 // 🌐 客户端检测（通用）
@@ -231,7 +206,6 @@ function isNotEmpty(value: any): boolean {
   return !isEmpty(value);
 }
 
-
 function genUUID(): string {
   return "xxxxxxxx-xxxx-4xxx-yxxx-xxxxxxxxxxxx".replace(/[xy]/g, function (c) {
     const r = (Math.random() * 16) | 0;
@@ -239,7 +213,6 @@ function genUUID(): string {
     return v.toString(16);
   });
 }
-
 
 // =============================
 // 📦 导出统一入口（推荐按需导入）

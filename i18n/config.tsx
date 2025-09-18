@@ -1,8 +1,8 @@
 // app/i18n/config.ts
 
 import SvgIcon from "@/components/icon/icon";
-import { Language } from "@/utils/constants";
-import { getStorageKey, STORAGE_KEYS } from "@/utils/storage";
+import { Language } from "@/lib/constants";
+import { getStorageKey, STORAGE_KEYS } from "@/lib/storage";
 
 export const supportedLocales = [Language.ZH, Language.EN] as const;
 export type Locale = (typeof supportedLocales)[number];

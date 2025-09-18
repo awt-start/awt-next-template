@@ -2,7 +2,7 @@
 import { getRequestConfig } from "next-intl/server";
 import { cookies } from "next/headers";
 import { i18nConfig, Locale } from "./config";
-import { getStorageKey, STORAGE_KEYS } from "@/utils/storage";
+import { getStorageKey, STORAGE_KEYS } from "@/lib/storage";
 
 // 类型守卫：检查字符串是否为有效的 Locale
 function isValidLocale(locale: string): locale is Locale {
