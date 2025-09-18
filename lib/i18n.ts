@@ -1,8 +1,8 @@
-'use client';
+"use client";
 
-import { useRouter } from 'next/navigation';
-import { useLocale } from 'next-intl';
-import { i18nConfig, type Locale } from '@/i18n/config';
+import { useRouter } from "next/navigation";
+import { useLocale } from "next-intl";
+import { i18nConfig, type Locale } from "@/i18n/config";
 
 // ============================
 // 类型定义与辅助工具
@@ -21,7 +21,9 @@ function isValidLocale(locale: string): locale is Locale {
 export function useCurrentLocale(): Locale {
   const locale = useLocale();
   if (!isValidLocale(locale)) {
-    console.warn(`Invalid locale detected: ${locale}, falling back to ${i18nConfig.defaultLocale}`);
+    console.warn(
+      `Invalid locale detected: ${locale}, falling back to ${i18nConfig.defaultLocale}`,
+    );
     return i18nConfig.defaultLocale;
   }
   return locale;
@@ -32,51 +34,55 @@ export function useCurrentLocale(): Locale {
 // ============================
 
 /**
-   * 设置语言 Cookie - 使用统一的 cookie 配置
-   */
-  export function setLocaleCookie(locale: Locale): void {
-    if (typeof window === 'undefined') {
-      return;
-    }
-    
-    const { cookie } = i18nConfig;
-    const cookieString = [
-      `${cookie.name}=${encodeURIComponent(locale)}`,
-      `path=${cookie.path}`,
-      `max-age=${cookie.maxAge}`,
-      `SameSite=${cookie.sameSite}`,
-      cookie.secure ? 'secure' : '',
-    ].filter(Boolean).join('; ');
-    
-    document.cookie = cookieString;
+ * 设置语言 Cookie - 使用统一的 cookie 配置
+ */
+export function setLocaleCookie(locale: Locale): void {
+  if (typeof window === "undefined") {
+    return;
   }
+
+  const { cookie } = i18nConfig;
+  const cookieString = [
+    `${cookie.name}=${encodeURIComponent(locale)}`,
+    `path=${cookie.path}`,
+    `max-age=${cookie.maxAge}`,
+    `SameSite=${cookie.sameSite}`,
+    cookie.secure ? "secure" : "",
+  ]
+    .filter(Boolean)
+    .join("; ");
+
+  document.cookie = cookieString;
+}
 
 /**
  * 获取语言 Cookie - 客户端专用
  */
 export function getLocaleFromCookie(): Locale | null {
   // 检查是否在客户端
-  if (typeof window === 'undefined') {
+  if (typeof window === "undefined") {
     return null;
   }
-  
+
   const { cookie } = i18nConfig;
-  const match = document.cookie.match(new RegExp(`(?:^|; )${cookie.name}=([^;]*)`));
+  const match = document.cookie.match(
+    new RegExp(`(?:^|; )${cookie.name}=([^;]*)`),
+  );
   const value = match ? decodeURIComponent(match[1]) : null;
   return value && isValidLocale(value) ? value : null;
 }
 
 /**
-   * 删除语言 Cookie
-   */
-  export function removeLocaleCookie(): void {
-    if (typeof window === 'undefined') {
-      return;
-    }
-    
-    const { cookie } = i18nConfig;
-    document.cookie = `${cookie.name}=; path=${cookie.path}; max-age=0`;
+ * 删除语言 Cookie
+ */
+export function removeLocaleCookie(): void {
+  if (typeof window === "undefined") {
+    return;
   }
+
+  const { cookie } = i18nConfig;
+  document.cookie = `${cookie.name}=; path=${cookie.path}; max-age=0`;
+}
 
 // ============================
 // 语言切换 Hook（增强版：支持无跳转切换）
@@ -176,19 +182,21 @@ export function getLocaleIcon(locale: Locale): string {
  * 支持：zh-CN → zh, en-US → en, pt-BR → pt 等
  */
 export function detectBrowserLanguage(): Locale {
-  if (typeof window === 'undefined') return i18nConfig.defaultLocale;
+  if (typeof window === "undefined") return i18nConfig.defaultLocale;
 
-  const browserLanguages = navigator.languages.map(lang => lang.toLowerCase().replace('-', '_'));
-  browserLanguages.unshift(navigator.language.toLowerCase().replace('-', '_')); // 添加主语言
+  const browserLanguages = navigator.languages.map((lang) =>
+    lang.toLowerCase().replace("-", "_"),
+  );
+  browserLanguages.unshift(navigator.language.toLowerCase().replace("-", "_")); // 添加主语言
 
   for (const lang of browserLanguages) {
     for (const locale of i18nConfig.locales) {
-      const normalizedLocale = locale.toLowerCase().replace('-', '_');
+      const normalizedLocale = locale.toLowerCase().replace("-", "_");
       if (lang === normalizedLocale) {
         return locale;
       }
       // 尝试前缀匹配：zh_CN → zh, en_US → en
-      const prefix = lang.split('_')[0];
+      const prefix = lang.split("_")[0];
       if (normalizedLocale.startsWith(prefix)) {
         return locale;
       }

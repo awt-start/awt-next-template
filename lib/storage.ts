@@ -11,7 +11,7 @@ export const STORAGE_KEYS = {
 } as const;
 
 // 👇 类型定义：所有合法的 storage key
-export type StorageKey = typeof STORAGE_KEYS[keyof typeof STORAGE_KEYS];
+export type StorageKey = (typeof STORAGE_KEYS)[keyof typeof STORAGE_KEYS];
 
 /**
  * 获取带前缀的存储键名

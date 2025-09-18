@@ -43,7 +43,7 @@ export default getRequestConfig(async ({ requestLocale }) => {
   } catch (error) {
     console.warn(
       `Locale messages not found for "${locale}", falling back to ${i18nConfig.defaultLocale}`,
-      error
+      error,
     );
 
     // 加载默认语言的翻译

@@ -39,6 +39,13 @@
     "zh-CN": "中文",
     "en-US": "English"
   },
+  "theme": {
+    "switch": "切换主题",
+    "light": "浅色模式",
+    "dark": "深色模式",
+    "system": "跟随系统",
+    "toggleTooltip": "切换主题模式"
+  },
   "error": {
     "404": "页面未找到",
     "500": "服务器错误",

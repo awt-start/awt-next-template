@@ -2,72 +2,71 @@
  * 通用常量工具类（基于 TypeScript Enum）
  * @author hsc
  * @date 2024-08-20
- * 
+ *
  * 推荐用法：
  * import { UserRole, Status } from '@/lib/constants';
  * console.log(UserRole.Admin); // "admin"
  * Object.values(UserRole) // ['user', 'admin', 'moderator']
  */
 
-
 // =============================
 // 🟢 状态码（Status）
 // =============================
 export enum Status {
-  Active = 'active',
-  Inactive = 'inactive',
-  Pending = 'pending',
-  Deleted = 'deleted',
+  Active = "active",
+  Inactive = "inactive",
+  Pending = "pending",
+  Deleted = "deleted",
 }
 
 // =============================
 // 📦 数据来源（Source）
 // =============================
 export enum Source {
-  Web = 'web',
-  Mobile = 'mobile',
-  API = 'api',
-  AdminPanel = 'admin-panel',
+  Web = "web",
+  Mobile = "mobile",
+  API = "api",
+  AdminPanel = "admin-panel",
 }
 
 // =============================
 // 📅 时间周期（Time Period）
 // =============================
 export enum TimePeriod {
-  Hourly = 'hourly',
-  Daily = 'daily',
-  Weekly = 'weekly',
-  Monthly = 'monthly',
-  Yearly = 'yearly',
+  Hourly = "hourly",
+  Daily = "daily",
+  Weekly = "weekly",
+  Monthly = "monthly",
+  Yearly = "yearly",
 }
 
 // =============================
 // 📊 排序方式（Sort Order）
 // =============================
 export enum SortOrder {
-  Asc = 'asc',
-  Desc = 'desc',
+  Asc = "asc",
+  Desc = "desc",
 }
 
 // =============================
 // 🖼️ 图片格式（Image Format）
 // =============================
 export enum ImageFormat {
-  JPG = 'jpg',
-  PNG = 'png',
-  JPEG = 'jpeg',
-  WEBP = 'webp',
-  GIF = 'gif',
+  JPG = "jpg",
+  PNG = "png",
+  JPEG = "jpeg",
+  WEBP = "webp",
+  GIF = "gif",
 }
 
 // =============================
 // 🌐 语言区域（Language）
 // =============================
 export enum Language {
-  ZH = 'zh-CN',
-  EN = 'en-US',
-  JA = 'ja-JP',
-  KO = 'ko-KR',
+  ZH = "zh-CN",
+  EN = "en-US",
+  JA = "ja-JP",
+  KO = "ko-KR",
 }
 
 // =============================
@@ -84,8 +83,12 @@ export enum Language {
  * @param enumObj - 枚举对象
  * @returns 值数组
  */
-export function getEnumValues<T extends Record<string, any>>(enumObj: T): Array<T[keyof T]> {
-  return Object.values(enumObj).filter((value) => typeof value === 'string') as Array<T[keyof T]>;
+export function getEnumValues<T extends Record<string, any>>(
+  enumObj: T,
+): Array<T[keyof T]> {
+  return Object.values(enumObj).filter(
+    (value) => typeof value === "string",
+  ) as Array<T[keyof T]>;
 }
 
 /**
@@ -93,11 +96,13 @@ export function getEnumValues<T extends Record<string, any>>(enumObj: T): Array<
  * @param enumObj - 枚举对象
  * @returns 键名数组
  */
-export function getEnumKeys<T extends Record<string, any>>(enumObj: T): Array<keyof T> {
-  return Object.keys(enumObj).filter((key) => isNaN(Number(key))) as Array<keyof T>;
+export function getEnumKeys<T extends Record<string, any>>(
+  enumObj: T,
+): Array<keyof T> {
+  return Object.keys(enumObj).filter((key) => isNaN(Number(key))) as Array<
+    keyof T
+  >;
 }
-
-
 
 /**
  * 根据值查找对应的键名（反向映射）
@@ -107,13 +112,11 @@ export function getEnumKeys<T extends Record<string, any>>(enumObj: T): Array<ke
  */
 export function findEnumKeyByValue<T extends Record<string, any>>(
   enumObj: T,
-  value: T[keyof T]
+  value: T[keyof T],
 ): keyof T | undefined {
   const keys = getEnumKeys(enumObj);
   return keys.find((key) => enumObj[key] === value);
 }
-
-
 
 /**
  * 验证某个值是否属于该枚举
@@ -123,7 +126,7 @@ export function findEnumKeyByValue<T extends Record<string, any>>(
  */
 export function isValidEnumValue<T extends Record<string, any>>(
   enumObj: T,
-  value: unknown
+  value: unknown,
 ): value is T[keyof T] {
   return getEnumValues(enumObj).includes(value as T[keyof T]);
 }

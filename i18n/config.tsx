@@ -25,9 +25,9 @@ export const i18nConfig = {
   cookie: {
     name: `lang`,
     maxAge: 60 * 60 * 24 * 365, // 1 year
-    path: '/',
-    sameSite: 'lax' as const,
-    secure: process.env.NODE_ENV === 'production',
+    path: "/",
+    sameSite: "lax" as const,
+    secure: process.env.NODE_ENV === "production",
   },
 } as const;
 

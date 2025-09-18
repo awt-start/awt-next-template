@@ -22,8 +22,7 @@ const buttonVariants = cva(
           "bg-secondary text-secondary-foreground shadow-xs hover:bg-secondary/80 active:scale-98",
         ghost:
           "hover:bg-accent hover:text-accent-foreground dark:hover:bg-accent/50 active:scale-98",
-        link:
-          "text-primary underline-offset-4 hover:underline focus-visible:underline data-[state=open]:underline",
+        link: "text-primary underline-offset-4 hover:underline focus-visible:underline data-[state=open]:underline",
         "outline-destructive":
           "border border-destructive text-destructive shadow-xs hover:bg-destructive/5 hover:text-destructive/90 dark:border-destructive/70 dark:hover:bg-destructive/10",
       },
@@ -45,7 +44,7 @@ const buttonVariants = cva(
       variant: "default",
       size: "default",
     },
-  }
+  },
 );
 
 // ✅ 新增：为 Button 定义支持的动画类型（复用 Icon 类型）
@@ -71,7 +70,7 @@ const Button = React.forwardRef<HTMLButtonElement, ButtonProps>(
       children,
       ...props
     },
-    ref
+    ref,
   ) => {
     const Comp = asChild ? Slot : "button";
 
@@ -90,7 +89,7 @@ const Button = React.forwardRef<HTMLButtonElement, ButtonProps>(
         {children}
       </Comp>
     );
-  }
+  },
 );
 
 Button.displayName = "Button";

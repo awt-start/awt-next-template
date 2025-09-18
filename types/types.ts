@@ -119,7 +119,6 @@ export type ThemeMode = "light" | "dark" | "system";
  */
 export type Language = "zh-CN" | "en-US" | "ja-JP" | "ko-KR";
 
-
 /**
  * 工具类型：获取数组元素类型
  */
@@ -167,7 +166,9 @@ export type ExcludeNullish<T> = T extends null | undefined ? never : T;
  * 工具类型：联合类型转交叉类型
  */
 export type UnionToIntersection<U> = (
-  U extends any ? (k: U) => void : never
+  U extends any
+    ? (k: U) => void
+    : never
 ) extends (k: infer I) => void
   ? I
   : never;

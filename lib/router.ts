@@ -15,10 +15,11 @@ export const ROUTES = {
 } as const;
 
 // 类型推导：所有路由路径的联合类型
-export type AppRoute = typeof ROUTES[keyof typeof ROUTES] extends (...args: any[]) => any
-  ? ReturnType<typeof ROUTES[keyof typeof ROUTES]>
-  : typeof ROUTES[keyof typeof ROUTES];
-
+export type AppRoute = (typeof ROUTES)[keyof typeof ROUTES] extends (
+  ...args: any[]
+) => any
+  ? ReturnType<(typeof ROUTES)[keyof typeof ROUTES]>
+  : (typeof ROUTES)[keyof typeof ROUTES];
 
 // =============================
 // 🔧 路由构建器（函数式 + 类型安全）
@@ -29,11 +30,14 @@ export type AppRoute = typeof ROUTES[keyof typeof ROUTES] extends (...args: any[
  * @param query - 查询参数对象
  * @returns URLSearchParams 字符串
  */
-export function buildQuery(query: Record<string, string | number | boolean | null | undefined>): string {
+export function buildQuery(
+  query: Record<string, string | number | boolean | null | undefined>,
+): string {
   const searchParams = new URLSearchParams();
 
   Object.entries(query).forEach(([key, value]) => {
-    if (value != null) { // 排除 null/undefined
+    if (value != null) {
+      // 排除 null/undefined
       searchParams.append(key, String(value));
     }
   });
@@ -47,12 +51,17 @@ export function buildQuery(query: Record<string, string | number | boolean | nul
  * @param params - 参数对象，如 { userId: '123', postId: '456' }
  * @returns 完整路径
  */
-export function buildRoute(template: string, params: Record<string, string>): string {
+export function buildRoute(
+  template: string,
+  params: Record<string, string>,
+): string {
   return template.replace(/\[([^\]]+)\]/g, (match, key) => {
     const value = params[key];
     if (value === undefined) {
       // 错误信息使用英文，便于调试和国际化
-      throw new Error(`Missing required route parameter: '${key}' in path template "${template}"`);
+      throw new Error(
+        `Missing required route parameter: '${key}' in path template "${template}"`,
+      );
     }
     return encodeURIComponent(value); // ✅ 自动编码，防止路径错误
   });
@@ -68,7 +77,7 @@ export function buildRoute(template: string, params: Record<string, string>): st
 export function buildUrl(
   path: string,
   params: Record<string, string> = {},
-  query: Record<string, string | number | boolean | null | undefined> = {}
+  query: Record<string, string | number | boolean | null | undefined> = {},
 ): string {
   const routePath = buildRoute(path, params);
   const queryString = buildQuery(query);
@@ -89,12 +98,11 @@ export function buildUrl(
  */
 export function build(
   routePath: Route,
-  query: Record<string, string | number | boolean | null | undefined> = {}
+  query: Record<string, string | number | boolean | null | undefined> = {},
 ): string {
   const queryString = buildQuery(query);
   return queryString ? `${routePath}?${queryString}` : routePath;
 }
-
 
 // =============================
 // 🧭 导航 Hook：客户端专用（React Server Component 兼容）
@@ -115,7 +123,6 @@ export function useNavigate() {
   };
 }
 
-
 // =============================
 // 🧪 辅助：用于服务端获取完整 URL（例如 SSR/ISR）
 // =============================
@@ -128,7 +135,7 @@ export function buildFullUrl(
   path: string,
   params: Record<string, string> = {},
   query: Record<string, string | number | boolean | null | undefined> = {},
-  baseUrl: string = process.env.NEXT_PUBLIC_BASE_URL || 'http://localhost:3000'
+  baseUrl: string = process.env.NEXT_PUBLIC_BASE_URL || "http://localhost:3000",
 ): string {
   const relativeUrl = buildUrl(path, params, query);
   return new URL(relativeUrl, baseUrl).toString();

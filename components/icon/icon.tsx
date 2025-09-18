@@ -70,8 +70,8 @@ const SvgIcon: React.FC<IconProps & { animate?: AnimationType }> = memo(
         if (animate) {
           console.warn(
             `SvgIcon: Unknown animation type "${animate}". Valid options are: ${Object.keys(
-              animationVariants
-            ).join(", ")}.`
+              animationVariants,
+            ).join(", ")}.`,
           );
         }
         return {};
@@ -85,7 +85,7 @@ const SvgIcon: React.FC<IconProps & { animate?: AnimationType }> = memo(
         color: color || undefined,
         ...style,
       }),
-      [color, style]
+      [color, style],
     );
 
     // ✅ 主要修复：使用 <motion.div> 包裹 <Icon>，而不是 motion.create(Icon)
@@ -122,7 +122,7 @@ const SvgIcon: React.FC<IconProps & { animate?: AnimationType }> = memo(
         {...rest}
       />
     );
-  }
+  },
 );
 
 SvgIcon.displayName = "SvgIcon";

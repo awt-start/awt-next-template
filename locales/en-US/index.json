@@ -39,6 +39,13 @@
     "zh-CN": "中文",
     "en-US": "English"
   },
+  "theme": {
+    "switch": "Switch Theme",
+    "light": "Light Mode",
+    "dark": "Dark Mode",
+    "system": "Follow System",
+    "toggleTooltip": "Toggle theme mode"
+  },
   "error": {
     "404": "Page not found",
     "500": "Server error",

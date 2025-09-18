@@ -32,9 +32,6 @@ function cn(...inputs: ClassValue[]): string {
 // ⏱️ 防抖 Hook（客户端专用）
 // =============================
 
-
-
-
 // =============================
 // 🌐 客户端检测（通用）
 // =============================
@@ -66,7 +63,7 @@ function formatCurrency(
     currency?: string;
     minimumFractionDigits?: number;
     maximumFractionDigits?: number;
-  } = {}
+  } = {},
 ): string {
   const {
     locale = "zh-CN",
@@ -141,7 +138,7 @@ function parseSearchParams(search: string): Record<string, string> {
  * @returns 如 "page=2&sort=desc"
  */
 function buildSearchParams(
-  params: Record<string, string | number | boolean | null | undefined>
+  params: Record<string, string | number | boolean | null | undefined>,
 ): string {
   const searchParams = new URLSearchParams();
   Object.entries(params).forEach(([key, value]) => {
@@ -173,7 +170,7 @@ function imageUrl(
   src: string,
   width: number,
   height: number,
-  quality: number = 80
+  quality: number = 80,
 ): string {
   // 如果是外部域名，不走 Next.js 优化
   if (src.startsWith("http")) {
