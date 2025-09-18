@@ -117,35 +117,6 @@ export default function AuthIndexPage() {
           ))}
         </div>
 
-        {/* 设计特点 */}
-        <motion.div
-          className="mt-8 pt-8 border-t border-slate-200/50 dark:border-slate-700/50"
-          initial={{ opacity: 0, y: 20 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ delay: 0.8, duration: 0.5, ease: SMOOTH_EASING }}
-        >
-          <h3 className="text-lg font-semibold text-foreground mb-4">
-            ✨ 设计亮点
-          </h3>
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-4 text-sm text-muted-foreground">
-            <div className="flex items-start gap-2">
-              <span className="text-blue-500">•</span>
-              <span>无边框卡片、柔光投影、毛玻璃效果</span>
-            </div>
-            <div className="flex items-start gap-2">
-              <span className="text-emerald-500">•</span>
-              <span>微交互动画、丝滑缓动曲线</span>
-            </div>
-            <div className="flex items-start gap-2">
-              <span className="text-purple-500">•</span>
-              <span>320px-4K 无缝响应式适配</span>
-            </div>
-            <div className="flex items-start gap-2">
-              <span className="text-cyan-500">•</span>
-              <span>科技感 × 人文温度的情绪传达</span>
-            </div>
-          </div>
-        </motion.div>
 
         {/* 返回首页 */}
         <motion.div

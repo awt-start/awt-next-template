@@ -11,15 +11,20 @@ import { ThemeSwitcher } from "@/components/theme-switcher/theme-switcher";
 import { LanguageSwitcher } from "@/components/language-switcher/language-switcher";
 import SvgIcon from "@/components/icon/icon";
 import { Button } from "@/components/ui/button";
-import { cn } from "@/lib/utils";
+import { cn, isClient } from "@/lib/utils";
+import icon from "@/public/images/favicon.ico";
+import { ENV_KEYS, getEnv, publicEnv } from "@/lib/env";
 
 interface NavbarProps {
   className?: string;
 }
 
 export function Navbar({ className }: NavbarProps) {
+
   const [isScrolled, setIsScrolled] = useState(false);
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
+
+
 
   useEffect(() => {
     const handleScroll = () => {
@@ -55,7 +60,7 @@ export function Navbar({ className }: NavbarProps) {
           "shadow-lg shadow-black/5 dark:shadow-black/20",
           "transition-all duration-500 ease-out",
           isScrolled &&
-            "bg-background/95 shadow-xl shadow-black/10 dark:shadow-black/30",
+          "bg-background/95 shadow-xl shadow-black/10 dark:shadow-black/30",
         )}
       >
         {/* Logo 区域 */}
@@ -80,19 +85,14 @@ export function Navbar({ className }: NavbarProps) {
               }}
               className="w-10 h-10 rounded-xl bg-gradient-to-tr from-blue-500 via-purple-500 to-pink-500 flex items-center justify-center"
             >
-              <SvgIcon
-                icon="lucide:layers"
-                width={20}
-                height={20}
-                className="text-white"
-              />
+              {/* 更改icon */}
+              <img src={icon.src} alt="logo" className="w-8 h-8" />
             </motion.div>
           </div>
           <div>
             <h1 className="text-lg font-bold bg-gradient-to-r from-foreground via-foreground/90 to-foreground/70 bg-clip-text text-transparent">
-              Next Template
+              {process.env.NEXT_PUBLIC_APP_NAME}
             </h1>
-            <p className="text-xs text-muted-foreground">Modern & Amazing</p>
           </div>
         </motion.div>
 
