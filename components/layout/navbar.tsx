@@ -20,11 +20,8 @@ interface NavbarProps {
 }
 
 export function Navbar({ className }: NavbarProps) {
-
   const [isScrolled, setIsScrolled] = useState(false);
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
-
-
 
   useEffect(() => {
     const handleScroll = () => {
@@ -60,7 +57,7 @@ export function Navbar({ className }: NavbarProps) {
           "shadow-lg shadow-black/5 dark:shadow-black/20",
           "transition-all duration-500 ease-out",
           isScrolled &&
-          "bg-background/95 shadow-xl shadow-black/10 dark:shadow-black/30",
+            "bg-background/95 shadow-xl shadow-black/10 dark:shadow-black/30",
         )}
       >
         {/* Logo 区域 */}

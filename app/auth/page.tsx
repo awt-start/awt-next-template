@@ -18,22 +18,22 @@ const authPages = [
     description: "用户名/邮箱输入、密码显隐切换、记住我、OAuth快捷登录",
     href: "/auth/login",
     icon: LogIn,
-    color: "from-blue-500 to-cyan-500"
+    color: "from-blue-500 to-cyan-500",
   },
   {
     title: "注册",
     description: "用户名唯一性校验、邮箱验证、手机号国际区号、密码强度提示",
     href: "/auth/register",
     icon: UserPlus,
-    color: "from-emerald-500 to-teal-500"
+    color: "from-emerald-500 to-teal-500",
   },
   {
     title: "忘记密码",
     description: "邮箱重置链接发送",
     href: "/auth/forgot-password",
     icon: Mail,
-    color: "from-purple-500 to-pink-500"
-  }
+    color: "from-purple-500 to-pink-500",
+  },
 ];
 
 export default function AuthIndexPage() {
@@ -44,7 +44,6 @@ export default function AuthIndexPage() {
       transition={{ duration: 0.6, ease: SMOOTH_EASING }}
       className="w-full"
     >
-
       {/* 主卡片 - 符合首页设计风格 */}
       <div className="backdrop-blur-xl bg-background/80 border border-border/50 rounded-2xl shadow-lg shadow-black/5 dark:shadow-black/20 p-8 md:p-10">
         {/* 标题区域 */}
@@ -77,20 +76,21 @@ export default function AuthIndexPage() {
               transition={{
                 delay: 0.3 + index * 0.1,
                 duration: 0.5,
-                ease: SMOOTH_EASING
+                ease: SMOOTH_EASING,
               }}
             >
-              <Link
-                href={page.href}
-                className="group block"
-              >
+              <Link href={page.href} className="group block">
                 <div className="relative p-6 rounded-2xl border border-border/50 backdrop-blur-xl bg-background/30 hover:bg-background/50 transition-all duration-500 hover:shadow-lg hover:shadow-black/5 dark:hover:shadow-black/20 hover:-translate-y-1">
                   {/* 渐变背景 */}
-                  <div className={`absolute inset-0 rounded-2xl bg-gradient-to-r ${page.color} opacity-0 group-hover:opacity-5 transition-opacity duration-500`} />
+                  <div
+                    className={`absolute inset-0 rounded-2xl bg-gradient-to-r ${page.color} opacity-0 group-hover:opacity-5 transition-opacity duration-500`}
+                  />
 
                   <div className="relative flex items-start gap-4">
                     {/* 图标 */}
-                    <div className={`flex-shrink-0 w-12 h-12 rounded-xl bg-gradient-to-r ${page.color} flex items-center justify-center group-hover:scale-110 transition-transform duration-500`}>
+                    <div
+                      className={`flex-shrink-0 w-12 h-12 rounded-xl bg-gradient-to-r ${page.color} flex items-center justify-center group-hover:scale-110 transition-transform duration-500`}
+                    >
                       <page.icon className="w-6 h-6 text-white" />
                     </div>
 
@@ -106,8 +106,17 @@ export default function AuthIndexPage() {
 
                     {/* 箭头 */}
                     <div className="flex-shrink-0 w-6 h-6 text-muted-foreground group-hover:text-foreground group-hover:translate-x-1 transition-all duration-300">
-                      <svg fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5l7 7-7 7" />
+                      <svg
+                        fill="none"
+                        stroke="currentColor"
+                        viewBox="0 0 24 24"
+                      >
+                        <path
+                          strokeLinecap="round"
+                          strokeLinejoin="round"
+                          strokeWidth={2}
+                          d="M9 5l7 7-7 7"
+                        />
                       </svg>
                     </div>
                   </div>
@@ -116,7 +125,6 @@ export default function AuthIndexPage() {
             </motion.div>
           ))}
         </div>
-
 
         {/* 返回首页 */}
         <motion.div
@@ -129,8 +137,18 @@ export default function AuthIndexPage() {
             href="/"
             className="inline-flex items-center gap-2 text-sm text-muted-foreground hover:text-foreground transition-colors"
           >
-            <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M10 19l-7-7m0 0l7-7m-7 7h18" />
+            <svg
+              className="w-4 h-4"
+              fill="none"
+              stroke="currentColor"
+              viewBox="0 0 24 24"
+            >
+              <path
+                strokeLinecap="round"
+                strokeLinejoin="round"
+                strokeWidth={2}
+                d="M10 19l-7-7m0 0l7-7m-7 7h18"
+              />
             </svg>
             返回首页
           </Link>

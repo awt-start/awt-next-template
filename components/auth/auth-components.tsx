@@ -61,10 +61,10 @@ export const Input = forwardRef<HTMLInputElement, InputProps>(
       <div className="space-y-2">
         {label && (
           <motion.label
-                    className="block text-sm font-medium text-muted-foreground"
+            className="block text-sm font-medium text-muted-foreground"
             initial={{ opacity: 0.7 }}
             animate={{ opacity: isFocused ? 1 : 0.7 }}
-                    transition={SMOOTH_TRANSITION}
+            transition={SMOOTH_TRANSITION}
           >
             {label}
           </motion.label>
@@ -72,7 +72,7 @@ export const Input = forwardRef<HTMLInputElement, InputProps>(
 
         <div className="relative">
           {icon && (
-                    <div className="absolute left-3 top-1/2 -translate-y-1/2 text-muted-foreground">
+            <div className="absolute left-3 top-1/2 -translate-y-1/2 text-muted-foreground">
               {icon}
             </div>
           )}
@@ -80,20 +80,20 @@ export const Input = forwardRef<HTMLInputElement, InputProps>(
           <motion.input
             ref={ref}
             className={cn(
-                // 基础样式 - 符合首页风格的毛玻璃效果
-                "w-full rounded-2xl border border-border/50",
-                "backdrop-blur-xl bg-background/80",
-                "shadow-lg shadow-black/5 dark:shadow-black/20",
-                "text-foreground placeholder:text-muted-foreground",
-                "transition-all duration-500 ease-out",
+              // 基础样式 - 符合首页风格的毛玻璃效果
+              "w-full rounded-2xl border border-border/50",
+              "backdrop-blur-xl bg-background/80",
+              "shadow-lg shadow-black/5 dark:shadow-black/20",
+              "text-foreground placeholder:text-muted-foreground",
+              "transition-all duration-500 ease-out",
 
-                // 聚焦状态 - 与首页导航栏一致的效果
-                "focus:outline-none focus:bg-background/95",
-                "focus:shadow-xl focus:shadow-black/10 dark:focus:shadow-black/30",
-                "focus:border-border",
+              // 聚焦状态 - 与首页导航栏一致的效果
+              "focus:outline-none focus:bg-background/95",
+              "focus:shadow-xl focus:shadow-black/10 dark:focus:shadow-black/30",
+              "focus:border-border",
 
               // 悬停状态
-                "hover:bg-background/90 hover:shadow-md",
+              "hover:bg-background/90 hover:shadow-md",
 
               // 尺寸
               sizeClasses[size],
@@ -103,18 +103,18 @@ export const Input = forwardRef<HTMLInputElement, InputProps>(
               rightIcon && "pr-10",
 
               // 错误状态
-                error && "border-red-500/50 bg-red-500/5",
+              error && "border-red-500/50 bg-red-500/5",
 
               // 成功状态
-                success && "border-emerald-500/50 bg-emerald-500/5",
+              success && "border-emerald-500/50 bg-emerald-500/5",
 
               className,
             )}
             onFocus={() => setIsFocused(true)}
             onBlur={() => setIsFocused(false)}
-                    whileHover={{ scale: 1.01 }}
-                    whileFocus={{ scale: 1.02 }}
-                    transition={SMOOTH_SPRING}
+            whileHover={{ scale: 1.01 }}
+            whileFocus={{ scale: 1.02 }}
+            transition={SMOOTH_SPRING}
             {...(props as any)}
           />
 
@@ -132,17 +132,17 @@ export const Input = forwardRef<HTMLInputElement, InputProps>(
               initial={{ opacity: 0, y: -5 }}
               animate={{ opacity: 1, y: 0 }}
               exit={{ opacity: 0, y: -5 }}
-                        transition={SMOOTH_TRANSITION}
+              transition={SMOOTH_TRANSITION}
               className={cn(
-                  "text-xs px-1 flex items-center gap-1",
+                "text-xs px-1 flex items-center gap-1",
                 error && "text-red-600 dark:text-red-400",
                 success && "text-emerald-600 dark:text-emerald-400",
-                  !error && !success && "text-muted-foreground",
+                !error && !success && "text-muted-foreground",
               )}
-                    >
-                        {error && <X className="w-3 h-3" />}
-                        {success && <Check className="w-3 h-3" />}
-                        <span>{error || success || hint}</span>
+            >
+              {error && <X className="w-3 h-3" />}
+              {success && <Check className="w-3 h-3" />}
+              <span>{error || success || hint}</span>
             </motion.div>
           )}
         </AnimatePresence>
@@ -184,14 +184,14 @@ export const PasswordInput = forwardRef<HTMLInputElement, PasswordInputProps>(
     };
 
     const strengthText = ["很弱", "弱", "一般", "强", "很强"][strength];
-        const strengthColors = [
-            "red-500",
-            "orange-500",
-            "yellow-500",
-            "blue-500",
-            "emerald-500",
+    const strengthColors = [
+      "red-500",
+      "orange-500",
+      "yellow-500",
+      "blue-500",
+      "emerald-500",
     ];
-        const strengthColor = strengthColors[strength];
+    const strengthColor = strengthColors[strength];
 
     return (
       <div className="space-y-2">
@@ -202,12 +202,16 @@ export const PasswordInput = forwardRef<HTMLInputElement, PasswordInputProps>(
             <motion.button
               type="button"
               onClick={() => setShowPassword(!showPassword)}
-                  className="text-muted-foreground hover:text-foreground transition-colors"
+              className="text-muted-foreground hover:text-foreground transition-colors"
               whileHover={{ scale: 1.1 }}
               whileTap={{ scale: 0.95 }}
-                  transition={SMOOTH_SPRING}
+              transition={SMOOTH_SPRING}
             >
-                  {showPassword ? <EyeOff className="w-4 h-4" /> : <Eye className="w-4 h-4" />}
+              {showPassword ? (
+                <EyeOff className="w-4 h-4" />
+              ) : (
+                <Eye className="w-4 h-4" />
+              )}
             </motion.button>
           }
           onChange={handlePasswordChange}
@@ -219,12 +223,12 @@ export const PasswordInput = forwardRef<HTMLInputElement, PasswordInputProps>(
           <motion.div
             initial={{ opacity: 0, height: 0 }}
             animate={{ opacity: 1, height: "auto" }}
-                    transition={SMOOTH_SPRING}
+            transition={SMOOTH_SPRING}
             className="space-y-2"
           >
             <div className="flex items-center gap-2">
-                        <span className="text-xs text-muted-foreground">密码强度：</span>
-                        <span className={`text-xs font-medium text-${strengthColor}`}>
+              <span className="text-xs text-muted-foreground">密码强度：</span>
+              <span className={`text-xs font-medium text-${strengthColor}`}>
                 {strengthText}
               </span>
             </div>
@@ -234,9 +238,7 @@ export const PasswordInput = forwardRef<HTMLInputElement, PasswordInputProps>(
                   key={level}
                   className={cn(
                     "h-1 flex-1 rounded-full transition-all duration-300",
-                    level <= strength
-                          ? `bg-${strengthColor}`
-                          : "bg-border",
+                    level <= strength ? `bg-${strengthColor}` : "bg-border",
                   )}
                   initial={{ scaleX: 0 }}
                   animate={{ scaleX: level <= strength ? 1 : 0.3 }}
@@ -279,17 +281,17 @@ export const Button = forwardRef<HTMLButtonElement, ButtonProps>(
     ref,
   ) => {
     const baseClasses =
-        "inline-flex items-center justify-center gap-2 rounded-2xl font-medium transition-all duration-500 focus:outline-none focus:ring-2 focus:ring-offset-2 disabled:opacity-50 disabled:cursor-not-allowed";
+      "inline-flex items-center justify-center gap-2 rounded-2xl font-medium transition-all duration-500 focus:outline-none focus:ring-2 focus:ring-offset-2 disabled:opacity-50 disabled:cursor-not-allowed";
 
     const variants = {
       primary:
-            "bg-gradient-to-r from-blue-600 via-purple-600 to-pink-600 hover:from-blue-700 hover:via-purple-700 hover:to-pink-700 text-white shadow-lg hover:shadow-xl dark:shadow-black/20 focus:ring-blue-500/30",
+        "bg-gradient-to-r from-blue-600 via-purple-600 to-pink-600 hover:from-blue-700 hover:via-purple-700 hover:to-pink-700 text-white shadow-lg hover:shadow-xl dark:shadow-black/20 focus:ring-blue-500/30",
       secondary:
-            "backdrop-blur-xl bg-background/80 hover:bg-background/95 border border-border/50 text-foreground shadow-lg hover:shadow-xl dark:shadow-black/20 focus:ring-border/30",
+        "backdrop-blur-xl bg-background/80 hover:bg-background/95 border border-border/50 text-foreground shadow-lg hover:shadow-xl dark:shadow-black/20 focus:ring-border/30",
       ghost:
-            "hover:bg-accent/50 text-muted-foreground hover:text-foreground focus:ring-border/30",
+        "hover:bg-accent/50 text-muted-foreground hover:text-foreground focus:ring-border/30",
       outline:
-            "border border-border/50 backdrop-blur-sm bg-background/30 hover:bg-background/50 text-foreground focus:ring-border/30",
+        "border border-border/50 backdrop-blur-sm bg-background/30 hover:bg-background/50 text-foreground focus:ring-border/30",
     };
 
     const sizes = {
@@ -305,10 +307,10 @@ export const Button = forwardRef<HTMLButtonElement, ButtonProps>(
         disabled={disabled || loading}
         whileHover={{
           scale: disabled || loading ? 1 : 1.02,
-            y: disabled || loading ? 0 : -2,
+          y: disabled || loading ? 0 : -2,
         }}
         whileTap={{ scale: disabled || loading ? 1 : 0.98 }}
-            transition={SMOOTH_SPRING}
+        transition={SMOOTH_SPRING}
         {...(props as any)}
       >
         {loading ? (
@@ -374,7 +376,7 @@ export const OAuthButton: React.FC<OAuthButtonProps> = ({
     <Button
       variant="outline"
       icon={OAuthIcons[provider]}
-          className="backdrop-blur-xl bg-background/60 dark:bg-background/40 border-border/30 hover:bg-background/80 hover:border-border/50 hover:shadow-lg"
+      className="backdrop-blur-xl bg-background/60 dark:bg-background/40 border-border/30 hover:bg-background/80 hover:border-border/50 hover:shadow-lg"
       {...props}
     >
       {children || OAuthLabels[provider]}
@@ -407,14 +409,14 @@ export const Checkbox: React.FC<CheckboxProps> = ({
         type="button"
         onClick={() => onChange?.(!checked)}
         className={cn(
-            "flex items-center justify-center w-5 h-5 rounded-lg border-2 transition-all duration-300",
+          "flex items-center justify-center w-5 h-5 rounded-lg border-2 transition-all duration-300",
           checked
-                ? "bg-gradient-to-r from-blue-600 to-purple-600 border-blue-600 text-white shadow-lg"
-                : "border-border bg-background/50 backdrop-blur-sm hover:bg-background/80",
+            ? "bg-gradient-to-r from-blue-600 to-purple-600 border-blue-600 text-white shadow-lg"
+            : "border-border bg-background/50 backdrop-blur-sm hover:bg-background/80",
         )}
         whileHover={{ scale: 1.05 }}
         whileTap={{ scale: 0.95 }}
-              transition={SMOOTH_SPRING}
+        transition={SMOOTH_SPRING}
       >
         <AnimatePresence>
           {checked && (
@@ -422,7 +424,7 @@ export const Checkbox: React.FC<CheckboxProps> = ({
               initial={{ scale: 0, opacity: 0 }}
               animate={{ scale: 1, opacity: 1 }}
               exit={{ scale: 0, opacity: 0 }}
-                          transition={SMOOTH_SPRING}
+              transition={SMOOTH_SPRING}
             >
               <Check className="w-3 h-3" />
             </motion.div>
@@ -433,7 +435,7 @@ export const Checkbox: React.FC<CheckboxProps> = ({
       {label && (
         <label
           htmlFor={id}
-                  className="text-sm text-muted-foreground cursor-pointer flex-1 hover:text-foreground transition-colors"
+          className="text-sm text-muted-foreground cursor-pointer flex-1 hover:text-foreground transition-colors"
           onClick={() => onChange?.(!checked)}
         >
           {label}

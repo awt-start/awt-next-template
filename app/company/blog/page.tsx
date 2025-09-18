@@ -3,7 +3,6 @@
  * 展示技术文章和公司动态
  */
 
-
 /* import type { Metadata } from "next";
 
 export const metadata: Metadata = {
@@ -30,7 +29,8 @@ const blogPosts = [
   {
     id: 1,
     title: "Next.js 15 新特性详解",
-    excerpt: "深入了解Next.js 15的新功能，包括Turbopack、App Router改进和性能优化。",
+    excerpt:
+      "深入了解Next.js 15的新功能，包括Turbopack、App Router改进和性能优化。",
     content: "Next.js 15 带来了许多激动人心的新功能...",
     author: "芒星",
     date: "2025-01-18",
@@ -39,7 +39,7 @@ const blogPosts = [
     readTime: "5分钟",
     image: "lucide:code-2",
     color: "text-blue-500",
-    gradient: "from-blue-500/10 to-cyan-500/10"
+    gradient: "from-blue-500/10 to-cyan-500/10",
   },
   {
     id: 2,
@@ -53,7 +53,7 @@ const blogPosts = [
     readTime: "8分钟",
     image: "lucide:shield-check",
     color: "text-emerald-500",
-    gradient: "from-emerald-500/10 to-teal-500/10"
+    gradient: "from-emerald-500/10 to-teal-500/10",
   },
   {
     id: 3,
@@ -67,7 +67,7 @@ const blogPosts = [
     readTime: "6分钟",
     image: "lucide:palette",
     color: "text-purple-500",
-    gradient: "from-purple-500/10 to-pink-500/10"
+    gradient: "from-purple-500/10 to-pink-500/10",
   },
   {
     id: 4,
@@ -81,7 +81,7 @@ const blogPosts = [
     readTime: "7分钟",
     image: "lucide:paintbrush",
     color: "text-cyan-500",
-    gradient: "from-cyan-500/10 to-blue-500/10"
+    gradient: "from-cyan-500/10 to-blue-500/10",
   },
   {
     id: 5,
@@ -95,7 +95,7 @@ const blogPosts = [
     readTime: "10分钟",
     image: "lucide:git-branch",
     color: "text-orange-500",
-    gradient: "from-orange-500/10 to-red-500/10"
+    gradient: "from-orange-500/10 to-red-500/10",
   },
   {
     id: 6,
@@ -109,16 +109,25 @@ const blogPosts = [
     readTime: "9分钟",
     image: "lucide:zap",
     color: "text-yellow-500",
-    gradient: "from-yellow-500/10 to-orange-500/10"
-  }
+    gradient: "from-yellow-500/10 to-orange-500/10",
+  },
 ];
 
 // 分类数据
 const categories = [
   { name: "全部", count: blogPosts.length },
-  { name: "技术", count: blogPosts.filter(post => post.category === "技术").length },
-  { name: "设计", count: blogPosts.filter(post => post.category === "设计").length },
-  { name: "经验", count: blogPosts.filter(post => post.category === "经验").length }
+  {
+    name: "技术",
+    count: blogPosts.filter((post) => post.category === "技术").length,
+  },
+  {
+    name: "设计",
+    count: blogPosts.filter((post) => post.category === "设计").length,
+  },
+  {
+    name: "经验",
+    count: blogPosts.filter((post) => post.category === "经验").length,
+  },
 ];
 
 export default function BlogPage() {
@@ -126,13 +135,17 @@ export default function BlogPage() {
   const [searchQuery, setSearchQuery] = useState("");
 
   // 过滤博客文章
-  const filteredPosts = blogPosts.filter(post => {
-    const matchesCategory = selectedCategory === "全部" || post.category === selectedCategory;
-    const matchesSearch = searchQuery === "" || 
+  const filteredPosts = blogPosts.filter((post) => {
+    const matchesCategory =
+      selectedCategory === "全部" || post.category === selectedCategory;
+    const matchesSearch =
+      searchQuery === "" ||
       post.title.toLowerCase().includes(searchQuery.toLowerCase()) ||
       post.excerpt.toLowerCase().includes(searchQuery.toLowerCase()) ||
-      post.tags.some(tag => tag.toLowerCase().includes(searchQuery.toLowerCase()));
-    
+      post.tags.some((tag) =>
+        tag.toLowerCase().includes(searchQuery.toLowerCase()),
+      );
+
     return matchesCategory && matchesSearch;
   });
 
@@ -140,7 +153,7 @@ export default function BlogPage() {
     <div className="relative min-h-screen bg-gradient-to-br from-background via-background/95 to-background/90">
       {/* 顶部导航栏 */}
       <Navbar />
-      
+
       {/* 动态网格背景 - 复用项目风格 */}
       <div className="absolute inset-0 opacity-20 dark:opacity-10">
         <div
@@ -171,25 +184,25 @@ export default function BlogPage() {
             className="space-y-12"
           >
             {/* 面包屑导航 */}
-            <motion.div 
+            <motion.div
               className="flex items-center gap-2 text-sm text-muted-foreground"
               initial={{ opacity: 0, x: -20 }}
               animate={{ opacity: 1, x: 0 }}
               transition={{ delay: 0.1, ...SMOOTH_TRANSITION }}
             >
-              <Link 
-                href="/" 
+              <Link
+                href="/"
                 className="flex items-center gap-1 hover:text-foreground transition-colors"
               >
                 <SvgIcon icon="lucide:home" width={16} height={16} />
                 <span>首页</span>
               </Link>
               <span>/</span>
-              <Link 
-                href="/company/about" 
+              <Link
+                href="/company/"
                 className="hover:text-foreground transition-colors"
               >
-                关于我们
+                公司介绍
               </Link>
               <span>/</span>
               <span className="text-foreground">博客</span>
@@ -203,14 +216,21 @@ export default function BlogPage() {
               transition={{ delay: 0.2, ...SMOOTH_TRANSITION }}
             >
               <div className="inline-flex items-center gap-3 px-4 py-2 rounded-full bg-gradient-to-r from-purple-500/10 via-pink-500/10 to-red-500/10 border border-purple-500/20">
-                <SvgIcon icon="lucide:book-open" width={20} height={20} className="text-purple-500" />
-                <span className="text-sm font-medium text-muted-foreground">技术博客</span>
+                <SvgIcon
+                  icon="lucide:book-open"
+                  width={20}
+                  height={20}
+                  className="text-purple-500"
+                />
+                <span className="text-sm font-medium text-muted-foreground">
+                  技术博客
+                </span>
               </div>
-              
+
               <h1 className="text-4xl md:text-6xl font-bold bg-gradient-to-r from-foreground via-purple-600 to-pink-600 bg-clip-text text-transparent">
                 技术博客
               </h1>
-              
+
               <p className="text-xl text-muted-foreground max-w-3xl mx-auto leading-relaxed">
                 分享我们的技术见解、设计思考和开发经验。
                 探索前端技术的最新趋势和最佳实践。
@@ -226,10 +246,10 @@ export default function BlogPage() {
             >
               {/* 搜索框 */}
               <div className="relative flex-1 max-w-md">
-                <SvgIcon 
-                  icon="lucide:search" 
-                  width={18} 
-                  height={18} 
+                <SvgIcon
+                  icon="lucide:search"
+                  width={18}
+                  height={18}
                   className="absolute left-3 top-1/2 -translate-y-1/2 text-muted-foreground"
                 />
                 <input
@@ -251,7 +271,7 @@ export default function BlogPage() {
                       "px-4 py-2 rounded-lg text-sm font-medium transition-all duration-300 whitespace-nowrap",
                       selectedCategory === category.name
                         ? "bg-purple-500 text-white shadow-lg"
-                        : "bg-background/50 text-muted-foreground hover:bg-background/80 hover:text-foreground border border-border/50"
+                        : "bg-background/50 text-muted-foreground hover:bg-background/80 hover:text-foreground border border-border/50",
                     )}
                   >
                     {category.name} ({category.count})
@@ -272,19 +292,27 @@ export default function BlogPage() {
                   key={post.id}
                   initial={{ opacity: 0, y: 20 }}
                   animate={{ opacity: 1, y: 0 }}
-                  transition={{ delay: 0.5 + index * 0.1, ...SMOOTH_TRANSITION }}
+                  transition={{
+                    delay: 0.5 + index * 0.1,
+                    ...SMOOTH_TRANSITION,
+                  }}
                   className="backdrop-blur-xl bg-background/80 border border-border/50 rounded-2xl overflow-hidden shadow-lg hover:shadow-xl transition-all duration-300 group"
                 >
                   {/* 文章头部 */}
-                  <div className={cn(
-                    "h-32 bg-gradient-to-r flex items-center justify-center relative overflow-hidden",
-                    post.gradient
-                  )}>
-                    <SvgIcon 
-                      icon={post.image} 
-                      width={48} 
-                      height={48} 
-                      className={cn(post.color, "group-hover:scale-110 transition-transform duration-300")}
+                  <div
+                    className={cn(
+                      "h-32 bg-gradient-to-r flex items-center justify-center relative overflow-hidden",
+                      post.gradient,
+                    )}
+                  >
+                    <SvgIcon
+                      icon={post.image}
+                      width={48}
+                      height={48}
+                      className={cn(
+                        post.color,
+                        "group-hover:scale-110 transition-transform duration-300",
+                      )}
                     />
                     <div className="absolute top-4 right-4">
                       <span className="px-2 py-1 text-xs bg-background/80 backdrop-blur-sm text-foreground rounded-full">
@@ -297,7 +325,11 @@ export default function BlogPage() {
                   <div className="p-6 space-y-4">
                     <div className="flex items-center gap-4 text-xs text-muted-foreground">
                       <span className="flex items-center gap-1">
-                        <SvgIcon icon="lucide:calendar" width={12} height={12} />
+                        <SvgIcon
+                          icon="lucide:calendar"
+                          width={12}
+                          height={12}
+                        />
                         {post.date}
                       </span>
                       <span className="flex items-center gap-1">
@@ -329,13 +361,20 @@ export default function BlogPage() {
                     <div className="flex items-center justify-between pt-4 border-t border-border/30">
                       <div className="flex items-center gap-2">
                         <div className="w-6 h-6 rounded-full bg-gradient-to-r from-purple-500/20 to-pink-500/20 flex items-center justify-center">
-                          <SvgIcon icon="lucide:user" width={12} height={12} className="text-purple-500" />
+                          <SvgIcon
+                            icon="lucide:user"
+                            width={12}
+                            height={12}
+                            className="text-purple-500"
+                          />
                         </div>
-                        <span className="text-sm text-muted-foreground">{post.author}</span>
+                        <span className="text-sm text-muted-foreground">
+                          {post.author}
+                        </span>
                       </div>
 
-                      <Button 
-                        variant="ghost" 
+                      <Button
+                        variant="ghost"
                         size="sm"
                         onClick={() => {
                           // 这里可以导航到文章详情页
@@ -343,7 +382,12 @@ export default function BlogPage() {
                         }}
                       >
                         <span className="text-sm">阅读更多</span>
-                        <SvgIcon icon="lucide:arrow-right" width={14} height={14} className="ml-1" />
+                        <SvgIcon
+                          icon="lucide:arrow-right"
+                          width={14}
+                          height={14}
+                          className="ml-1"
+                        />
                       </Button>
                     </div>
                   </div>
@@ -360,14 +404,21 @@ export default function BlogPage() {
                 className="text-center py-16"
               >
                 <div className="w-24 h-24 mx-auto mb-6 rounded-full bg-gradient-to-r from-purple-500/10 to-pink-500/10 flex items-center justify-center">
-                  <SvgIcon icon="lucide:search-x" width={32} height={32} className="text-purple-500" />
+                  <SvgIcon
+                    icon="lucide:search-x"
+                    width={32}
+                    height={32}
+                    className="text-purple-500"
+                  />
                 </div>
-                <h3 className="text-xl font-semibold text-foreground mb-2">没有找到相关文章</h3>
+                <h3 className="text-xl font-semibold text-foreground mb-2">
+                  没有找到相关文章
+                </h3>
                 <p className="text-muted-foreground mb-6">
                   尝试调整搜索条件或选择不同的分类
                 </p>
-                <Button 
-                  variant="outline" 
+                <Button
+                  variant="outline"
                   onClick={() => {
                     setSearchQuery("");
                     setSelectedCategory("全部");
@@ -387,18 +438,35 @@ export default function BlogPage() {
                 className="text-center"
               >
                 <div className="backdrop-blur-xl bg-gradient-to-r from-purple-500/10 via-pink-500/10 to-red-500/10 border border-border/50 rounded-2xl p-8 shadow-lg">
-                  <h3 className="text-xl font-semibold text-foreground mb-4">想要了解更多？</h3>
+                  <h3 className="text-xl font-semibold text-foreground mb-4">
+                    想要了解更多？
+                  </h3>
                   <p className="text-muted-foreground mb-6">
                     关注我们的GitHub或订阅我们的邮件列表，获取最新的技术文章和产品动态。
                   </p>
                   <div className="flex flex-col sm:flex-row gap-4 justify-center">
-                    <Button variant="outline" onClick={() => window.open("https://github.com", "_blank")}>
-                      <SvgIcon icon="lucide:github" width={16} height={16} className="mr-2" />
+                    <Button
+                      variant="outline"
+                      onClick={() =>
+                        window.open("https://github.com", "_blank")
+                      }
+                    >
+                      <SvgIcon
+                        icon="lucide:github"
+                        width={16}
+                        height={16}
+                        className="mr-2"
+                      />
                       关注GitHub
                     </Button>
                     <Button asChild>
                       <Link href="/company/contact">
-                        <SvgIcon icon="lucide:mail" width={16} height={16} className="mr-2" />
+                        <SvgIcon
+                          icon="lucide:mail"
+                          width={16}
+                          height={16}
+                          className="mr-2"
+                        />
                         订阅邮件
                       </Link>
                     </Button>

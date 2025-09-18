@@ -9,7 +9,13 @@ import { useState } from "react";
 import { motion } from "framer-motion";
 import { Mail, Lock, ArrowRight, Home, ArrowLeft } from "lucide-react";
 import Link from "next/link";
-import { Input, PasswordInput, Button, OAuthButton, Checkbox } from "@/components/auth/auth-components";
+import {
+  Input,
+  PasswordInput,
+  Button,
+  OAuthButton,
+  Checkbox,
+} from "@/components/auth/auth-components";
 
 // 自定义缓动曲线
 const SMOOTH_TRANSITION = { duration: 0.5, ease: "easeOut" } as const;
@@ -18,7 +24,7 @@ export default function LoginPage() {
   const [formData, setFormData] = useState({
     email: "",
     password: "",
-    rememberMe: false
+    rememberMe: false,
   });
   const [isLoading, setIsLoading] = useState(false);
   const [errors, setErrors] = useState<Record<string, string>>({});
@@ -62,13 +68,11 @@ export default function LoginPage() {
       transition={SMOOTH_TRANSITION}
       className="w-full space-y-8"
     >
-
-
       {/* 主登录卡片 */}
       <div className="backdrop-blur-xl bg-background/80 border border-border/50 rounded-2xl shadow-lg shadow-black/5 dark:shadow-black/20 p-8 md:p-10">
         {/* 标题区域 */}
         <div className="text-center mb-8">
-          <motion.h1 
+          <motion.h1
             className="text-3xl font-bold bg-gradient-to-r from-foreground via-blue-600 to-purple-600 bg-clip-text text-transparent mb-2"
             initial={{ opacity: 0, y: -10 }}
             animate={{ opacity: 1, y: 0 }}
@@ -224,8 +228,6 @@ export default function LoginPage() {
           </p>
         </motion.div>
       </div>
-
-
     </motion.div>
   );
 }

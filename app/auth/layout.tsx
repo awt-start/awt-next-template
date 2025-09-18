@@ -42,15 +42,19 @@ export default function AuthLayout({
 
         {/* 细节装饰点 - 呼应首页粒子效果 */}
         <div className="absolute top-1/4 left-1/4 w-2 h-2 bg-blue-500/20 rounded-full animate-pulse" />
-        <div className="absolute top-3/4 right-1/3 w-1 h-1 bg-purple-500/30 rounded-full animate-pulse" style={{ animationDelay: "1s" }} />
-        <div className="absolute top-1/2 right-1/4 w-1.5 h-1.5 bg-pink-500/25 rounded-full animate-pulse" style={{ animationDelay: "2s" }} />
+        <div
+          className="absolute top-3/4 right-1/3 w-1 h-1 bg-purple-500/30 rounded-full animate-pulse"
+          style={{ animationDelay: "1s" }}
+        />
+        <div
+          className="absolute top-1/2 right-1/4 w-1.5 h-1.5 bg-pink-500/25 rounded-full animate-pulse"
+          style={{ animationDelay: "2s" }}
+        />
       </div>
 
       {/* 主要内容区域 - 考虑导航栏高度 */}
       <main className="relative z-10 min-h-screen flex items-center justify-center p-4 pt-24">
-        <div className="w-full max-w-md">
-          {children}
-        </div>
+        <div className="w-full max-w-md">{children}</div>
       </main>
     </div>
   );

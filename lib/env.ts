@@ -12,7 +12,9 @@ const ENV_KEYS = {
 } as const;
 
 const envSchema = z.object({
-  [ENV_KEYS.NODE_ENV]: z.enum(["development", "production", "test"]).default("development"),
+  [ENV_KEYS.NODE_ENV]: z
+    .enum(["development", "production", "test"])
+    .default("development"),
   [ENV_KEYS.NEXT_PUBLIC_APP_NAME]: z.string(),
   [ENV_KEYS.NEXT_STORE_PREFIX]: z.string(),
 });
@@ -25,7 +27,10 @@ type EnvVariables = z.infer<typeof envSchema>;
 type PublicEnvKeys = Extract<keyof EnvVariables, `NEXT_PUBLIC_${string}`>;
 
 // ✅ 客户端安全读取：仅暴露 NEXT_PUBLIC_ 变量，类型安全
-export const publicEnv = process.env as unknown as Pick<EnvVariables, PublicEnvKeys>;
+export const publicEnv = process.env as unknown as Pick<
+  EnvVariables,
+  PublicEnvKeys
+>;
 
 // =============================
 // ⚙️ 服务端安全读取（启动时校验）

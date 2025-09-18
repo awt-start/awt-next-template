@@ -181,7 +181,6 @@ export default function RegisterPage() {
 
         {/* 注册表单 */}
         <form onSubmit={handleSubmit} className="space-y-6">
-
           {/* 邮箱 */}
           <motion.div
             initial={{ opacity: 0, x: -20 }}
@@ -205,7 +204,6 @@ export default function RegisterPage() {
 
           {/* 手机号（带国际区号） */}
 
-
           {/* 密码 */}
           <motion.div
             initial={{ opacity: 0, x: -20 }}
@@ -227,7 +225,6 @@ export default function RegisterPage() {
               autoComplete="new-password"
             />
           </motion.div>
-
 
           {/* 用户协议同意 */}
           <motion.div

@@ -12,7 +12,6 @@ export const metadata: Metadata = {
  */
 "use client";
 
-
 import { motion } from "framer-motion";
 import Link from "next/link";
 import { Navbar } from "@/components/layout/navbar";
@@ -155,7 +154,9 @@ export default function CompanyPageIndex() {
                 <span>首页</span>
               </Link>
               <span>/</span>
-              <span className="text-foreground" aria-current="page">公司介绍</span>
+              <span className="text-foreground" aria-current="page">
+                公司介绍
+              </span>
             </motion.div>
 
             {/* 页面标题区域 */}
@@ -167,8 +168,15 @@ export default function CompanyPageIndex() {
             >
               {/* 标签徽章 */}
               <div className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-gradient-to-r from-blue-500/10 via-purple-500/10 to-pink-500/10 border border-blue-500/20">
-                <SvgIcon icon="lucide:building" width={18} height={18} className="text-blue-500" />
-                <span className="text-sm font-medium text-muted-foreground">公司介绍</span>
+                <SvgIcon
+                  icon="lucide:building"
+                  width={18}
+                  height={18}
+                  className="text-blue-500"
+                />
+                <span className="text-sm font-medium text-muted-foreground">
+                  公司介绍
+                </span>
               </div>
 
               {/* 主标题 */}
@@ -189,14 +197,26 @@ export default function CompanyPageIndex() {
                     key={stat.label}
                     initial={{ opacity: 0, y: 20 }}
                     animate={{ opacity: 1, y: 0 }}
-                    transition={{ delay: 0.3 + index * 0.1, ...SMOOTH_TRANSITION }}
+                    transition={{
+                      delay: 0.3 + index * 0.1,
+                      ...SMOOTH_TRANSITION,
+                    }}
                     className="text-center"
                   >
                     <div className="w-14 h-14 mx-auto mb-3 rounded-lg bg-gradient-to-r from-blue-500/10 to-purple-500/10 flex items-center justify-center">
-                      <SvgIcon icon={stat.icon} width={20} height={20} className={stat.color} />
+                      <SvgIcon
+                        icon={stat.icon}
+                        width={20}
+                        height={20}
+                        className={stat.color}
+                      />
                     </div>
-                    <div className="text-2xl md:text-3xl font-bold text-foreground">{stat.number}</div>
-                    <div className="text-sm md:text-base text-muted-foreground">{stat.label}</div>
+                    <div className="text-2xl md:text-3xl font-bold text-foreground">
+                      {stat.number}
+                    </div>
+                    <div className="text-sm md:text-base text-muted-foreground">
+                      {stat.label}
+                    </div>
                   </motion.div>
                 ))}
               </div>
@@ -210,7 +230,9 @@ export default function CompanyPageIndex() {
               className="space-y-6"
             >
               <div className="text-center">
-                <h2 className="text-2xl md:text-3xl font-bold text-foreground mb-2">我们的服务</h2>
+                <h2 className="text-2xl md:text-3xl font-bold text-foreground mb-2">
+                  我们的服务
+                </h2>
                 <p className="text-muted-foreground max-w-2xl mx-auto">
                   专业的技术服务，助力您的项目成功
                 </p>
@@ -222,12 +244,20 @@ export default function CompanyPageIndex() {
                     key={service.title}
                     initial={{ opacity: 0, y: 20 }}
                     animate={{ opacity: 1, y: 0 }}
-                    transition={{ delay: 0.5 + index * 0.1, ...SMOOTH_TRANSITION }}
+                    transition={{
+                      delay: 0.5 + index * 0.1,
+                      ...SMOOTH_TRANSITION,
+                    }}
                     className="backdrop-blur-xl bg-background/80 border border-border/50 rounded-2xl p-6 md:p-8 shadow-lg hover:shadow-xl transition-all duration-300 group text-center"
                     aria-labelledby={`service-${index}`}
                   >
                     <div className="w-16 h-16 mx-auto mb-6 rounded-full bg-gradient-to-r from-blue-500/10 to-purple-500/10 flex items-center justify-center group-hover:scale-110 transition-transform duration-300">
-                      <SvgIcon icon={service.icon} width={24} height={24} className="text-blue-500" />
+                      <SvgIcon
+                        icon={service.icon}
+                        width={24}
+                        height={24}
+                        className="text-blue-500"
+                      />
                     </div>
                     <h3
                       id={`service-${index}`}
@@ -235,7 +265,9 @@ export default function CompanyPageIndex() {
                     >
                       {service.title}
                     </h3>
-                    <p className="text-muted-foreground mb-6 leading-relaxed">{service.description}</p>
+                    <p className="text-muted-foreground mb-6 leading-relaxed">
+                      {service.description}
+                    </p>
 
                     <div className="space-y-2">
                       {service.features.map((feature) => (
@@ -243,7 +275,12 @@ export default function CompanyPageIndex() {
                           key={feature}
                           className="flex items-center justify-center gap-2 text-sm text-muted-foreground"
                         >
-                          <SvgIcon icon="lucide:check" width={14} height={14} className="text-emerald-500" />
+                          <SvgIcon
+                            icon="lucide:check"
+                            width={14}
+                            height={14}
+                            className="text-emerald-500"
+                          />
                           <span>{feature}</span>
                         </div>
                       ))}
@@ -261,7 +298,9 @@ export default function CompanyPageIndex() {
               className="space-y-6"
             >
               <div className="text-center">
-                <h2 className="text-2xl md:text-3xl font-bold text-foreground mb-2">了解更多</h2>
+                <h2 className="text-2xl md:text-3xl font-bold text-foreground mb-2">
+                  了解更多
+                </h2>
                 <p className="text-muted-foreground max-w-2xl mx-auto">
                   探索我们的各个方面，开启您的技术旅程
                 </p>
@@ -273,21 +312,27 @@ export default function CompanyPageIndex() {
                     key={page.title}
                     initial={{ opacity: 0, y: 20 }}
                     animate={{ opacity: 1, y: 0 }}
-                    transition={{ delay: 0.7 + index * 0.1, ...SMOOTH_TRANSITION }}
+                    transition={{
+                      delay: 0.7 + index * 0.1,
+                      ...SMOOTH_TRANSITION,
+                    }}
                     className="backdrop-blur-xl bg-background/80 border border-border/50 rounded-2xl overflow-hidden shadow-lg hover:shadow-xl transition-all duration-300 group"
                   >
                     {/* 卡片头部 */}
                     <div
                       className={cn(
                         "h-32 bg-gradient-to-r flex items-center justify-center relative overflow-hidden",
-                        page.gradient
+                        page.gradient,
                       )}
                     >
                       <SvgIcon
                         icon={page.icon}
                         width={48}
                         height={48}
-                        className={cn(page.color, "group-hover:scale-110 transition-transform duration-300")}
+                        className={cn(
+                          page.color,
+                          "group-hover:scale-110 transition-transform duration-300",
+                        )}
                       />
                     </div>
 
@@ -308,7 +353,12 @@ export default function CompanyPageIndex() {
                             key={feature}
                             className="flex items-center gap-2 text-sm text-muted-foreground"
                           >
-                            <SvgIcon icon="lucide:check" width={14} height={14} className="text-emerald-500" />
+                            <SvgIcon
+                              icon="lucide:check"
+                              width={14}
+                              height={14}
+                              className="text-emerald-500"
+                            />
                             <span>{feature}</span>
                           </div>
                         ))}
@@ -321,9 +371,17 @@ export default function CompanyPageIndex() {
                           className="w-full group-hover:bg-blue-500 group-hover:text-white group-hover:border-blue-500 transition-all duration-300"
                           asChild
                         >
-                          <Link href={page.href} aria-label={`了解更多：${page.title}`}>
+                          <Link
+                            href={page.href}
+                            aria-label={`了解更多：${page.title}`}
+                          >
                             <span>了解更多</span>
-                            <SvgIcon icon="lucide:arrow-right" width={16} height={16} className="ml-2" />
+                            <SvgIcon
+                              icon="lucide:arrow-right"
+                              width={16}
+                              height={16}
+                              className="ml-2"
+                            />
                           </Link>
                         </Button>
                       </div>
@@ -342,7 +400,12 @@ export default function CompanyPageIndex() {
             >
               <div className="backdrop-blur-xl bg-gradient-to-r from-blue-500/10 via-purple-500/10 to-pink-500/10 border border-border/50 rounded-2xl p-8 md:p-12 shadow-lg">
                 <div className="w-16 h-16 mx-auto mb-6 rounded-full bg-gradient-to-r from-blue-500/20 to-purple-500/20 flex items-center justify-center">
-                  <SvgIcon icon="lucide:rocket" width={32} height={32} className="text-blue-500" />
+                  <SvgIcon
+                    icon="lucide:rocket"
+                    width={32}
+                    height={32}
+                    className="text-blue-500"
+                  />
                 </div>
                 <h2 className="text-2xl md:text-3xl font-bold text-foreground mb-4">
                   准备开始您的项目？
@@ -353,7 +416,12 @@ export default function CompanyPageIndex() {
                 <div className="flex flex-col sm:flex-row gap-4 justify-center">
                   <Button size="lg" asChild className="min-w-[140px]">
                     <Link href="/company/contact" aria-label="立即联系我们">
-                      <SvgIcon icon="lucide:mail" width={20} height={20} className="mr-2" />
+                      <SvgIcon
+                        icon="lucide:mail"
+                        width={20}
+                        height={20}
+                        className="mr-2"
+                      />
                       立即联系我们
                     </Link>
                   </Button>
@@ -364,7 +432,12 @@ export default function CompanyPageIndex() {
                     className="min-w-[140px]"
                   >
                     <Link href="/company/about" aria-label="了解我们的团队">
-                      <SvgIcon icon="lucide:users" width={20} height={20} className="mr-2" />
+                      <SvgIcon
+                        icon="lucide:users"
+                        width={20}
+                        height={20}
+                        className="mr-2"
+                      />
                       了解团队
                     </Link>
                   </Button>
