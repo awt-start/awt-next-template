@@ -34,10 +34,10 @@ const footerLinks = {
     { name: "招聘", href: "#careers" },
   ],
   legal: [
-    { name: "隐私政策", href: "#privacy" },
-    { name: "服务条款", href: "#terms" },
-    { name: "Cookie 政策", href: "#cookies" },
-    { name: "许可证", href: "#license" },
+    { name: "隐私政策", href: "/privacy/info" },
+    { name: "服务条款", href: "/privacy/terms" },
+    { name: "Cookie 政策", href: "/privacy/cookies" },
+    { name: "许可证", href: "/privacy/license" },
   ],
 };
 
