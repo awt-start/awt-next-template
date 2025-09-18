@@ -1,14 +1,10 @@
-/**
- * 页脚组件 - 优雅的页面底部设计
- * 包含链接、社交媒体、版权信息等
- */
-
 "use client";
 
 import { motion } from "framer-motion";
-import SvgIcon from "@/components/icon/icon";
 import { Button } from "@/components/ui/button";
 import { cn } from "@/lib/utils";
+import SvgIcon from "@/components/icon/icon"; // 👈 你的自定义 SvgIcon
+import type { AnimationType } from "@/components/icon/icon"; // 导入动画类型（可选）
 
 interface FooterProps {
   className?: string;
@@ -16,27 +12,26 @@ interface FooterProps {
 
 const footerLinks = {
   product: [
-    { name: "功能特性", href: "/product/features" },
-    { name: "技术栈", href: "/product/tech" },
-    { name: "更新日志", href: "/product/changelog" },
-    { name: "路线图", href: "/product/roadmap" },
+    { name: "功能特性", href: "/product/features", icon: "lucide:sparkles" },
+    { name: "技术栈", href: "/product/tech", icon: "lucide:code" },
+    { name: "更新日志", href: "/product/changelog", icon: "lucide:file-text" },
+    { name: "路线图", href: "/product/roadmap", icon: "lucide:map-pin" },
   ],
   resources: [
-    { name: "文档", href: "/resources/docs" },
-    { name: "教程", href: "/resources/tutorials" },
-    { name: "示例", href: "/resources/examples" },
-    { name: "API 参考", href: "/resources/api" },
+    { name: "资源", href: "/resources/index", icon: "lucide:book-open" },
+    { name: "教程", href: "/resources/tutorials", icon: "lucide:graduation-cap" },
+    { name: "文档", href: "/resources/docs", icon: "lucide:file-text" },
   ],
   company: [
-    { name: "关于我们", href: "/company/about" },
-    { name: "博客", href: "/company/blog" },
-    { name: "联系我们", href: "/company/contact" },
+    { name: "关于我们", href: "/company/about", icon: "lucide:users" },
+    { name: "博客", href: "/company/blog", icon: "lucide:pen-line" },
+    { name: "联系我们", href: "/company/contact", icon: "lucide:mail" },
   ],
   legal: [
-    { name: "隐私政策", href: "/privacy/info" },
-    { name: "服务条款", href: "/privacy/terms" },
-    { name: "Cookie 政策", href: "/privacy/cookies" },
-    { name: "许可证", href: "/privacy/license" },
+    { name: "隐私政策", href: "/privacy/info", icon: "lucide:lock" },
+    { name: "服务条款", href: "/privacy/terms", icon: "lucide:file-text" },
+    { name: "Cookie 政策", href: "/privacy/cookies", icon: "lucide:cookie" },
+    { name: "许可证", href: "/privacy/license", icon: "lucide:award" },
   ],
 };
 
@@ -111,7 +106,7 @@ export function Footer({ className }: FooterProps) {
             viewport={{ once: true }}
             className="lg:col-span-4 space-y-6"
           >
-            {/* Logo */}
+            {/* Logo - 带旋转动画 */}
             <div className="flex items-center gap-3">
               <div className="relative">
                 <motion.div
@@ -133,11 +128,13 @@ export function Footer({ className }: FooterProps) {
                   }}
                   className="w-10 h-10 rounded-xl bg-gradient-to-tr from-blue-500 via-purple-500 to-pink-500 flex items-center justify-center"
                 >
+                  {/* 使用你的 SvgIcon，启用 spin 动画 */}
                   <SvgIcon
                     icon="lucide:layers"
                     width={20}
                     height={20}
                     className="text-white"
+                    animate="spin" // ✅ 启用旋转动画
                   />
                 </motion.div>
               </div>
@@ -172,7 +169,13 @@ export function Footer({ className }: FooterProps) {
                   size="sm"
                   className="bg-gradient-to-r from-blue-600 to-purple-600 hover:from-blue-700 hover:to-purple-700 text-white border-0"
                 >
-                  <SvgIcon icon="lucide:send" width={14} height={14} />
+                  {/* 发送图标，带悬停缩放 */}
+                  <SvgIcon
+                    icon="lucide:send"
+                    width={14}
+                    height={14}
+                    animate="hover-scale" // ✅ 悬停缩放
+                  />
                 </Button>
               </div>
             </div>
@@ -180,58 +183,64 @@ export function Footer({ className }: FooterProps) {
 
           {/* 链接区域 */}
           <div className="lg:col-span-8 grid grid-cols-2 md:grid-cols-4 gap-8">
-            {Object.entries(footerLinks).map(
-              ([category, links], categoryIndex) => (
-                <motion.div
-                  key={category}
-                  initial={{ opacity: 0, y: 20 }}
-                  whileInView={{ opacity: 1, y: 0 }}
-                  transition={{ duration: 0.6, delay: categoryIndex * 0.1 }}
-                  viewport={{ once: true }}
-                  className="space-y-4"
-                >
-                  <h4 className="text-sm font-semibold text-foreground capitalize">
-                    {category === "product" && "产品"}
-                    {category === "resources" && "资源"}
-                    {category === "company" && "公司"}
-                    {category === "legal" && "法律"}
-                  </h4>
-                  <ul className="space-y-3">
-                    {links.map((link, linkIndex) => (
-                      <motion.li
-                        key={link.name}
-                        initial={{ opacity: 0, x: -10 }}
-                        whileInView={{ opacity: 1, x: 0 }}
-                        transition={{
-                          duration: 0.4,
-                          delay: categoryIndex * 0.1 + linkIndex * 0.05,
-                        }}
-                        viewport={{ once: true }}
+            {Object.entries(footerLinks).map(([category, links], categoryIndex) => (
+              <motion.div
+                key={category}
+                initial={{ opacity: 0, y: 20 }}
+                whileInView={{ opacity: 1, y: 0 }}
+                transition={{ duration: 0.6, delay: categoryIndex * 0.1 }}
+                viewport={{ once: true }}
+                className="space-y-4"
+              >
+                <h4 className="text-sm font-semibold text-foreground capitalize">
+                  {category === "product" && "产品"}
+                  {category === "resources" && "资源"}
+                  {category === "company" && "公司"}
+                  {category === "legal" && "法律"}
+                </h4>
+                <ul className="space-y-3">
+                  {links.map((link, linkIndex) => (
+                    <motion.li
+                      key={link.name}
+                      initial={{ opacity: 0, x: -10 }}
+                      whileInView={{ opacity: 1, x: 0 }}
+                      transition={{
+                        duration: 0.4,
+                        delay: categoryIndex * 0.1 + linkIndex * 0.05,
+                      }}
+                      viewport={{ once: true }}
+                    >
+                      <a
+                        href={link.href}
+                        className="text-sm text-muted-foreground hover:text-foreground transition-colors duration-200 flex items-center group"
                       >
-                        <a
-                          href={link.href}
-                          className="text-sm text-muted-foreground hover:text-foreground transition-colors duration-200 flex items-center group"
+                        <SvgIcon
+                          icon={link.icon}
+                          width={12}
+                          height={12}
+
+                        />
+                        <span className="ml-2">{link.name}</span>
+                        <motion.div
+                          className="ml-1 opacity-0 group-hover:opacity-100"
+                          initial={{ x: -5 }}
+                          whileHover={{ x: 0 }}
+                          transition={{ duration: 0.2 }}
                         >
-                          <span>{link.name}</span>
-                          <motion.div
-                            className="ml-1 opacity-0 group-hover:opacity-100"
-                            initial={{ x: -5 }}
-                            whileHover={{ x: 0 }}
-                            transition={{ duration: 0.2 }}
-                          >
-                            <SvgIcon
-                              icon="lucide:arrow-up-right"
-                              width={12}
-                              height={12}
-                            />
-                          </motion.div>
-                        </a>
-                      </motion.li>
-                    ))}
-                  </ul>
-                </motion.div>
-              ),
-            )}
+                          <SvgIcon
+                            icon="lucide:arrow-up-right"
+                            width={12}
+                            height={12}
+                            className="text-muted-foreground group-hover:text-foreground"
+                            animate="hover-scale" // ✅ 悬停缩放
+                          />
+                        </motion.div>
+                      </a>
+                    </motion.li>
+                  ))}
+                </ul>
+              </motion.div>
+            ))}
           </div>
         </div>
 
@@ -262,6 +271,7 @@ export function Footer({ className }: FooterProps) {
                   width={14}
                   height={14}
                   className="text-red-500"
+                  animate="hover-scale" // ✅ 悬停缩放
                 />
                 Made with love
               </span>
@@ -271,6 +281,7 @@ export function Footer({ className }: FooterProps) {
                   width={14}
                   height={14}
                   className="text-orange-500"
+                  animate="hover-scale" // ✅ 悬停缩放
                 />
                 Powered by caffeine
               </span>
@@ -295,7 +306,12 @@ export function Footer({ className }: FooterProps) {
                 whileTap={{ scale: 0.95 }}
                 aria-label={social.name}
               >
-                <SvgIcon icon={social.icon} width={16} height={16} />
+                <SvgIcon
+                  icon={social.icon}
+                  width={16}
+                  height={16}
+                  animate="hover-scale" // ✅ 悬停缩放
+                />
               </motion.a>
             ))}
           </div>
@@ -315,6 +331,7 @@ export function Footer({ className }: FooterProps) {
               width={14}
               height={14}
               className="text-blue-500"
+              animate="hover-scale" // ✅ 悬停缩放
             />
             <span className="text-xs text-muted-foreground">
               持续更新中 · 感谢您的支持
