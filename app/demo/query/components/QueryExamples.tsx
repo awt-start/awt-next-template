@@ -6,7 +6,13 @@
 "use client";
 
 import { useState } from "react";
-import { useApiQuery, useApiMutation, useUserQueries, useUserMutations, useQueryManager } from "@/lib/api/hooks";
+import {
+  useApiQuery,
+  useApiMutation,
+  useUserQueries,
+  useUserMutations,
+  useQueryManager,
+} from "@/lib/api/hooks";
 import { Button } from "@/components/ui/button";
 import SvgIcon from "@/components/icon/icon";
 
@@ -24,7 +30,7 @@ export function BasicQueryExample() {
     voList: Array<{ tenantId: string; companyName: string; domain: string }>;
     total: number;
   }>({
-      endpoint: "/auth/tenant/list",
+    endpoint: "/auth/tenant/list",
     params: { page: 1, limit: 10 },
     queryKey: ["users", { page: 1, limit: 10 }],
   });
@@ -32,7 +38,12 @@ export function BasicQueryExample() {
   if (isLoading) {
     return (
       <div className="flex items-center gap-2 p-4">
-        <SvgIcon icon="lucide:loader-2" width={16} height={16} className="animate-spin" />
+        <SvgIcon
+          icon="lucide:loader-2"
+          width={16}
+          height={16}
+          className="animate-spin"
+        />
         <span>加载用户列表...</span>
       </div>
     );
@@ -56,12 +67,11 @@ export function BasicQueryExample() {
   }
 
   console.log(users);
-  
+
   return (
     <div className="space-y-4">
-      <div className="flex items-center justify-between">
-      </div>
-      
+      <div className="flex items-center justify-between"></div>
+
       <div className="grid gap-2">
         {users?.voList.map((user) => (
           <div
@@ -73,29 +83,26 @@ export function BasicQueryExample() {
           </div>
         ))}
       </div>
-      
+
       <Button
         variant="outline"
         size="sm"
         onClick={() => refetch()}
         className="w-full"
       >
-              <SvgIcon animate={
-                  isLoading ? 'spin' : 'click-pulse'
-              } icon="lucide:refresh-cw" width={16} height={16} className="mr-2" />
-
+        <SvgIcon
+          animate={isLoading ? "spin" : "click-pulse"}
+          icon="lucide:refresh-cw"
+          width={16}
+          height={16}
+          className="mr-2"
+        />
         刷新数据
       </Button>
 
-          <Button
-              variant='outline'
-              size='sm'
-              onClick={() => {
-
-              }}
-          >
-              OK了
-          </Button>
+      <Button variant="outline" size="sm" onClick={() => {}}>
+        OK了
+      </Button>
     </div>
   );
 }
@@ -118,13 +125,20 @@ export function UserQueriesExample() {
         <h4 className="font-semibold mb-2">当前用户</h4>
         {userProfile.isLoading ? (
           <div className="flex items-center gap-2">
-            <SvgIcon icon="lucide:loader-2" width={16} height={16} className="animate-spin" />
+            <SvgIcon
+              icon="lucide:loader-2"
+              width={16}
+              height={16}
+              className="animate-spin"
+            />
             <span>加载中...</span>
           </div>
         ) : userProfile.data ? (
           <div>
             <p className="font-medium">{userProfile.data.name}</p>
-            <p className="text-sm text-muted-foreground">{userProfile.data.email}</p>
+            <p className="text-sm text-muted-foreground">
+              {userProfile.data.email}
+            </p>
           </div>
         ) : (
           <p className="text-muted-foreground">未登录</p>
@@ -177,7 +191,8 @@ export function UserQueriesExample() {
                 </p>
               )}
               <p className="text-xs text-muted-foreground">
-                注册时间: {new Date(userDetail.data.createdAt).toLocaleDateString()}
+                注册时间:{" "}
+                {new Date(userDetail.data.createdAt).toLocaleDateString()}
               </p>
             </div>
           ) : (
@@ -275,7 +290,9 @@ export function UserMutationsExample() {
             type="email"
             placeholder="邮箱"
             value={formData.email}
-            onChange={(e) => setFormData({ ...formData, email: e.target.value })}
+            onChange={(e) =>
+              setFormData({ ...formData, email: e.target.value })
+            }
             className="w-full px-3 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
           />
           <Button
@@ -285,12 +302,22 @@ export function UserMutationsExample() {
           >
             {createUser.isPending ? (
               <>
-                <SvgIcon icon="lucide:loader-2" width={16} height={16} className="mr-2 animate-spin" />
+                <SvgIcon
+                  icon="lucide:loader-2"
+                  width={16}
+                  height={16}
+                  className="mr-2 animate-spin"
+                />
                 创建中...
               </>
             ) : (
               <>
-                <SvgIcon icon="lucide:user-plus" width={16} height={16} className="mr-2" />
+                <SvgIcon
+                  icon="lucide:user-plus"
+                  width={16}
+                  height={16}
+                  className="mr-2"
+                />
                 创建用户
               </>
             )}
@@ -324,12 +351,22 @@ export function UserMutationsExample() {
           >
             {updateProfile.isPending ? (
               <>
-                <SvgIcon icon="lucide:loader-2" width={16} height={16} className="mr-2 animate-spin" />
+                <SvgIcon
+                  icon="lucide:loader-2"
+                  width={16}
+                  height={16}
+                  className="mr-2 animate-spin"
+                />
                 更新中...
               </>
             ) : (
               <>
-                <SvgIcon icon="lucide:edit" width={16} height={16} className="mr-2" />
+                <SvgIcon
+                  icon="lucide:edit"
+                  width={16}
+                  height={16}
+                  className="mr-2"
+                />
                 更新资料
               </>
             )}
@@ -346,7 +383,12 @@ export function UserMutationsExample() {
             size="sm"
             onClick={() => queryManager.invalidateAll()}
           >
-            <SvgIcon icon="lucide:refresh-cw" width={14} height={14} className="mr-1" />
+            <SvgIcon
+              icon="lucide:refresh-cw"
+              width={14}
+              height={14}
+              className="mr-1"
+            />
             刷新所有
           </Button>
           <Button
@@ -397,7 +439,12 @@ export function MockDataExample() {
         <div className="p-4 border rounded-lg">
           {mockQuery.isLoading ? (
             <div className="flex items-center gap-2">
-              <SvgIcon icon="lucide:loader-2" width={16} height={16} className="animate-spin" />
+              <SvgIcon
+                icon="lucide:loader-2"
+                width={16}
+                height={16}
+                className="animate-spin"
+              />
               <span>加载 Mock 数据...</span>
             </div>
           ) : mockQuery.error ? (
@@ -444,7 +491,8 @@ export function TanStackQueryExamples() {
     { id: "mock", label: "Mock演示", component: MockDataExample },
   ];
 
-  const ActiveComponent = tabs.find(tab => tab.id === activeTab)?.component || BasicQueryExample;
+  const ActiveComponent =
+    tabs.find((tab) => tab.id === activeTab)?.component || BasicQueryExample;
 
   return (
     <div className="max-w-4xl mx-auto p-6">

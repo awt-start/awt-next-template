@@ -1,10 +1,10 @@
 // app/page.tsx
-"use client"
+"use client";
 
-import { useToast } from "@/lib/useToast"
+import { useToast } from "@/lib/useToast";
 
 export default function HomePage() {
-  const { success, error, warning, info, dismiss } = useToast()
+  const { success, error, warning, info, dismiss } = useToast();
 
   return (
     <div className="p-6 space-y-4">
@@ -36,7 +36,6 @@ export default function HomePage() {
         Info
       </button>
 
-    
       <button
         onClick={() =>
           success("Custom with action!", {
@@ -59,5 +58,5 @@ export default function HomePage() {
         Dismiss All
       </button>
     </div>
-  )
+  );
 }

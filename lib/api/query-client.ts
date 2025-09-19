@@ -28,7 +28,11 @@ const defaultQueryOptions: DefaultOptions = {
       ];
 
       if (error instanceof ApiRequestError) {
-        return !noRetryErrors.includes(error.status as typeof noRetryErrors[number]) && failureCount < 3;
+        return (
+          !noRetryErrors.includes(
+            error.status as (typeof noRetryErrors)[number],
+          ) && failureCount < 3
+        );
       }
 
       // 网络错误重试
@@ -131,24 +135,25 @@ export function getQueryClient(): QueryClient {
 export const queryKeys = {
   // 所有查询的根键
   all: ["api"] as const,
-  
+
   // 用户相关查询
   users: () => [...queryKeys.all, "users"] as const,
   user: (id: string | number) => [...queryKeys.users(), id] as const,
   userProfile: () => [...queryKeys.users(), "profile"] as const,
-  
+
   // 通用列表查询
   list: (resource: string) => [...queryKeys.all, resource] as const,
-  listWithFilter: (resource: string, filters: Record<string, unknown>) => 
+  listWithFilter: (resource: string, filters: Record<string, unknown>) =>
     [...queryKeys.list(resource), filters] as const,
-  
+
   // 通用详情查询
-  detail: (resource: string, id: string | number) => 
+  detail: (resource: string, id: string | number) =>
     [...queryKeys.list(resource), id] as const,
-  
+
   // 无限查询
-  infinite: (resource: string) => [...queryKeys.list(resource), "infinite"] as const,
-  infiniteWithFilter: (resource: string, filters: Record<string, unknown>) => 
+  infinite: (resource: string) =>
+    [...queryKeys.list(resource), "infinite"] as const,
+  infiniteWithFilter: (resource: string, filters: Record<string, unknown>) =>
     [...queryKeys.infinite(resource), filters] as const,
 } as const;
 
@@ -160,25 +165,29 @@ export const invalidateQueries = {
   all: (queryClient: QueryClient) => {
     return queryClient.invalidateQueries({ queryKey: queryKeys.all });
   },
-  
+
   // 失效用户相关查询
   users: (queryClient: QueryClient) => {
     return queryClient.invalidateQueries({ queryKey: queryKeys.users() });
   },
-  
+
   // 失效特定用户查询
   user: (queryClient: QueryClient, id: string | number) => {
     return queryClient.invalidateQueries({ queryKey: queryKeys.user(id) });
   },
-  
+
   // 失效资源列表
   list: (queryClient: QueryClient, resource: string) => {
-    return queryClient.invalidateQueries({ queryKey: queryKeys.list(resource) });
+    return queryClient.invalidateQueries({
+      queryKey: queryKeys.list(resource),
+    });
   },
-  
+
   // 失效特定资源详情
   detail: (queryClient: QueryClient, resource: string, id: string | number) => {
-    return queryClient.invalidateQueries({ queryKey: queryKeys.detail(resource, id) });
+    return queryClient.invalidateQueries({
+      queryKey: queryKeys.detail(resource, id),
+    });
   },
 } as const;
 

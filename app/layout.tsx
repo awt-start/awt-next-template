@@ -48,7 +48,8 @@ export default async function RootLayout({
           <QueryProvider>
             <NextIntlClientProvider>
               <Toaster />
-              {children}</NextIntlClientProvider>
+              {children}
+            </NextIntlClientProvider>
           </QueryProvider>
         </ThemeProvider>
       </body>

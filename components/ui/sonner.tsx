@@ -1,10 +1,10 @@
-"use client"
+"use client";
 
-import { getCurrentTheme } from "@/lib/theme"
-import { Toaster as Sonner, ToasterProps } from "sonner"
+import { getCurrentTheme } from "@/lib/theme";
+import { Toaster as Sonner, ToasterProps } from "sonner";
 
 const Toaster = ({ ...props }: ToasterProps) => {
-  const theme = getCurrentTheme()
+  const theme = getCurrentTheme();
   return (
     <Sonner
       theme={theme as ToasterProps["theme"]}
@@ -18,7 +18,7 @@ const Toaster = ({ ...props }: ToasterProps) => {
       }
       {...props}
     />
-  )
-}
+  );
+};
 
-export { Toaster }
+export { Toaster };

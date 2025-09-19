@@ -8,11 +8,11 @@ export { ApiClient, ApiRequestError, HTTP_STATUS } from "./client";
 export type { ApiResponse, ApiError, RequestConfig } from "./client";
 
 // Query配置和管理
-export { 
-  createQueryClient, 
-  getQueryClient, 
-  queryKeys, 
-  invalidateQueries 
+export {
+  createQueryClient,
+  getQueryClient,
+  queryKeys,
+  invalidateQueries,
 } from "./query-client";
 
 // Query Provider组件
@@ -34,9 +34,9 @@ export type {
 } from "./hooks";
 
 // 示例组件（仅用于开发和演示）
-export { 
+export {
   TanStackQueryExamples,
   BasicQueryExample,
-  UserQueriesExample, 
-  UserMutationsExample 
+  UserQueriesExample,
+  UserMutationsExample,
 } from "./examples";

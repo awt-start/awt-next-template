@@ -15,7 +15,7 @@ interface QueryProviderProps {
 
 /**
  * Query Provider组件
- * 
+ *
  * 注意：在App Router中，这个组件需要使用"use client"指令，
  * 因为QueryClient需要在客户端环境中运行
  */
@@ -24,9 +24,7 @@ export function QueryProvider({ children }: QueryProviderProps) {
   const [queryClient] = useState(() => createQueryClient());
 
   return (
-    <QueryClientProvider client={queryClient}>
-      {children}
-    </QueryClientProvider>
+    <QueryClientProvider client={queryClient}>{children}</QueryClientProvider>
   );
 }
 

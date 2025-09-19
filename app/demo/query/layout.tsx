@@ -5,5 +5,5 @@ interface QueryDemoLayoutProps {
 }
 
 export default function QueryDemoLayout({ children }: QueryDemoLayoutProps) {
- return children;
+  return children;
 }

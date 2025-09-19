@@ -59,7 +59,7 @@ export function Navbar({ className }: NavbarProps) {
           "shadow-lg shadow-black/5 dark:shadow-black/20",
           "transition-all duration-500 ease-out",
           isScrolled &&
-          "bg-background/95 shadow-xl shadow-black/10 dark:shadow-black/30",
+            "bg-background/95 shadow-xl shadow-black/10 dark:shadow-black/30",
         )}
       >
         {/* Logo 区域 */}

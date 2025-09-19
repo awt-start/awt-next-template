@@ -28,15 +28,18 @@ export interface UseApiQueryOptions<TData, TError = ApiRequestError>
 }
 
 // useApiMutation选项类型
-export interface UseApiMutationOptions<TData, TError = ApiRequestError, TVariables = unknown>
-  extends Omit<UseMutationOptions<TData, TError, TVariables>, "mutationFn"> {
+export interface UseApiMutationOptions<
+  TData,
+  TError = ApiRequestError,
+  TVariables = unknown,
+> extends Omit<UseMutationOptions<TData, TError, TVariables>, "mutationFn"> {
   endpoint: string;
   method?: "POST" | "PUT" | "PATCH" | "DELETE";
 }
 
 /**
  * 通用API查询Hook
- * 
+ *
  * @example
  * ```tsx
  * const { data, isLoading, error } = useApiQuery<User[]>({
@@ -64,7 +67,7 @@ export function useApiQuery<TData = unknown, TError = ApiRequestError>({
 
 /**
  * 通用API变更Hook
- * 
+ *
  * @example
  * ```tsx
  * const createUser = useApiMutation<User, ApiRequestError, CreateUserData>({
@@ -79,7 +82,7 @@ export function useApiQuery<TData = unknown, TError = ApiRequestError>({
  *     console.error("用户创建失败:", error.message);
  *   },
  * });
- * 
+ *
  * // 使用
  * createUser.mutate({ name: "张三", email: "zhangsan@awt0204.shop" });
  * ```
@@ -201,7 +204,7 @@ export const useUserMutations = {
     onError?: (error: ApiRequestError) => void;
   }) => {
     const queryClient = useQueryClient();
-    
+
     return useApiMutation<
       { id: string; name: string; email: string },
       ApiRequestError,
@@ -226,7 +229,7 @@ export const useUserMutations = {
     onError?: (error: ApiRequestError) => void;
   }) => {
     const queryClient = useQueryClient();
-    
+
     return useApiMutation<
       { id: string; name: string; email: string },
       ApiRequestError,
@@ -237,7 +240,9 @@ export const useUserMutations = {
       onSuccess: (data, variables) => {
         // 失效相关查询
         queryClient.invalidateQueries({ queryKey: queryKeys.users() });
-        queryClient.invalidateQueries({ queryKey: queryKeys.user(variables.id) });
+        queryClient.invalidateQueries({
+          queryKey: queryKeys.user(variables.id),
+        });
         options?.onSuccess?.(data);
       },
       onError: options?.onError,
@@ -252,12 +257,8 @@ export const useUserMutations = {
     onError?: (error: ApiRequestError) => void;
   }) => {
     const queryClient = useQueryClient();
-    
-    return useMutation<
-      void,
-      ApiRequestError,
-      string
-    >({
+
+    return useMutation<void, ApiRequestError, string>({
       mutationFn: (userId: string) => ApiClient.delete(`/users/${userId}`),
       onSuccess: (_, userId) => {
         // 失效相关查询
@@ -277,7 +278,7 @@ export const useUserMutations = {
     onError?: (error: ApiRequestError) => void;
   }) => {
     const queryClient = useQueryClient();
-    
+
     return useApiMutation<
       any,
       ApiRequestError,
@@ -350,7 +351,7 @@ export function useQueryManager() {
     prefetch: <T>(
       queryKey: QueryKey,
       queryFn: () => Promise<T>,
-      options?: { staleTime?: number }
+      options?: { staleTime?: number },
     ) => {
       return queryClient.prefetchQuery({
         queryKey,

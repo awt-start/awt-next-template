@@ -4,7 +4,6 @@
  * 支持请求/响应拦截、错误处理、类型安全等特性
  */
 
-
 // API响应基础类型
 export interface ApiResponse<T = unknown> {
   data: T;
@@ -68,9 +67,11 @@ export class ApiRequestError extends Error {
 /**
  * 构建查询参数字符串
  */
-function buildQueryString(params: Record<string, string | number | boolean>): string {
+function buildQueryString(
+  params: Record<string, string | number | boolean>,
+): string {
   const searchParams = new URLSearchParams();
-  
+
   Object.entries(params).forEach(([key, value]) => {
     if (value !== undefined && value !== null) {
       searchParams.append(key, String(value));
@@ -86,7 +87,7 @@ function buildQueryString(params: Record<string, string | number | boolean>): st
  */
 function getAuthToken(): string | null {
   if (typeof window === "undefined") return null;
-  
+
   // 从localStorage或cookie中获取token
   // 这里需要根据您的认证方案调整
   return localStorage.getItem("auth_token") || null;
@@ -98,7 +99,7 @@ function getAuthToken(): string | null {
 function getDefaultHeaders(skipAuth = false): HeadersInit {
   const headers: HeadersInit = {
     "Content-Type": "application/json",
-    "Accept": "application/json",
+    Accept: "application/json",
   };
 
   // 添加认证头
@@ -133,20 +134,17 @@ async function handleResponse<T>(response: Response): Promise<T> {
 
   // 处理HTTP错误状态
   if (!response.ok) {
-    const errorMessage = isJson && data && typeof data === "object" && "msg" in data
-      ? (data as { msg: string }).msg
-      : `HTTP错误: ${response.status} ${response.statusText}`;
+    const errorMessage =
+      isJson && data && typeof data === "object" && "msg" in data
+        ? (data as { msg: string }).msg
+        : `HTTP错误: ${response.status} ${response.statusText}`;
 
-    const errorCode = isJson && data && typeof data === "object" && "code" in data
-      ? (data as { code: string | number }).code
-      : response.status;
+    const errorCode =
+      isJson && data && typeof data === "object" && "code" in data
+        ? (data as { code: string | number }).code
+        : response.status;
 
-    throw new ApiRequestError(
-      errorMessage,
-      response.status,
-      errorCode,
-      data,
-    );
+    throw new ApiRequestError(errorMessage, response.status, errorCode, data);
   }
 
   // 如果响应是标准API格式，返回data字段
@@ -206,22 +204,12 @@ async function request<T>(
   } catch (error) {
     // 处理中止错误（超时）
     if (error instanceof Error && error.name === "AbortError") {
-      throw new ApiRequestError(
-        "请求超时",
-        408,
-        "TIMEOUT",
-        { timeout },
-      );
+      throw new ApiRequestError("请求超时", 408, "TIMEOUT", { timeout });
     }
 
     // 处理网络错误
     if (error instanceof TypeError) {
-      throw new ApiRequestError(
-        "网络连接失败",
-        0,
-        "NETWORK_ERROR",
-        error,
-      );
+      throw new ApiRequestError("网络连接失败", 0, "NETWORK_ERROR", error);
     }
 
     // 重新抛出API错误
@@ -230,12 +218,7 @@ async function request<T>(
     }
 
     // 处理其他未知错误
-    throw new ApiRequestError(
-      "请求失败",
-      500,
-      "UNKNOWN_ERROR",
-      error,
-    );
+    throw new ApiRequestError("请求失败", 500, "UNKNOWN_ERROR", error);
   }
 }
 
