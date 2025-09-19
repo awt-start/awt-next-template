@@ -37,6 +37,7 @@ export function Navbar({ className }: NavbarProps) {
     { key: "home", href: "/", icon: "lucide:home" },
     { key: "features", href: "/#features", icon: "lucide:sparkles" },
     { key: "product", href: "/product", icon: "lucide:box" },
+    { key: "resources", href: "/resources", icon: "lucide:library" },
     { key: "company", href: "/company", icon: "lucide:building-2" },
     { key: "contact", href: "/company/contact", icon: "lucide:mail" },
   ];

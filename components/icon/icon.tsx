@@ -22,6 +22,86 @@ const animationVariants = {
     whileTap: { scale: 0.95 },
     transition: { type: "spring", stiffness: 300, damping: 20 },
   },
+
+  // ==================== 新增推荐 ====================
+
+  // 淡入淡出（常用于页面切换、弹窗）
+  fade: {
+    initial: { opacity: 0 },
+    animate: { opacity: 1 },
+    exit: { opacity: 0 },
+    transition: { duration: 0.3, ease: "easeInOut" },
+  },
+
+  // 上滑进入（常用于列表项、卡片加载）
+  "slide-up": {
+    initial: { y: 20, opacity: 0 },
+    animate: { y: 0, opacity: 1 },
+    exit: { y: -20, opacity: 0 },
+    transition: { duration: 0.5, ease: "easeOut" },
+  },
+
+  // 下滑进入
+  "slide-down": {
+    initial: { y: -20, opacity: 0 },
+    animate: { y: 0, opacity: 1 },
+    exit: { y: 20, opacity: 0 },
+    transition: { duration: 0.5, ease: "easeOut" },
+  },
+
+  // 左右滑动（用于侧边栏、导航菜单）
+  "slide-left": {
+    initial: { x: -50, opacity: 0 },
+    animate: { x: 0, opacity: 1 },
+    exit: { x: -50, opacity: 0 },
+    transition: { duration: 0.4, ease: "easeOut" },
+  },
+  "slide-right": {
+    initial: { x: 50, opacity: 0 },
+    animate: { x: 0, opacity: 1 },
+    exit: { x: 50, opacity: 0 },
+    transition: { duration: 0.4, ease: "easeOut" },
+  },
+
+  // 缩放进入（用于按钮、图标强调）
+  "scale-in": {
+    initial: { scale: 0.8, opacity: 0 },
+    animate: { scale: 1, opacity: 1 },
+    transition: { type: "spring", stiffness: 260, damping: 20 },
+  },
+
+  // 轻微抖动（用于错误提示、无效点击反馈）
+  shake: {
+    initial: { x: 0 },
+    animate: { x: [-5, 5, -3, 3, -2, 2, -1, 1, 0] },
+    transition: { duration: 0.5, ease: "easeInOut" },
+  },
+
+  // 点击后“按下”效果（比 click-pulse 更明显）
+  "press-effect": {
+    initial: { scale: 1 },
+    whileTap: { scale: 0.9, backgroundColor: "#e0e0e0" }, // 可配合背景色变化
+    transition: { type: "spring", stiffness: 500, damping: 30 },
+  },
+
+  // 长按高亮（适用于长按菜单）
+  "long-press-highlight": {
+    initial: { backgroundColor: "transparent" },
+    whileTap: { backgroundColor: "rgba(0, 0, 0, 0.05)" },
+    transition: { duration: 0.1 },
+  },
+
+  // 波浪效果（适合加载指示器或装饰性元素）
+  wave: {
+    initial: { scale: 1, opacity: 0.7 },
+    animate: { scale: 1.2, opacity: 0.3 },
+    transition: {
+      duration: 1.5,
+      repeat: Infinity,
+      repeatType: "reverse",
+      ease: "easeInOut",
+    },
+  },
 } as const;
 
 export type AnimationType = keyof typeof animationVariants | null;

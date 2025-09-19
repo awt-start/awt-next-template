@@ -19,7 +19,11 @@ const footerLinks = {
   ],
   resources: [
     { name: "资源", href: "/resources/index", icon: "lucide:book-open" },
-    { name: "教程", href: "/resources/tutorials", icon: "lucide:graduation-cap" },
+    {
+      name: "教程",
+      href: "/resources/tutorials",
+      icon: "lucide:graduation-cap",
+    },
     { name: "文档", href: "/resources/docs", icon: "lucide:file-text" },
   ],
   company: [
@@ -183,64 +187,66 @@ export function Footer({ className }: FooterProps) {
 
           {/* 链接区域 */}
           <div className="lg:col-span-8 grid grid-cols-2 md:grid-cols-4 gap-8">
-            {Object.entries(footerLinks).map(([category, links], categoryIndex) => (
-              <motion.div
-                key={category}
-                initial={{ opacity: 0, y: 20 }}
-                whileInView={{ opacity: 1, y: 0 }}
-                transition={{ duration: 0.6, delay: categoryIndex * 0.1 }}
-                viewport={{ once: true }}
-                className="space-y-4"
-              >
-                <h4 className="text-sm font-semibold text-foreground capitalize">
-                  {category === "product" && "产品"}
-                  {category === "resources" && "资源"}
-                  {category === "company" && "公司"}
-                  {category === "legal" && "法律"}
-                </h4>
-                <ul className="space-y-3">
-                  {links.map((link, linkIndex) => (
-                    <motion.li
-                      key={link.name}
-                      initial={{ opacity: 0, x: -10 }}
-                      whileInView={{ opacity: 1, x: 0 }}
-                      transition={{
-                        duration: 0.4,
-                        delay: categoryIndex * 0.1 + linkIndex * 0.05,
-                      }}
-                      viewport={{ once: true }}
-                    >
-                      <a
-                        href={link.href}
-                        className="text-sm text-muted-foreground hover:text-foreground transition-colors duration-200 flex items-center group"
+            {Object.entries(footerLinks).map(
+              ([category, links], categoryIndex) => (
+                <motion.div
+                  key={category}
+                  initial={{ opacity: 0, y: 20 }}
+                  whileInView={{ opacity: 1, y: 0 }}
+                  transition={{ duration: 0.6, delay: categoryIndex * 0.1 }}
+                  viewport={{ once: true }}
+                  className="space-y-4"
+                >
+                  <h4 className="text-sm font-semibold text-foreground capitalize">
+                    {category === "product" && "产品"}
+                    {category === "resources" && "资源"}
+                    {category === "company" && "公司"}
+                    {category === "legal" && "法律"}
+                  </h4>
+                  <ul className="space-y-3">
+                    {links.map((link, linkIndex) => (
+                      <motion.li
+                        key={link.name}
+                        initial={{ opacity: 0, x: -10 }}
+                        whileInView={{ opacity: 1, x: 0 }}
+                        transition={{
+                          duration: 0.4,
+                          delay: categoryIndex * 0.1 + linkIndex * 0.05,
+                        }}
+                        viewport={{ once: true }}
                       >
-                        <SvgIcon
-                          icon={link.icon}
-                          width={12}
-                          height={12}
-
-                        />
-                        <span className="ml-2">{link.name}</span>
-                        <motion.div
-                          className="ml-1 opacity-0 group-hover:opacity-100"
-                          initial={{ x: -5 }}
-                          whileHover={{ x: 0 }}
-                          transition={{ duration: 0.2 }}
+                        <a
+                          href={link.href}
+                          className="text-sm text-muted-foreground hover:text-foreground transition-colors duration-200 flex items-center group"
                         >
                           <SvgIcon
-                            icon="lucide:arrow-up-right"
+                            icon={link.icon}
                             width={12}
                             height={12}
-                            className="text-muted-foreground group-hover:text-foreground"
                             animate="hover-scale" // ✅ 悬停缩放
                           />
-                        </motion.div>
-                      </a>
-                    </motion.li>
-                  ))}
-                </ul>
-              </motion.div>
-            ))}
+                          <span className="ml-2">{link.name}</span>
+                          <motion.div
+                            className="ml-1 opacity-0 group-hover:opacity-100"
+                            initial={{ x: -5 }}
+                            whileHover={{ x: 0 }}
+                            transition={{ duration: 0.2 }}
+                          >
+                            <SvgIcon
+                              icon="lucide:arrow-up-right"
+                              width={12}
+                              height={12}
+                              className="text-muted-foreground group-hover:text-foreground"
+                              animate="hover-scale" // ✅ 悬停缩放
+                            />
+                          </motion.div>
+                        </a>
+                      </motion.li>
+                    ))}
+                  </ul>
+                </motion.div>
+              ),
+            )}
           </div>
         </div>
 
