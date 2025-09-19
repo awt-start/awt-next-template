@@ -34,12 +34,11 @@ export function Navbar({ className }: NavbarProps) {
   }, []);
 
   const navItems = [
-    { key: "home", href: "/", icon: "lucide:home" },
-    { key: "features", href: "/#features", icon: "lucide:sparkles" },
-    { key: "product", href: "/product", icon: "lucide:box" },
-    { key: "resources", href: "/resources", icon: "lucide:library" },
-    { key: "company", href: "/company", icon: "lucide:building-2" },
-    { key: "contact", href: "/company/contact", icon: "lucide:mail" },
+    { key: "首页", href: "/", icon: "lucide:home" },
+    { key: "产品", href: "/product", icon: "lucide:box" },
+    { key: "资源", href: "/resources", icon: "lucide:library" },
+    { key: "公司", href: "/company", icon: "lucide:building-2" },
+    { key: "联系", href: "/company/contact", icon: "lucide:mail" },
   ];
 
   return (
@@ -60,7 +59,7 @@ export function Navbar({ className }: NavbarProps) {
           "shadow-lg shadow-black/5 dark:shadow-black/20",
           "transition-all duration-500 ease-out",
           isScrolled &&
-            "bg-background/95 shadow-xl shadow-black/10 dark:shadow-black/30",
+          "bg-background/95 shadow-xl shadow-black/10 dark:shadow-black/30",
         )}
       >
         {/* Logo 区域 */}

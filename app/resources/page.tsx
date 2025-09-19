@@ -11,6 +11,7 @@ import Link from "next/link";
 import SvgIcon from "@/components/icon/icon";
 import { Button } from "@/components/ui/button";
 import { cn } from "@/lib/utils";
+import { Navbar } from "@/components/layout/navbar";
 
 // 动画配置
 const SMOOTH_TRANSITION = {
@@ -368,7 +369,7 @@ export default function ResourcesPage() {
       <div className="absolute inset-0 bg-grid-pattern opacity-[0.02] dark:opacity-[0.05]" />
       <div className="absolute top-0 left-1/4 w-96 h-96 bg-gradient-to-br from-blue-500/10 to-purple-500/10 rounded-full blur-3xl" />
       <div className="absolute bottom-0 right-1/4 w-96 h-96 bg-gradient-to-br from-emerald-500/10 to-cyan-500/10 rounded-full blur-3xl" />
-
+      <Navbar />
       <div className="relative z-10 max-w-7xl mx-auto px-6 py-24">
         {/* 页面标题 */}
         <motion.div

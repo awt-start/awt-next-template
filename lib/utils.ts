@@ -218,7 +218,6 @@ function genUUID(): string {
 export {
   genUUID,
   cn,
-  useDebounce,
   isClient,
   formatCurrency,
   formatRelativeTime,
