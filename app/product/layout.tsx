@@ -38,13 +38,14 @@ export const metadata: Metadata = {
 
 interface ProductLayoutProps {
   children: React.ReactNode;
-  params: { locale: string };
+  params: Promise<Record<string, string>>;
 }
 
 export default async function ProductLayout({
   children,
-  params: { locale },
+  params,
 }: ProductLayoutProps) {
+  const { locale } = await params;
   const messages = await getMessages();
 
   return (

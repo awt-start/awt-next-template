@@ -42,13 +42,14 @@ export const metadata: Metadata = {
 
 interface ResourcesLayoutProps {
   children: React.ReactNode;
-  params: { locale: string };
+  params: Promise<Record<string, string>>;
 }
 
 export default async function ResourcesLayout({
   children,
-  params: { locale },
+  params,
 }: ResourcesLayoutProps) {
+  const { locale } = await params;
   const messages = await getMessages();
 
   return (

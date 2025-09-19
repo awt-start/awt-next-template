@@ -5,6 +5,7 @@ import { getLocale } from "next-intl/server";
 import "./globals.css";
 import { ENV_KEYS, getEnv } from "@/lib/env";
 import { ThemeProvider } from "@/components/theme-switcher/theme-provider";
+import { QueryProvider } from "@/lib/api/query-provider";
 import { getThemeScript } from "@/lib/theme-script";
 
 const geistSans = Geist({
@@ -43,7 +44,9 @@ export default async function RootLayout({
         className={`${geistSans.variable} ${geistMono.variable} antialiased`}
       >
         <ThemeProvider>
-          <NextIntlClientProvider>{children}</NextIntlClientProvider>
+          <QueryProvider>
+            <NextIntlClientProvider>{children}</NextIntlClientProvider>
+          </QueryProvider>
         </ThemeProvider>
       </body>
     </html>

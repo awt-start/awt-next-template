@@ -5,6 +5,7 @@ import { z } from "zod";
 const ENV_KEYS = {
   NODE_ENV: "NODE_ENV" as const,
   NEXT_PUBLIC_APP_NAME: "NEXT_PUBLIC_APP_NAME" as const,
+  NEXT_PUBLIC_API_URL: "NEXT_PUBLIC_API_URL" as const,
   NEXT_STORE_PREFIX: "NEXT_STORE_PREFIX" as const,
   DEV: "development" as const,
   PROD: "production" as const,
@@ -16,6 +17,7 @@ const envSchema = z.object({
     .enum(["development", "production", "test"])
     .default("development"),
   [ENV_KEYS.NEXT_PUBLIC_APP_NAME]: z.string(),
+  [ENV_KEYS.NEXT_PUBLIC_API_URL]: z.string().optional(),
   [ENV_KEYS.NEXT_STORE_PREFIX]: z.string(),
 });
 
