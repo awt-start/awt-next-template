@@ -6,6 +6,7 @@ import { FeaturesSection } from "@/components/sections/features-section";
 import { TechStackSection } from "@/components/sections/tech-stack-section";
 import { Footer } from "@/components/layout/footer";
 import { ScrollToTop } from "@/components/ui/scroll-to-top";
+import { toast } from "sonner";
 
 export default function Home() {
   return (

@@ -7,6 +7,7 @@ import { ENV_KEYS, getEnv } from "@/lib/env";
 import { ThemeProvider } from "@/components/theme-switcher/theme-provider";
 import { QueryProvider } from "@/lib/api/query-provider";
 import { getThemeScript } from "@/lib/theme-script";
+import { Toaster } from "@/components/ui/sonner";
 
 const geistSans = Geist({
   variable: "--font-geist-sans",
@@ -45,7 +46,9 @@ export default async function RootLayout({
       >
         <ThemeProvider>
           <QueryProvider>
-            <NextIntlClientProvider>{children}</NextIntlClientProvider>
+            <NextIntlClientProvider>
+              <Toaster />
+              {children}</NextIntlClientProvider>
           </QueryProvider>
         </ThemeProvider>
       </body>

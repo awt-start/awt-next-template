@@ -4,11 +4,9 @@
  * 支持请求/响应拦截、错误处理、类型安全等特性
  */
 
-import { publicEnv } from "@/lib/env";
 
 // API响应基础类型
 export interface ApiResponse<T = unknown> {
-  success: boolean;
   data: T;
   msg?: string;
   code?: string | number;
@@ -136,7 +134,7 @@ async function handleResponse<T>(response: Response): Promise<T> {
   // 处理HTTP错误状态
   if (!response.ok) {
     const errorMessage = isJson && data && typeof data === "object" && "msg" in data
-      ? (data as { message: string }).message
+      ? (data as { msg: string }).msg
       : `HTTP错误: ${response.status} ${response.statusText}`;
 
     const errorCode = isJson && data && typeof data === "object" && "code" in data

@@ -24,7 +24,7 @@ export function BasicQueryExample() {
     voList: Array<{ tenantId: string; companyName: string; domain: string }>;
     total: number;
   }>({
-    endpoint: "/auth/tenant/list",
+      endpoint: "/auth/tenant/list",
     params: { page: 1, limit: 10 },
     queryKey: ["users", { page: 1, limit: 10 }],
   });
@@ -80,9 +80,22 @@ export function BasicQueryExample() {
         onClick={() => refetch()}
         className="w-full"
       >
-        <SvgIcon icon="lucide:refresh-cw" width={16} height={16} className="mr-2" />
+              <SvgIcon animate={
+                  isLoading ? 'spin' : 'click-pulse'
+              } icon="lucide:refresh-cw" width={16} height={16} className="mr-2" />
+
         刷新数据
       </Button>
+
+          <Button
+              variant='outline'
+              size='sm'
+              onClick={() => {
+
+              }}
+          >
+              OK了
+          </Button>
     </div>
   );
 }

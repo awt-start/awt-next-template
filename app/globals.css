@@ -185,3 +185,60 @@
     -webkit-box-orient: vertical;
   }
 }
+
+/* 🌟 Sonner 默认类名覆盖 —— 使用 Tailwind 的 utility classes */
+.sonner-toast {
+  @apply rounded-lg shadow-lg border border-gray-200 dark:border-gray-700;
+  @apply bg-white dark:bg-gray-800 text-gray-900 dark:text-gray-100;
+  @apply px-4 py-3 flex items-center gap-3;
+  @apply font-medium;
+  @apply transition-all duration-200 ease-in-out;
+}
+
+/* 成功 */
+.sonner-toast-success {
+  @apply bg-emerald-50 dark:bg-emerald-900/30 border-emerald-200 dark:border-emerald-800 text-emerald-800 dark:text-emerald-200;
+}
+
+/* 错误 */
+.sonner-toast-error {
+  @apply bg-red-50 dark:bg-red-900/30 border-red-200 dark:border-red-800 text-red-800 dark:text-red-200;
+}
+
+/* 警告 */
+.sonner-toast-warning {
+  @apply bg-amber-50 dark:bg-amber-900/30 border-amber-200 dark:border-amber-800 text-amber-800 dark:text-amber-200;
+}
+
+/* 信息 */
+.sonner-toast-info {
+  @apply bg-blue-50 dark:bg-blue-900/30 border-blue-200 dark:border-blue-800 text-blue-800 dark:text-blue-200;
+}
+
+/* 加载中 */
+.sonner-toast-loading {
+  @apply bg-slate-50 dark:bg-slate-800/50 border-slate-200 dark:border-slate-700 text-slate-800 dark:text-slate-200 animate-pulse;
+}
+
+/* 隐藏默认图标（可选） */
+.sonner-toast svg {
+  display: none !important;
+}
+
+/* 优化按钮样式 */
+.sonner-toast button {
+  @apply text-sm font-medium underline-offset-4 hover:underline;
+  @apply bg-transparent text-current p-0 m-0;
+}
+
+/* 关闭按钮 */
+.sonner-toast button[aria-label="Dismiss"] {
+  @apply text-gray-500 hover:text-gray-700 dark:text-gray-400 dark:hover:text-gray-200;
+}
+
+/* 响应式间距 */
+@media (min-width: 640px) {
+  .sonner-toast {
+    @apply text-base;
+  }
+}

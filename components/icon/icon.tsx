@@ -6,7 +6,7 @@ import { motion } from "framer-motion";
 import React, { memo, useMemo } from "react";
 
 // Define animation variants with proper Framer Motion structure
-const animationVariants = {
+export const animationVariants = {
   "hover-scale": {
     initial: { scale: 1 },
     whileHover: { scale: 1.1 },
