@@ -9,11 +9,11 @@ import { useNavigate } from "@/lib/router";
 interface FeatureCard {
   title: string;
   description: string;
-  icon: string; // Iconify 图标名称
+  icon: string;
   href: string;
 }
 
-export default function demoPage() {
+export default function DemoPage() {
   const { push } = useNavigate();
 
   const featureCards: FeatureCard[] = [
@@ -42,7 +42,6 @@ export default function demoPage() {
 
   const handleNavigate = (href: string) => {
     console.log(href);
-
     push(href);
   };
 
@@ -51,7 +50,7 @@ export default function demoPage() {
       {/* 主内容区 */}
       <main className="relative z-10 min-h-screen pt-24 pb-16">
         {/* 标题区域 */}
-        <div className="max-w-7xl mx-auto px-6 pb-20">
+        <div className="max-w-7xl mx-auto px-6 pb-20 relative z-10">
           <div className="text-center mb-16">
             <motion.div
               variants={animationVariants.fade}
@@ -63,12 +62,12 @@ export default function demoPage() {
                 强大的功能特性
               </h1>
             </motion.div>
-            <p className="mt-4 text-xl text-gray-300 max-w-4xl mx-auto leading-relaxed font-light">
+            <p className="mt-4 text-xl text-gray-300 dark:text-gray-400 max-w-4xl mx-auto leading-relaxed font-light">
               探索我们 Next.js 模板的核心功能，从现代化 UI
               组件到性能优化，为您的项目提供完整的全栈解决方案。
             </p>
 
-            {/* 标签筛选器 - 增强视觉层次 */}
+            {/* 标签筛选器 */}
             <div className="flex justify-center gap-4 mt-12 flex-wrap">
               {[
                 { label: "UI组件", color: "bg-cyan-600" },
@@ -78,12 +77,9 @@ export default function demoPage() {
               ].map((tag, i) => (
                 <button
                   key={i}
-                  className={`px-6 py-3 rounded-full font-medium shadow-lg transition-all duration-300 hover:scale-105 hover:shadow-xl border border-gray-700 hover:border-opacity-50 ${
+                  className={`px-6 py-3 rounded-full font-medium shadow-lg transition-all duration-300 hover:scale-105 hover:shadow-xl border border-gray-700 dark:border-gray-600 ${
                     tag.color
                   } text-white hover:shadow-cyan-500/20`}
-                  style={{
-                    textShadow: "0 0 10px rgba(59, 130, 246, 0.3)",
-                  }}
                 >
                   {tag.label}
                 </button>
@@ -110,14 +106,14 @@ export default function demoPage() {
                   duration: 0.3,
                   ease: "easeOut",
                 }}
-                className="group relative overflow-hidden bg-gray-900/90 backdrop-blur-xl border border-gray-800/50 rounded-2xl hover:bg-gray-900/95 transition-all duration-500"
+                className="group relative overflow-hidden bg-white dark:bg-gray-800 backdrop-blur-sm border border-gray-200 dark:border-gray-700 rounded-2xl shadow-lg hover:shadow-2xl transition-all duration-500"
               >
-                {/* 卡片顶部渐变装饰条 */}
+                {/* 卡片顶部装饰条 */}
                 <div className="absolute top-0 left-0 w-full h-1 bg-gradient-to-r from-cyan-400 via-blue-500 to-purple-500 transform scale-x-0 group-hover:scale-x-100 transition-transform duration-500 origin-left" />
 
                 {/* 图标背景 */}
-                <div className="h-32 bg-gradient-to-br from-blue-900/40 via-purple-900/30 to-cyan-800/40 flex items-center justify-center relative overflow-hidden">
-                  <div className="absolute inset-0 bg-gradient-to-br from-transparent via-white/5 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500" />
+                <div className="h-32 bg-gradient-to-br from-blue-900/40 via-purple-900/30 to-cyan-800/40 dark:from-blue-900/30 dark:via-purple-900/20 dark:to-cyan-800/20 flex items-center justify-center relative overflow-hidden">
+                  <div className="absolute inset-0 bg-gradient-to-br from-transparent via-white/5 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500 dark:from-transparent dark:via-gray-900/5 dark:to-transparent" />
                   <SvgIcon
                     icon={card.icon}
                     width={52}
@@ -126,26 +122,22 @@ export default function demoPage() {
                     animate="hover-scale"
                     className="drop-shadow-lg"
                   />
-                  {/* 微光效果 */}
                   <div className="absolute inset-0 rounded-full bg-gradient-to-r from-cyan-400/0 to-blue-400/0 opacity-0 group-hover:opacity-30 blur-xl transition-all duration-700" />
                 </div>
 
                 {/* 内容区 */}
                 <div className="p-7">
-                  <h3 className="text-2xl font-bold text-white mb-4 group-hover:text-cyan-300 transition-colors duration-300">
+                  <h3 className="text-2xl font-bold text-gray-900 dark:text-white mb-4 group-hover:text-cyan-500 transition-colors duration-300">
                     {card.title}
                   </h3>
-                  <p className="text-gray-300 leading-relaxed text-sm mb-6 whitespace-pre-line">
+                  <p className="text-gray-600 dark:text-gray-300 leading-relaxed text-sm mb-6 whitespace-pre-line">
                     {card.description}
                   </p>
 
                   {/* 按钮 */}
                   <button
                     onClick={() => handleNavigate(card.href)}
-                    className="w-full py-3 text-center text-cyan-400 font-medium hover:text-cyan-300 transition-all duration-300 flex items-center justify-center gap-2 group"
-                    style={{
-                      textShadow: "0 0 8px rgba(59, 130, 246, 0.4)",
-                    }}
+                    className="w-full py-3 text-center text-cyan-500 font-medium hover:text-cyan-600 transition-all duration-300 flex items-center justify-center gap-2 group"
                   >
                     查看详情
                     <svg
@@ -165,7 +157,7 @@ export default function demoPage() {
                   </button>
                 </div>
 
-                {/* 卡片底部装饰光晕 */}
+                {/* 底部光晕 */}
                 <div className="absolute -bottom-4 -right-4 w-20 h-20 bg-gradient-to-tr from-cyan-400/10 to-transparent rounded-full blur-xl opacity-0 group-hover:opacity-100 transition-opacity duration-700" />
               </motion.div>
             ))}

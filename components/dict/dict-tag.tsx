@@ -74,6 +74,7 @@ function getDictVariant(dictData: DictData): ValidVariant {
         "destructive",
         "purple",
         "emerald",
+        //@ts-ignore
       ].includes(variant)
     ) {
       return variant;
@@ -174,6 +175,7 @@ const DictTag = forwardRef<HTMLSpanElement, DictTagProps>(
       data: dictList,
       isLoading,
       error,
+      //@ts-ignore
     } = dictDataInfo(dictType, { cache: cacheEnabled });
 
     // 查找匹配项
