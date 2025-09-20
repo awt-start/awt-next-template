@@ -14,12 +14,11 @@ export const ROUTES = {
   About: "/about" as const,
 } as const;
 
-// 类型推导：所有路由路径的联合类型
-export type AppRoute = (typeof ROUTES)[keyof typeof ROUTES] extends (
-  ...args: any[]
-) => any
-  ? ReturnType<(typeof ROUTES)[keyof typeof ROUTES]>
-  : (typeof ROUTES)[keyof typeof ROUTES];
+// 类型推导：所有静态路由路径的联合类型
+export type StaticRoute = (typeof ROUTES)[keyof typeof ROUTES];
+
+// 扩展支持任意字符串
+export type AppRoute = StaticRoute | string;
 
 // =============================
 // 🔧 路由构建器（函数式 + 类型安全）

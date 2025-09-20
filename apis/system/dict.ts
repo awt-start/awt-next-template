@@ -1,10 +1,8 @@
-import { useApiQuery } from '@/lib/api';
-import { DictData } from './dict-data-model';
-
-
+import { useApiQuery } from "@/lib/api/hooks";
+import { DictData } from "./dict-data-model";
 
 enum Api {
-  root = '/system/dict/data',
+  root = "/system/dict/data",
 }
 
 /**
@@ -13,7 +11,7 @@ enum Api {
  * @returns 字典数据
  */
 export function dictDataInfo(dictType: string) {
-  return  useApiQuery<DictData[]>(
-        { endpoint: `${Api.root}/open/type/${dictType}`  }
-    )
+  return useApiQuery<DictData[]>({
+    endpoint: `${Api.root}/open/type/${dictType}`,
+  });
 }
