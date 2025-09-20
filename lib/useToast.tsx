@@ -39,6 +39,7 @@ export function useToast() {
     ) => {
       return sonnerToast[type](message, {
         ...DEFAULT_TOAST_OPTIONS,
+        // @ts-ignore
         icon: options?.icon ?? createIconComponent(type), // 支持自定义 icon 覆盖
         ...options,
       });

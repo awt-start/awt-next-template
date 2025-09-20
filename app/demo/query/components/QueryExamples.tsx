@@ -15,6 +15,7 @@ import {
 } from "@/lib/api/hooks";
 import { Button } from "@/components/ui/button";
 import SvgIcon from "@/components/icon/icon";
+import { dictDataInfo } from "@/apis/system/dict";
 
 /**
  * 示例1: 基础的API查询
@@ -34,6 +35,8 @@ export function BasicQueryExample() {
     params: { page: 1, limit: 10 },
     queryKey: ["users", { page: 1, limit: 10 }],
   });
+
+  dictDataInfo('sys_user_sex')
 
   if (isLoading) {
     return (
@@ -100,7 +103,7 @@ export function BasicQueryExample() {
         刷新数据
       </Button>
 
-      <Button variant="outline" size="sm" onClick={() => {}}>
+      <Button variant="outline" size="sm" onClick={() => { }}>
         OK了
       </Button>
     </div>
@@ -156,11 +159,10 @@ export function UserQueriesExample() {
               <button
                 key={user.id}
                 onClick={() => setSelectedUserId(user.id)}
-                className={`w-full text-left p-2 rounded border transition-colors ${
-                  selectedUserId === user.id
+                className={`w-full text-left p-2 rounded border transition-colors ${selectedUserId === user.id
                     ? "bg-blue-50 border-blue-200"
                     : "hover:bg-accent/50"
-                }`}
+                  }`}
               >
                 <div className="font-medium">{user.name}</div>
                 <div className="text-xs text-muted-foreground">{user.role}</div>
@@ -510,11 +512,10 @@ export function TanStackQueryExamples() {
             <button
               key={tab.id}
               onClick={() => setActiveTab(tab.id)}
-              className={`pb-2 text-sm font-medium transition-colors ${
-                activeTab === tab.id
+              className={`pb-2 text-sm font-medium transition-colors ${activeTab === tab.id
                   ? "text-blue-600 border-b-2 border-blue-600"
                   : "text-muted-foreground hover:text-foreground"
-              }`}
+                }`}
             >
               {tab.label}
             </button>

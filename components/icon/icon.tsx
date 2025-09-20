@@ -172,6 +172,7 @@ const SvgIcon: React.FC<IconProps & { animate?: AnimationType }> = memo(
     if (animate && animationVariants[animate]) {
       return (
         <motion.div
+          // @ts-ignore
           variants={animationVariants[animate]}
           className={`iconify-wrapper ${className}`} // 添加 wrapper 类用于样式控制
           style={{ display: "inline-block", ...style }} // 确保容器是块级/内联块，支持 transform
