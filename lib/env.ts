@@ -1,6 +1,5 @@
 // lib/env.ts
 
-
 const ENV_KEYS = {
   NODE_ENV: "NODE_ENV" as const,
   NEXT_PUBLIC_APP_NAME: "NEXT_PUBLIC_APP_NAME" as const,
@@ -33,10 +32,13 @@ type EnvVariables = {
 // =============================
 // 🌐 动态提取所有 NEXT_PUBLIC_ 开头的键（自动同步 ENV_KEYS）
 // =============================
-type PublicEnvKeys = Extract<keyof EnvVariables, `NEXT_PUBLIC_${string}`>
+type PublicEnvKeys = Extract<keyof EnvVariables, `NEXT_PUBLIC_${string}`>;
 
 // ✅ 客户端安全读取：仅暴露 NEXT_PUBLIC_ 变量，类型安全
-export const publicEnv = process.env as unknown as Pick<EnvVariables, PublicEnvKeys>;
+export const publicEnv = process.env as unknown as Pick<
+  EnvVariables,
+  PublicEnvKeys
+>;
 
 // =============================
 // ⚙️ 服务端安全读取（仅封装访问，无校验）
