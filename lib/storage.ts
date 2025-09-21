@@ -24,9 +24,8 @@ export type StorageKey = (typeof STORAGE_KEYS)[keyof typeof STORAGE_KEYS];
  * @returns 带环境前缀的完整键名
  */
 export const getStorageKey = (key: StorageKey): string => {
-  const prefix = getEnv(ENV_KEYS.NEXT_STORE_PREFIX);
   // @ts-ignore
-  return prefix + key;
+  return process.env.NEXT_PUBLIC_STORE_PREFIX + key;
 };
 
 /**

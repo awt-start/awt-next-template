@@ -1,4 +1,5 @@
 import { storage, STORAGE_KEYS } from "@/lib/storage";
+import { getEnv, publicEnv } from "../env";
 
 /**
  * API客户端服务层
@@ -109,6 +110,9 @@ function getDefaultHeaders(skipAuth = false): HeadersInit {
     if (token) {
       headers.Authorization = `Bearer ${token}`;
     }
+  }
+  if(process.env.NEXT_PUBLIC_APP_CLIENT_ID){
+    headers['clientid'] = process.env.NEXT_PUBLIC_APP_CLIENT_ID
   }
 
   return headers;

@@ -4,7 +4,7 @@
  */
 
 "use client";
-
+import { useAuth as AuthAPi } from "@/apis/auth/auth";
 import {
   createContext,
   useContext,
@@ -15,6 +15,8 @@ import {
 } from "react";
 import { AuthApi } from "@/apis/auth/auth-type";
 import { storage, STORAGE_KEYS } from "@/lib/storage";
+import { useApiQuery } from "../api";
+import { ApiClient } from "../api/client";
 
 // 认证状态类型定义
 interface AuthState {
@@ -31,7 +33,8 @@ interface AuthState {
 // 认证操作类型
 type AuthAction =
   | { type: "LOGIN_START" }
-  | { type: "LOGIN_SUCCESS"; payload: AuthApi.LoginResult }
+  | { type: "LOGIN_SUCCESS"; payload: { tokens: AuthApi.LoginResult } }
+  | { type: "SET_USER_INFO"; payload: AuthApi.UserInfoResult }
   | { type: "LOGIN_FAILURE"; payload: string }
   | { type: "LOGOUT" }
   | { type: "RESTORE_AUTH"; payload: Partial<AuthState> }
@@ -63,11 +66,19 @@ function authReducer(state: AuthState, action: AuthAction): AuthState {
     case "LOGIN_SUCCESS":
       return {
         ...state,
+        isAuthenticated: true, // 先设置为false，等待用户信息获取成功后再设置为true
+        isLoading: true, // 正在获取用户信息
+        accessToken: action.payload.tokens.access_token,
+        refreshToken: action.payload.tokens.refresh_token,
+        error: null,
+      };
+
+    case "SET_USER_INFO":
+      return {
+        ...state,
         isAuthenticated: true,
         isLoading: false,
-        user: action.payload.user_info,
-        accessToken: action.payload.access_token,
-        refreshToken: action.payload.refresh_token,
+        user: action.payload.user,
         permissions: action.payload.permissions,
         roles: action.payload.roles,
         error: null,
@@ -118,7 +129,8 @@ function authReducer(state: AuthState, action: AuthAction): AuthState {
 
 // Context类型定义
 interface AuthContextType extends AuthState {
-  login: (result: AuthApi.LoginResult) => void;
+  login: (result: AuthApi.LoginResult) => Promise<void>;
+  setUserInfo: (userInfo: AuthApi.UserInfoResult) => void;
   logout: () => void;
   clearError: () => void;
   updateUser: (user: AuthApi.UserInfo) => void;
@@ -141,16 +153,46 @@ export function AuthProvider({ children }: AuthProviderProps) {
   const [state, dispatch] = useReducer(authReducer, initialState);
 
   // 登录成功处理
-  const login = useCallback((result: AuthApi.LoginResult) => {
-    // 保存到本地存储
-    storage.setItem(STORAGE_KEYS.ACCESS_TOKEN, result.access_token);
-    storage.setItem(STORAGE_KEYS.REFRESH_TOKEN, result.refresh_token);
-    storage.setItem(STORAGE_KEYS.USER_INFO, result.user_info);
-    storage.setItem(STORAGE_KEYS.PERMISSIONS, result.permissions);
-    storage.setItem(STORAGE_KEYS.ROLES, result.roles);
+  const login = useCallback(async (result: AuthApi.LoginResult) => {
+    try {
+      dispatch({ type: "LOGIN_START" });
 
-    // 更新状态
-    dispatch({ type: "LOGIN_SUCCESS", payload: result });
+      // 1. 先保存 tokens 到 storage 并更新状态
+      storage.setItem(STORAGE_KEYS.ACCESS_TOKEN, result.access_token);
+      storage.setItem(STORAGE_KEYS.REFRESH_TOKEN, result.refresh_token);
+
+      dispatch({ type: "LOGIN_SUCCESS", payload: { tokens: result } });
+
+      // 2. 调用获取用户信息接口
+      const userInfoResponse = await ApiClient.get<AuthApi.UserInfoResult>("/system/user/getInfo");
+
+      // 3. 保存用户信息到 storage 并更新状态
+      storage.setItem(STORAGE_KEYS.USER_INFO, userInfoResponse.user);
+      storage.setItem(STORAGE_KEYS.PERMISSIONS, userInfoResponse.permissions);
+      storage.setItem(STORAGE_KEYS.ROLES, userInfoResponse.roles);
+
+      dispatch({ type: "SET_USER_INFO", payload: userInfoResponse });
+
+    } catch (error) {
+      console.error("获取用户信息失败:", error);
+
+      // 如果获取用户信息失败，清除已保存的token
+      storage.removeItem(STORAGE_KEYS.ACCESS_TOKEN);
+      storage.removeItem(STORAGE_KEYS.REFRESH_TOKEN);
+
+      const errorMessage = error instanceof Error ? error.message : "获取用户信息失败";
+      dispatch({ type: "LOGIN_FAILURE", payload: errorMessage });
+
+      throw error; // 重新抛出错误，让调用方知道登录失败
+    }
+  }, []);
+
+  // 设置用户信息（用于其他地方手动调用）
+  const setUserInfo = useCallback((userInfo: AuthApi.UserInfoResult) => {
+    storage.setItem(STORAGE_KEYS.USER_INFO, userInfo.user);
+    storage.setItem(STORAGE_KEYS.PERMISSIONS, userInfo.permissions);
+    storage.setItem(STORAGE_KEYS.ROLES, userInfo.roles);
+    dispatch({ type: "SET_USER_INFO", payload: userInfo });
   }, []);
 
   // 登出处理
@@ -180,7 +222,7 @@ export function AuthProvider({ children }: AuthProviderProps) {
   // 权限检查函数
   const checkPermission = useCallback(
     (permission: string): boolean => {
-      return state.permissions.includes(permission);
+      return state.permissions.includes(permission) || state.permissions.includes("*:*:*");
     },
     [state.permissions]
   );
@@ -188,6 +230,7 @@ export function AuthProvider({ children }: AuthProviderProps) {
   // 角色检查函数
   const checkRole = useCallback(
     (role: string): boolean => {
+      if (state.roles.includes("superadmin")) return true;
       return state.roles.includes(role);
     },
     [state.roles]
@@ -196,6 +239,7 @@ export function AuthProvider({ children }: AuthProviderProps) {
   // 检查是否拥有任一权限
   const hasAnyPermission = useCallback(
     (permissions: string[]): boolean => {
+      if (state.permissions.includes("*:*:*")) return true;
       return permissions.some(permission => state.permissions.includes(permission));
     },
     [state.permissions]
@@ -204,6 +248,7 @@ export function AuthProvider({ children }: AuthProviderProps) {
   // 检查是否拥有任一角色
   const hasAnyRole = useCallback(
     (roles: string[]): boolean => {
+      if (state.roles.includes("superadmin")) return true;
       return roles.some(role => state.roles.includes(role));
     },
     [state.roles]
@@ -256,6 +301,7 @@ export function AuthProvider({ children }: AuthProviderProps) {
   const value: AuthContextType = {
     ...state,
     login,
+    setUserInfo,
     logout,
     clearError,
     updateUser,
@@ -295,8 +341,8 @@ export function PermissionGuard({
 }: PermissionGuardProps) {
   const { checkPermission, checkRole } = useAuth();
 
-  const hasPermission = permissions.length > 0 
-    ? requireAll 
+  const hasPermission = permissions.length > 0
+    ? requireAll
       ? permissions.every(checkPermission)
       : permissions.some(checkPermission)
     : true;
@@ -319,10 +365,10 @@ interface AuthGuardProps {
   children: ReactNode;
 }
 
-export function AuthGuard({ 
-  fallback = <div>请先登录</div>, 
+export function AuthGuard({
+  fallback = <div>请先登录</div>,
   redirectTo,
-  children 
+  children
 }: AuthGuardProps) {
   const { isAuthenticated, isLoading } = useAuth();
 

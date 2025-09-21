@@ -121,12 +121,9 @@ export const useAuth = {
    * 获取当前用户信息
    */
   useUserInfo() {
-    const accessToken = storage.getItem<string>(STORAGE_KEYS.ACCESS_TOKEN);
-    
-    return useApiQuery<AuthApi.UserInfo>({
-      endpoint: "/system/user/profile",
+    return useApiQuery<AuthApi.UserInfoResult>({
+      endpoint: "/system/user/getInfo",
       queryKey: ["userInfo"],
-      enabled: !!accessToken, // 只有当有token时才请求
       staleTime: 5 * 60 * 1000, // 5分钟内不重新请求
     });
   },

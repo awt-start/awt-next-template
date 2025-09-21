@@ -1,13 +1,8 @@
-/**
- * 登录页面
- * 集成Ruoyi-Plus后端接口的登录功能
- */
-
 "use client";
 
 import { useState, useEffect } from "react";
 import { motion } from "framer-motion";
-import { useRouter } from "next/navigation";
+import { useRouter, useSearchParams } from "next/navigation";
 import {
   Input,
   PasswordInput,
@@ -19,7 +14,7 @@ import SvgIcon from "@/components/icon/icon";
 import { useAuth } from "@/lib/auth/auth-context";
 import { useAuth as useAuthApi, useCaptcha } from "@/apis/auth/auth";
 import { AuthApi } from "@/apis/auth/auth-type";
-import { cn } from "@/lib/utils";
+import { useToast } from "@/lib/useToast";
 
 // 动画配置
 const SMOOTH_SPRING = { type: "spring", stiffness: 300, damping: 30 } as const;
@@ -27,7 +22,9 @@ const SMOOTH_TRANSITION = { duration: 0.6, ease: "easeOut" } as const;
 
 export default function LoginPage() {
   const router = useRouter();
+  const searchParams = useSearchParams();
   const { isAuthenticated, login: loginToContext, clearError } = useAuth();
+  const { error: toastError, success: toastSuccess } = useToast();
 
   // 表单状态
   const [formData, setFormData] = useState<AuthApi.SimpleLoginParams>({
@@ -46,70 +43,101 @@ export default function LoginPage() {
   // API hooks
   const captchaQuery = useCaptcha.useCaptchaImage();
   const loginMutation = useAuthApi.login({
-    onSuccess: (data) => {
-      // 登录成功，更新Context状态
-      loginToContext(data);
-      // 跳转到首页或上一个页面
-      const returnUrl = new URLSearchParams(window.location.search).get('returnUrl');
-      router.push(returnUrl || '/');
+    onSuccess: async (data) => {
+      try {
+        // ✅ 交给 Context 内部处理用户信息加载 + 跳转
+        await loginToContext(data);
+        toastSuccess("登录成功");
+      } catch (err: any) {
+        toastError(err.message || "登录流程异常");
+      }
     },
     onError: (error) => {
       console.error('登录失败:', error.message);
-      // 如果是验证码错误，刷新验证码
-      if (error.status === 400 && showCaptcha) {
-        captchaQuery.refetch();
+      toastError(error.message || "登录失败，请重试");
+
+      // 如果是验证码相关错误，刷新验证码
+      if (error.status === 400 || showCaptcha) {
+        refreshCaptcha();
       }
     },
   });
 
-  // 如果已登录，跳转到首页
+  // ✅ 已登录用户直接跳转（避免重复渲染）
   useEffect(() => {
     if (isAuthenticated) {
-      const returnUrl = new URLSearchParams(window.location.search).get('returnUrl');
-      router.push(returnUrl || '/');
+      const returnUrl = searchParams.get('returnUrl') || '/';
+      router.push(returnUrl);
     }
-  }, [isAuthenticated, router]);
+  }, [isAuthenticated, router, searchParams]);
 
-  // 初始化时获取验证码
+  // 初始化验证码
   useEffect(() => {
     if (captchaQuery.data?.captchaEnabled) {
       setShowCaptcha(true);
-      setFormData(prev => ({
+      setFormData((prev) => ({
         ...prev,
-        uuid: captchaQuery.data?.uuid || '',
+        uuid: captchaQuery.data.uuid || '',
       }));
     }
   }, [captchaQuery.data]);
 
-  // 处理表单提交
+  // 刷新验证码
+  const refreshCaptcha = () => {
+    captchaQuery.refetch().then((result) => {
+      if (result.data?.uuid) {
+        setFormData((prev) => ({
+          ...prev,
+          uuid: result.data.uuid,
+          code: "", // 清空旧验证码
+        }));
+      }
+    });
+  };
+
+  // 表单提交
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     clearError();
 
     // 表单验证
     if (!formData.username.trim()) {
-      alert('请输入用户名');
+      toastError('请输入用户名');
       return;
     }
 
     if (!formData.password.trim()) {
-      alert('请输入密码');
+      toastError('请输入密码');
       return;
     }
 
     if (showCaptcha && !formData.code?.trim()) {
-      alert('请输入验证码');
+      toastError('请输入验证码');
       return;
     }
 
-    // 提交登录请求
+    // ✅ 记住用户名（可选）
+    if (rememberMe) {
+      localStorage.setItem("rememberedUsername", formData.username);
+    } else {
+      localStorage.removeItem("rememberedUsername");
+    }
+
+    // 提交登录
     loginMutation.mutate(formData);
   };
 
-  // 刷新验证码
-  const refreshCaptcha = () => {
-    captchaQuery.refetch();
-  };
+  // ✅ 初始化时恢复记住的用户名
+  useEffect(() => {
+    const savedUsername = localStorage.getItem("rememberedUsername");
+    if (savedUsername) {
+      setFormData((prev) => ({
+        ...prev,
+        username: savedUsername,
+      }));
+      setRememberMe(true);
+    }
+  }, []);
 
   return (
     <div className="min-h-screen flex items-center justify-center p-6">
@@ -197,7 +225,7 @@ export default function LoginPage() {
               type="text"
               placeholder="请输入用户名"
               value={formData.username}
-              onChange={(e) => setFormData(prev => ({ ...prev, username: e.target.value }))}
+              onChange={(e) => setFormData((prev) => ({ ...prev, username: e.target.value }))}
               icon={<SvgIcon icon="lucide:user" width={16} height={16} />}
               autoComplete="username"
             />
@@ -207,7 +235,7 @@ export default function LoginPage() {
               label="密码"
               placeholder="请输入密码"
               value={formData.password}
-              onChange={(e) => setFormData(prev => ({ ...prev, password: e.target.value }))}
+              onChange={(e) => setFormData((prev) => ({ ...prev, password: e.target.value }))}
               autoComplete="current-password"
             />
 
@@ -227,7 +255,7 @@ export default function LoginPage() {
                   <Input
                     placeholder="请输入验证码"
                     value={formData.code || ''}
-                    onChange={(e) => setFormData(prev => ({ ...prev, code: e.target.value }))}
+                    onChange={(e) => setFormData((prev) => ({ ...prev, code: e.target.value }))}
                     className="flex-1"
                   />
 

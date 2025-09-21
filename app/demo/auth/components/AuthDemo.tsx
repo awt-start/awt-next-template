@@ -35,13 +35,13 @@ function UserInfoCard() {
     >
       <div className="flex items-start gap-4">
         <div className="w-16 h-16 rounded-full bg-gradient-to-r from-blue-500 to-purple-500 flex items-center justify-center text-white font-semibold text-lg">
-          {user.nick_name?.[0] || user.user_name?.[0] || 'U'}
+                  {user.nickName?.[0] || user.nickName?.[0] || 'U'}
         </div>
         
         <div className="flex-1 space-y-2">
           <div>
-            <h3 className="font-semibold text-lg">{user.nick_name || user.user_name}</h3>
-            <p className="text-sm text-muted-foreground">@{user.user_name}</p>
+                      <h3 className="font-semibold text-lg">{user.nickName || user.userName}</h3>
+                      <p className="text-sm text-muted-foreground">@{user.userName}</p>
           </div>
           
           <div className="grid grid-cols-2 gap-4 text-sm">
@@ -55,11 +55,11 @@ function UserInfoCard() {
             </div>
             <div>
               <span className="text-muted-foreground">部门ID：</span>
-              <span>{user.dept_id}</span>
+                          <span>{user.deptId}</span>
             </div>
             <div>
               <span className="text-muted-foreground">用户类型：</span>
-              <span>{user.user_type}</span>
+                          <span>{user.userType}</span>
             </div>
           </div>
           
@@ -67,7 +67,7 @@ function UserInfoCard() {
             <div className="mb-2">
               <span className="text-sm font-medium text-muted-foreground">角色：</span>
               <div className="flex flex-wrap gap-1 mt-1">
-                {roles.length > 0 ? roles.map((role, index) => (
+                              {roles.length > 0 ? roles.map((role, index) => (
                   <span
                     key={index}
                     className="px-2 py-1 text-xs bg-blue-500/10 text-blue-600 rounded-full"
@@ -83,21 +83,21 @@ function UserInfoCard() {
             <div>
               <span className="text-sm font-medium text-muted-foreground">权限：</span>
               <div className="flex flex-wrap gap-1 mt-1">
-                {permissions.length > 0 ? permissions.slice(0, 5).map((permission, index) => (
-                  <span
-                    key={index}
-                    className="px-2 py-1 text-xs bg-green-500/10 text-green-600 rounded-full"
-                  >
-                    {permission}
-                  </span>
-                )) : (
-                  <span className="text-xs text-muted-foreground">无权限</span>
-                )}
-                {permissions.length > 5 && (
-                  <span className="px-2 py-1 text-xs bg-gray-500/10 text-gray-600 rounded-full">
-                    +{permissions.length - 5}
-                  </span>
-                )}
+                              {permissions.length > 0 ? permissions.slice(0, 5).map((permission, index) => (
+                                  <span
+                                      key={index}
+                                      className="px-2 py-1 text-xs bg-green-500/10 text-green-600 rounded-full"
+                                  >
+                                      {permission}
+                                  </span>
+                              )) : (
+                                  <span className="text-xs text-muted-foreground">无权限</span>
+                              )}
+                              {permissions.length > 5 && (
+                                  <span className="px-2 py-1 text-xs bg-gray-500/10 text-gray-600 rounded-full">
+                                      +{permissions.length - 5}
+                                  </span>
+                              )}
               </div>
             </div>
           </div>

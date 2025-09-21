@@ -62,23 +62,42 @@ export namespace AuthApi {
 
   /** 用户信息 */
   export interface UserInfo {
-    user_id: number;
-    dept_id: number;
-    user_name: string;
-    nick_name: string;
-    user_type: string;
+    userId: number;
+    tenantId: string;
+    deptId: number;
+    userName: string;
+    nickName: string;
+    userType: string;
     email: string;
     phonenumber: string;
     sex: string;
-    avatar: string;
+    avatar: string | null;
     status: string;
-    login_ip: string;
-    login_date: string;
-    create_by: string;
-    create_time: string;
-    update_by: string;
-    update_time: string;
+    loginIp: string;
+    loginDate: string;
     remark: string;
+    createTime: string;
+    deptName: string;
+    roles: Role[];
+    roleIds?: number[] | null;
+    postIds?: number[] | null;
+    roleId?: number | null;
+  }
+
+  /** 角色信息 */
+  export interface Role {
+    roleId: number;
+    roleName: string;
+    roleKey: string;
+    roleSort: number;
+    dataScope: string;
+    menuCheckStrictly?: boolean | null;
+    deptCheckStrictly?: boolean | null;
+    status: string;
+    remark?: string | null;
+    createTime?: string | null;
+    flag: boolean;
+    superAdmin: boolean;
   }
 
   /** 登录接口返回值 */
@@ -87,25 +106,11 @@ export namespace AuthApi {
     refresh_token: string;
     client_id: string;
     expire_in: number;
-    user_info: {
-      user_id: number;
-      dept_id: number;
-      user_name: string;
-      nick_name: string;
-      user_type: string;
-      email: string;
-      phonenumber: string;
-      sex: string;
-      avatar: string;
-      status: string;
-      login_ip: string;
-      login_date: string;
-      create_by: string;
-      create_time: string;
-      update_by: string;
-      update_time: string;
-      remark: string;
-    };
+  }
+
+  /** 用户信息接口返回值 */
+  export interface UserInfoResult {
+    user: UserInfo;
     permissions: string[];
     roles: string[];
   }
