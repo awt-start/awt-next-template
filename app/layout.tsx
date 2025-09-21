@@ -6,6 +6,7 @@ import "./globals.css";
 import { ENV_KEYS, getEnv } from "@/lib/env";
 import { ThemeProvider } from "@/components/theme-switcher/theme-provider";
 import { QueryProvider } from "@/lib/api/query-provider";
+import { AuthProvider } from "@/lib/auth/auth-context";
 import { getThemeScript } from "@/lib/theme-script";
 import { Toaster } from "@/components/ui/sonner";
 
@@ -46,10 +47,12 @@ export default async function RootLayout({
       >
         <ThemeProvider>
           <QueryProvider>
-            <NextIntlClientProvider>
-              <Toaster />
-              {children}
-            </NextIntlClientProvider>
+            <AuthProvider>
+              <NextIntlClientProvider>
+                <Toaster />
+                {children}
+              </NextIntlClientProvider>
+            </AuthProvider>
           </QueryProvider>
         </ThemeProvider>
       </body>

@@ -51,20 +51,63 @@ export namespace AuthApi {
    * @param username 用户名
    * @param password 密码
    */
-   interface SimpleLoginParams extends BaseLoginParams {
+   export interface SimpleLoginParams extends BaseLoginParams {
     code?: string;
     uuid?: string;
     username: string;
     password: string;
   }
 
-   type LoginParams = OAuthLoginParams | SimpleLoginParams;
+  export type LoginParams = OAuthLoginParams | SimpleLoginParams;
+
+  /** 用户信息 */
+  export interface UserInfo {
+    user_id: number;
+    dept_id: number;
+    user_name: string;
+    nick_name: string;
+    user_type: string;
+    email: string;
+    phonenumber: string;
+    sex: string;
+    avatar: string;
+    status: string;
+    login_ip: string;
+    login_date: string;
+    create_by: string;
+    create_time: string;
+    update_by: string;
+    update_time: string;
+    remark: string;
+  }
 
   /** 登录接口返回值 */
-   interface LoginResult {
+  export interface LoginResult {
     access_token: string;
+    refresh_token: string;
     client_id: string;
     expire_in: number;
+    user_info: {
+      user_id: number;
+      dept_id: number;
+      user_name: string;
+      nick_name: string;
+      user_type: string;
+      email: string;
+      phonenumber: string;
+      sex: string;
+      avatar: string;
+      status: string;
+      login_ip: string;
+      login_date: string;
+      create_by: string;
+      create_time: string;
+      update_by: string;
+      update_time: string;
+      remark: string;
+    };
+    permissions: string[];
+    roles: string[];
   }
 
    interface RefreshTokenResult {

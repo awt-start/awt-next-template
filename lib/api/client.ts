@@ -1,3 +1,5 @@
+import { storage, STORAGE_KEYS } from "@/lib/storage";
+
 /**
  * API客户端服务层
  * 基于fetch API封装，提供统一的HTTP请求接口
@@ -88,9 +90,8 @@ function buildQueryString(
 function getAuthToken(): string | null {
   if (typeof window === "undefined") return null;
 
-  // 从localStorage或cookie中获取token
-  // 这里需要根据您的认证方案调整
-  return localStorage.getItem("auth_token") || null;
+  // 从存储中获取token
+  return storage.getItem<string>(STORAGE_KEYS.ACCESS_TOKEN);
 }
 
 /**
