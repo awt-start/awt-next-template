@@ -35,69 +35,79 @@ function UserInfoCard() {
     >
       <div className="flex items-start gap-4">
         <div className="w-16 h-16 rounded-full bg-gradient-to-r from-blue-500 to-purple-500 flex items-center justify-center text-white font-semibold text-lg">
-                  {user.nickName?.[0] || user.nickName?.[0] || 'U'}
+          {user.nickName?.[0] || user.nickName?.[0] || "U"}
         </div>
-        
+
         <div className="flex-1 space-y-2">
           <div>
-                      <h3 className="font-semibold text-lg">{user.nickName || user.userName}</h3>
-                      <p className="text-sm text-muted-foreground">@{user.userName}</p>
+            <h3 className="font-semibold text-lg">
+              {user.nickName || user.userName}
+            </h3>
+            <p className="text-sm text-muted-foreground">@{user.userName}</p>
           </div>
-          
+
           <div className="grid grid-cols-2 gap-4 text-sm">
             <div>
               <span className="text-muted-foreground">邮箱：</span>
-              <span>{user.email || '未设置'}</span>
+              <span>{user.email || "未设置"}</span>
             </div>
             <div>
               <span className="text-muted-foreground">手机：</span>
-              <span>{user.phonenumber || '未设置'}</span>
+              <span>{user.phonenumber || "未设置"}</span>
             </div>
             <div>
               <span className="text-muted-foreground">部门ID：</span>
-                          <span>{user.deptId}</span>
+              <span>{user.deptId}</span>
             </div>
             <div>
               <span className="text-muted-foreground">用户类型：</span>
-                          <span>{user.userType}</span>
+              <span>{user.userType}</span>
             </div>
           </div>
-          
+
           <div className="mt-4">
             <div className="mb-2">
-              <span className="text-sm font-medium text-muted-foreground">角色：</span>
+              <span className="text-sm font-medium text-muted-foreground">
+                角色：
+              </span>
               <div className="flex flex-wrap gap-1 mt-1">
-                              {roles.length > 0 ? roles.map((role, index) => (
-                  <span
-                    key={index}
-                    className="px-2 py-1 text-xs bg-blue-500/10 text-blue-600 rounded-full"
-                  >
-                    {role}
-                  </span>
-                )) : (
+                {roles.length > 0 ? (
+                  roles.map((role, index) => (
+                    <span
+                      key={index}
+                      className="px-2 py-1 text-xs bg-blue-500/10 text-blue-600 rounded-full"
+                    >
+                      {role}
+                    </span>
+                  ))
+                ) : (
                   <span className="text-xs text-muted-foreground">无角色</span>
                 )}
               </div>
             </div>
-            
+
             <div>
-              <span className="text-sm font-medium text-muted-foreground">权限：</span>
+              <span className="text-sm font-medium text-muted-foreground">
+                权限：
+              </span>
               <div className="flex flex-wrap gap-1 mt-1">
-                              {permissions.length > 0 ? permissions.slice(0, 5).map((permission, index) => (
-                                  <span
-                                      key={index}
-                                      className="px-2 py-1 text-xs bg-green-500/10 text-green-600 rounded-full"
-                                  >
-                                      {permission}
-                                  </span>
-                              )) : (
-                                  <span className="text-xs text-muted-foreground">无权限</span>
-                              )}
-                              {permissions.length > 5 && (
-                                  <span className="px-2 py-1 text-xs bg-gray-500/10 text-gray-600 rounded-full">
-                                      +{permissions.length - 5}
-                                  </span>
-                              )}
+                {permissions.length > 0 ? (
+                  permissions.slice(0, 5).map((permission, index) => (
+                    <span
+                      key={index}
+                      className="px-2 py-1 text-xs bg-green-500/10 text-green-600 rounded-full"
+                    >
+                      {permission}
+                    </span>
+                  ))
+                ) : (
+                  <span className="text-xs text-muted-foreground">无权限</span>
+                )}
+                {permissions.length > 5 && (
+                  <span className="px-2 py-1 text-xs bg-gray-500/10 text-gray-600 rounded-full">
+                    +{permissions.length - 5}
+                  </span>
+                )}
               </div>
             </div>
           </div>
@@ -147,15 +157,17 @@ function AuthControls() {
     <div className="space-y-4">
       <div className="flex items-center justify-between p-4 border rounded-lg">
         <div className="flex items-center gap-3">
-          <div className={cn(
-            "w-3 h-3 rounded-full",
-            isAuthenticated ? "bg-green-500" : "bg-gray-400"
-          )} />
+          <div
+            className={cn(
+              "w-3 h-3 rounded-full",
+              isAuthenticated ? "bg-green-500" : "bg-gray-400",
+            )}
+          />
           <span className="font-medium">
             {isAuthenticated ? "已登录" : "未登录"}
           </span>
         </div>
-        
+
         {isAuthenticated ? (
           <Button
             variant="outline"
@@ -164,15 +176,25 @@ function AuthControls() {
             loading={logoutMutation.isPending}
             disabled={logoutMutation.isPending}
           >
-            <SvgIcon icon="lucide:log-out" width={16} height={16} className="mr-1" />
-            {logoutMutation.isPending ? '登出中...' : '登出'}
+            <SvgIcon
+              icon="lucide:log-out"
+              width={16}
+              height={16}
+              className="mr-1"
+            />
+            {logoutMutation.isPending ? "登出中..." : "登出"}
           </Button>
         ) : (
           <Button
             size="sm"
-            onClick={() => window.location.href = '/auth/login'}
+            onClick={() => (window.location.href = "/auth/login")}
           >
-            <SvgIcon icon="lucide:log-in" width={16} height={16} className="mr-1" />
+            <SvgIcon
+              icon="lucide:log-in"
+              width={16}
+              height={16}
+              className="mr-1"
+            />
             登录
           </Button>
         )}
@@ -186,22 +208,17 @@ function AuthControls() {
  */
 function PermissionTests() {
   const { checkPermission, checkRole, permissions, roles } = useAuth();
-  
+
   const testPermissions = [
-    'system:user:list',
-    'system:user:add', 
-    'system:user:edit',
-    'system:user:remove',
-    'system:role:list',
-    'system:menu:list',
+    "system:user:list",
+    "system:user:add",
+    "system:user:edit",
+    "system:user:remove",
+    "system:role:list",
+    "system:menu:list",
   ];
-  
-  const testRoles = [
-    'admin',
-    'common',
-    'user',
-    'guest',
-  ];
+
+  const testRoles = ["admin", "common", "user", "guest"];
 
   return (
     <div className="space-y-6">
@@ -215,18 +232,20 @@ function PermissionTests() {
                 key={permission}
                 className={cn(
                   "p-3 rounded-lg border text-sm",
-                  hasPermission 
-                    ? "bg-green-50 border-green-200 text-green-700" 
-                    : "bg-gray-50 border-gray-200 text-gray-600"
+                  hasPermission
+                    ? "bg-green-50 border-green-200 text-green-700"
+                    : "bg-gray-50 border-gray-200 text-gray-600",
                 )}
               >
                 <div className="flex items-center justify-between">
                   <span className="font-mono">{permission}</span>
-                  <SvgIcon 
-                    icon={hasPermission ? "lucide:check" : "lucide:x"} 
-                    width={16} 
+                  <SvgIcon
+                    icon={hasPermission ? "lucide:check" : "lucide:x"}
+                    width={16}
                     height={16}
-                    className={hasPermission ? "text-green-500" : "text-gray-400"}
+                    className={
+                      hasPermission ? "text-green-500" : "text-gray-400"
+                    }
                   />
                 </div>
               </div>
@@ -234,7 +253,7 @@ function PermissionTests() {
           })}
         </div>
       </div>
-      
+
       <div>
         <h3 className="font-semibold mb-4">角色测试</h3>
         <div className="grid grid-cols-2 md:grid-cols-4 gap-2">
@@ -245,19 +264,19 @@ function PermissionTests() {
                 key={role}
                 className={cn(
                   "p-3 rounded-lg border text-sm text-center",
-                  hasRole 
-                    ? "bg-blue-50 border-blue-200 text-blue-700" 
-                    : "bg-gray-50 border-gray-200 text-gray-600"
+                  hasRole
+                    ? "bg-blue-50 border-blue-200 text-blue-700"
+                    : "bg-gray-50 border-gray-200 text-gray-600",
                 )}
               >
                 <div className="font-medium">{role}</div>
-                <SvgIcon 
-                  icon={hasRole ? "lucide:check" : "lucide:x"} 
-                  width={16} 
+                <SvgIcon
+                  icon={hasRole ? "lucide:check" : "lucide:x"}
+                  width={16}
                   height={16}
                   className={cn(
                     "mx-auto mt-1",
-                    hasRole ? "text-blue-500" : "text-gray-400"
+                    hasRole ? "text-blue-500" : "text-gray-400",
                   )}
                 />
               </div>
@@ -277,8 +296,8 @@ function ComponentGuards() {
     <div className="space-y-6">
       <div>
         <h3 className="font-semibold mb-4">认证守卫演示</h3>
-        
-        <AuthGuard 
+
+        <AuthGuard
           fallback={
             <div className="p-4 border-2 border-dashed border-gray-300 rounded-lg text-center text-muted-foreground">
               需要登录才能查看此内容
@@ -290,13 +309,13 @@ function ComponentGuards() {
           </div>
         </AuthGuard>
       </div>
-      
+
       <div>
         <h3 className="font-semibold mb-4">权限守卫演示</h3>
-        
+
         <div className="space-y-3">
-          <PermissionGuard 
-            permissions={['system:user:list']}
+          <PermissionGuard
+            permissions={["system:user:list"]}
             fallback={
               <div className="p-4 border-2 border-dashed border-orange-300 rounded-lg text-center text-muted-foreground">
                 需要 "system:user:list" 权限才能查看
@@ -307,9 +326,9 @@ function ComponentGuards() {
               ✅ 有用户列表权限的用户可以看到这个内容
             </div>
           </PermissionGuard>
-          
-          <PermissionGuard 
-            roles={['admin']}
+
+          <PermissionGuard
+            roles={["admin"]}
             fallback={
               <div className="p-4 border-2 border-dashed border-red-300 rounded-lg text-center text-muted-foreground">
                 需要 "admin" 角色才能查看
@@ -339,7 +358,8 @@ export function AuthDemo() {
     { id: "guards", label: "组件守卫", component: ComponentGuards },
   ];
 
-  const ActiveComponent = tabs.find(tab => tab.id === activeTab)?.component || UserInfoCard;
+  const ActiveComponent =
+    tabs.find((tab) => tab.id === activeTab)?.component || UserInfoCard;
 
   return (
     <div className="max-w-4xl mx-auto p-6">
@@ -356,61 +376,101 @@ export function AuthDemo() {
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
           <div className="flex items-start gap-3">
             <div className="flex-shrink-0 w-8 h-8 rounded-full bg-blue-500/10 flex items-center justify-center">
-              <SvgIcon icon="lucide:shield-check" width={16} height={16} className="text-blue-500" />
+              <SvgIcon
+                icon="lucide:shield-check"
+                width={16}
+                height={16}
+                className="text-blue-500"
+              />
             </div>
             <div>
               <h3 className="font-medium">JWT认证</h3>
-              <p className="text-sm text-muted-foreground">基于Token的无状态认证</p>
+              <p className="text-sm text-muted-foreground">
+                基于Token的无状态认证
+              </p>
             </div>
           </div>
-          
+
           <div className="flex items-start gap-3">
             <div className="flex-shrink-0 w-8 h-8 rounded-full bg-green-500/10 flex items-center justify-center">
-              <SvgIcon icon="lucide:key" width={16} height={16} className="text-green-500" />
+              <SvgIcon
+                icon="lucide:key"
+                width={16}
+                height={16}
+                className="text-green-500"
+              />
             </div>
             <div>
               <h3 className="font-medium">权限控制</h3>
-              <p className="text-sm text-muted-foreground">细粒度的权限和角色管理</p>
+              <p className="text-sm text-muted-foreground">
+                细粒度的权限和角色管理
+              </p>
             </div>
           </div>
-          
+
           <div className="flex items-start gap-3">
             <div className="flex-shrink-0 w-8 h-8 rounded-full bg-purple-500/10 flex items-center justify-center">
-              <SvgIcon icon="lucide:shield" width={16} height={16} className="text-purple-500" />
+              <SvgIcon
+                icon="lucide:shield"
+                width={16}
+                height={16}
+                className="text-purple-500"
+              />
             </div>
             <div>
               <h3 className="font-medium">路由守卫</h3>
-              <p className="text-sm text-muted-foreground">自动保护需要认证的页面</p>
+              <p className="text-sm text-muted-foreground">
+                自动保护需要认证的页面
+              </p>
             </div>
           </div>
-          
+
           <div className="flex items-start gap-3">
             <div className="flex-shrink-0 w-8 h-8 rounded-full bg-orange-500/10 flex items-center justify-center">
-              <SvgIcon icon="lucide:refresh-cw" width={16} height={16} className="text-orange-500" />
+              <SvgIcon
+                icon="lucide:refresh-cw"
+                width={16}
+                height={16}
+                className="text-orange-500"
+              />
             </div>
             <div>
               <h3 className="font-medium">自动刷新</h3>
               <p className="text-sm text-muted-foreground">Token自动刷新机制</p>
             </div>
           </div>
-          
+
           <div className="flex items-start gap-3">
             <div className="flex-shrink-0 w-8 h-8 rounded-full bg-red-500/10 flex items-center justify-center">
-              <SvgIcon icon="lucide:database" width={16} height={16} className="text-red-500" />
+              <SvgIcon
+                icon="lucide:database"
+                width={16}
+                height={16}
+                className="text-red-500"
+              />
             </div>
             <div>
               <h3 className="font-medium">状态持久化</h3>
-              <p className="text-sm text-muted-foreground">登录状态本地持久化</p>
+              <p className="text-sm text-muted-foreground">
+                登录状态本地持久化
+              </p>
             </div>
           </div>
-          
+
           <div className="flex items-start gap-3">
             <div className="flex-shrink-0 w-8 h-8 rounded-full bg-cyan-500/10 flex items-center justify-center">
-              <SvgIcon icon="lucide:code" width={16} height={16} className="text-cyan-500" />
+              <SvgIcon
+                icon="lucide:code"
+                width={16}
+                height={16}
+                className="text-cyan-500"
+              />
             </div>
             <div>
               <h3 className="font-medium">TypeScript</h3>
-              <p className="text-sm text-muted-foreground">完整的类型安全支持</p>
+              <p className="text-sm text-muted-foreground">
+                完整的类型安全支持
+              </p>
             </div>
           </div>
         </div>

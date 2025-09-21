@@ -53,7 +53,7 @@ export default function LoginPage() {
       }
     },
     onError: (error) => {
-      console.error('登录失败:', error.message);
+      console.error("登录失败:", error.message);
       toastError(error.message || "登录失败，请重试");
 
       // 如果是验证码相关错误，刷新验证码
@@ -66,7 +66,7 @@ export default function LoginPage() {
   // ✅ 已登录用户直接跳转（避免重复渲染）
   useEffect(() => {
     if (isAuthenticated) {
-      const returnUrl = searchParams.get('returnUrl') || '/';
+      const returnUrl = searchParams.get("returnUrl") || "/";
       router.push(returnUrl);
     }
   }, [isAuthenticated, router, searchParams]);
@@ -77,7 +77,7 @@ export default function LoginPage() {
       setShowCaptcha(true);
       setFormData((prev) => ({
         ...prev,
-        uuid: captchaQuery.data.uuid || '',
+        uuid: captchaQuery.data.uuid || "",
       }));
     }
   }, [captchaQuery.data]);
@@ -102,17 +102,17 @@ export default function LoginPage() {
 
     // 表单验证
     if (!formData.username.trim()) {
-      toastError('请输入用户名');
+      toastError("请输入用户名");
       return;
     }
 
     if (!formData.password.trim()) {
-      toastError('请输入密码');
+      toastError("请输入密码");
       return;
     }
 
     if (showCaptcha && !formData.code?.trim()) {
-      toastError('请输入验证码');
+      toastError("请输入验证码");
       return;
     }
 
@@ -184,7 +184,10 @@ export default function LoginPage() {
       >
         <motion.div
           className="backdrop-blur-xl bg-background/90 dark:bg-background/70 border border-border/50 rounded-3xl shadow-2xl shadow-black/10 dark:shadow-black/30 p-8"
-          whileHover={{ y: -2, boxShadow: "0 25px 50px -12px rgba(0, 0, 0, 0.15)" }}
+          whileHover={{
+            y: -2,
+            boxShadow: "0 25px 50px -12px rgba(0, 0, 0, 0.15)",
+          }}
           transition={SMOOTH_TRANSITION}
         >
           {/* 标题 */}
@@ -206,9 +209,7 @@ export default function LoginPage() {
               欢迎回来
             </h1>
 
-            <p className="text-muted-foreground mt-2">
-              登录您的账户继续使用
-            </p>
+            <p className="text-muted-foreground mt-2">登录您的账户继续使用</p>
           </motion.div>
 
           {/* 登录表单 */}
@@ -225,7 +226,9 @@ export default function LoginPage() {
               type="text"
               placeholder="请输入用户名"
               value={formData.username}
-              onChange={(e) => setFormData((prev) => ({ ...prev, username: e.target.value }))}
+              onChange={(e) =>
+                setFormData((prev) => ({ ...prev, username: e.target.value }))
+              }
               icon={<SvgIcon icon="lucide:user" width={16} height={16} />}
               autoComplete="username"
             />
@@ -235,7 +238,9 @@ export default function LoginPage() {
               label="密码"
               placeholder="请输入密码"
               value={formData.password}
-              onChange={(e) => setFormData((prev) => ({ ...prev, password: e.target.value }))}
+              onChange={(e) =>
+                setFormData((prev) => ({ ...prev, password: e.target.value }))
+              }
               autoComplete="current-password"
             />
 
@@ -254,8 +259,10 @@ export default function LoginPage() {
                 <div className="flex gap-3">
                   <Input
                     placeholder="请输入验证码"
-                    value={formData.code || ''}
-                    onChange={(e) => setFormData((prev) => ({ ...prev, code: e.target.value }))}
+                    value={formData.code || ""}
+                    onChange={(e) =>
+                      setFormData((prev) => ({ ...prev, code: e.target.value }))
+                    }
                     className="flex-1"
                   />
 
@@ -268,7 +275,12 @@ export default function LoginPage() {
                     disabled={captchaQuery.isLoading}
                   >
                     {captchaQuery.isLoading ? (
-                      <SvgIcon icon="lucide:loader-2" width={16} height={16} className="animate-spin mx-auto" />
+                      <SvgIcon
+                        icon="lucide:loader-2"
+                        width={16}
+                        height={16}
+                        className="animate-spin mx-auto"
+                      />
                     ) : captchaQuery.data?.img ? (
                       <img
                         src={`data:image/jpeg;base64,${captchaQuery.data.img}`}
@@ -276,7 +288,9 @@ export default function LoginPage() {
                         className="w-full h-full object-cover"
                       />
                     ) : (
-                      <span className="text-xs text-muted-foreground">点击刷新</span>
+                      <span className="text-xs text-muted-foreground">
+                        点击刷新
+                      </span>
                     )}
                   </motion.button>
                 </div>
@@ -296,7 +310,7 @@ export default function LoginPage() {
                 className="text-sm text-blue-600 hover:text-blue-700 dark:text-blue-400 dark:hover:text-blue-300 transition-colors"
                 whileHover={{ scale: 1.02 }}
                 whileTap={{ scale: 0.98 }}
-                onClick={() => router.push('/auth/forgot-password')}
+                onClick={() => router.push("/auth/forgot-password")}
               >
                 忘记密码？
               </motion.button>
@@ -310,7 +324,7 @@ export default function LoginPage() {
               disabled={loginMutation.isPending}
               className="w-full"
             >
-              {loginMutation.isPending ? '登录中...' : '登录'}
+              {loginMutation.isPending ? "登录中..." : "登录"}
             </Button>
           </motion.form>
 
@@ -353,15 +367,13 @@ export default function LoginPage() {
             animate={{ opacity: 1 }}
             transition={{ delay: 0.6, ...SMOOTH_TRANSITION }}
           >
-            <span className="text-sm text-muted-foreground">
-              还没有账户？{' '}
-            </span>
+            <span className="text-sm text-muted-foreground">还没有账户？ </span>
             <motion.button
               type="button"
               className="text-sm text-blue-600 hover:text-blue-700 dark:text-blue-400 dark:hover:text-blue-300 font-medium transition-colors"
               whileHover={{ scale: 1.02 }}
               whileTap={{ scale: 0.98 }}
-              onClick={() => router.push('/auth/register')}
+              onClick={() => router.push("/auth/register")}
             >
               立即注册
             </motion.button>

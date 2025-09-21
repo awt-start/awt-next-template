@@ -243,14 +243,14 @@ export default function RegisterPage() {
                 <span className="text-sm">
                   我已阅读并同意
                   <Link
-                    href="/terms"
+                    href="/privacy/terms"
                     className="text-blue-600 dark:text-blue-400 hover:text-blue-700 dark:hover:text-blue-300 mx-1"
                   >
                     《用户协议》
                   </Link>
                   和
                   <Link
-                    href="/privacy"
+                    href="/privacy/info"
                     className="text-blue-600 dark:text-blue-400 hover:text-blue-700 dark:hover:text-blue-300 ml-1"
                   >
                     《隐私政策》

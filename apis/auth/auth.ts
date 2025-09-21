@@ -80,22 +80,20 @@ export const useAuth = {
     onSuccess?: (data: any) => void;
     onError?: (error: ApiRequestError) => void;
   }) {
-    return useApiMutation<any, ApiRequestError, {}>(
-      {
-        endpoint: "/auth/logout",
-        method: "POST",
-        onSuccess: (data) => {
-          // 清除本地存储的token
-          storage.removeItem(STORAGE_KEYS.ACCESS_TOKEN);
-          storage.removeItem(STORAGE_KEYS.REFRESH_TOKEN);
-          storage.removeItem(STORAGE_KEYS.USER_INFO);
-          storage.removeItem(STORAGE_KEYS.PERMISSIONS);
-          storage.removeItem(STORAGE_KEYS.ROLES);
-          options?.onSuccess?.(data);
-        },
-        onError: options?.onError,
-      }
-    );
+    return useApiMutation<any, ApiRequestError, {}>({
+      endpoint: "/auth/logout",
+      method: "POST",
+      onSuccess: (data) => {
+        // 清除本地存储的token
+        storage.removeItem(STORAGE_KEYS.ACCESS_TOKEN);
+        storage.removeItem(STORAGE_KEYS.REFRESH_TOKEN);
+        storage.removeItem(STORAGE_KEYS.USER_INFO);
+        storage.removeItem(STORAGE_KEYS.PERMISSIONS);
+        storage.removeItem(STORAGE_KEYS.ROLES);
+        options?.onSuccess?.(data);
+      },
+      onError: options?.onError,
+    });
   },
 
   /**
@@ -133,7 +131,7 @@ export const useAuth = {
    */
   useUserPermissions() {
     const accessToken = storage.getItem<string>(STORAGE_KEYS.ACCESS_TOKEN);
-    
+
     return useApiQuery<{ permissions: string[]; roles: string[] }>({
       endpoint: "/system/user/permissions",
       queryKey: ["userPermissions"],

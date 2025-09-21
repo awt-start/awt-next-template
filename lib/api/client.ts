@@ -111,8 +111,8 @@ function getDefaultHeaders(skipAuth = false): HeadersInit {
       headers.Authorization = `Bearer ${token}`;
     }
   }
-  if(process.env.NEXT_PUBLIC_APP_CLIENT_ID){
-    headers['clientid'] = process.env.NEXT_PUBLIC_APP_CLIENT_ID
+  if (process.env.NEXT_PUBLIC_APP_CLIENT_ID) {
+    headers["clientid"] = process.env.NEXT_PUBLIC_APP_CLIENT_ID;
   }
 
   return headers;

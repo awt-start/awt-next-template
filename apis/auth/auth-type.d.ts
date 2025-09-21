@@ -51,7 +51,7 @@ export namespace AuthApi {
    * @param username 用户名
    * @param password 密码
    */
-   export interface SimpleLoginParams extends BaseLoginParams {
+  export interface SimpleLoginParams extends BaseLoginParams {
     code?: string;
     uuid?: string;
     username: string;
@@ -115,23 +115,23 @@ export namespace AuthApi {
     roles: string[];
   }
 
-   interface RefreshTokenResult {
+  interface RefreshTokenResult {
     data: string;
     status: number;
   }
 
-   interface TenantOption {
-  companyName: string;
-  domain?: string;
-  tenantId: string;
-}
+  interface TenantOption {
+    companyName: string;
+    domain?: string;
+    tenantId: string;
+  }
 
-/**
- * @param tenantEnabled 是否启用租户
- * @param voList 租户列表
- */
- interface TenantResp {
-  tenantEnabled: boolean;
-  voList: TenantOption[];
-}
+  /**
+   * @param tenantEnabled 是否启用租户
+   * @param voList 租户列表
+   */
+  interface TenantResp {
+    tenantEnabled: boolean;
+    voList: TenantOption[];
+  }
 }

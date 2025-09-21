@@ -164,7 +164,9 @@ export function AuthProvider({ children }: AuthProviderProps) {
       dispatch({ type: "LOGIN_SUCCESS", payload: { tokens: result } });
 
       // 2. 调用获取用户信息接口
-      const userInfoResponse = await ApiClient.get<AuthApi.UserInfoResult>("/system/user/getInfo");
+      const userInfoResponse = await ApiClient.get<AuthApi.UserInfoResult>(
+        "/system/user/getInfo",
+      );
 
       // 3. 保存用户信息到 storage 并更新状态
       storage.setItem(STORAGE_KEYS.USER_INFO, userInfoResponse.user);
@@ -172,7 +174,6 @@ export function AuthProvider({ children }: AuthProviderProps) {
       storage.setItem(STORAGE_KEYS.ROLES, userInfoResponse.roles);
 
       dispatch({ type: "SET_USER_INFO", payload: userInfoResponse });
-
     } catch (error) {
       console.error("获取用户信息失败:", error);
 
@@ -180,7 +181,8 @@ export function AuthProvider({ children }: AuthProviderProps) {
       storage.removeItem(STORAGE_KEYS.ACCESS_TOKEN);
       storage.removeItem(STORAGE_KEYS.REFRESH_TOKEN);
 
-      const errorMessage = error instanceof Error ? error.message : "获取用户信息失败";
+      const errorMessage =
+        error instanceof Error ? error.message : "获取用户信息失败";
       dispatch({ type: "LOGIN_FAILURE", payload: errorMessage });
 
       throw error; // 重新抛出错误，让调用方知道登录失败
@@ -222,9 +224,12 @@ export function AuthProvider({ children }: AuthProviderProps) {
   // 权限检查函数
   const checkPermission = useCallback(
     (permission: string): boolean => {
-      return state.permissions.includes(permission) || state.permissions.includes("*:*:*");
+      return (
+        state.permissions.includes(permission) ||
+        state.permissions.includes("*:*:*")
+      );
     },
-    [state.permissions]
+    [state.permissions],
   );
 
   // 角色检查函数
@@ -233,25 +238,27 @@ export function AuthProvider({ children }: AuthProviderProps) {
       if (state.roles.includes("superadmin")) return true;
       return state.roles.includes(role);
     },
-    [state.roles]
+    [state.roles],
   );
 
   // 检查是否拥有任一权限
   const hasAnyPermission = useCallback(
     (permissions: string[]): boolean => {
       if (state.permissions.includes("*:*:*")) return true;
-      return permissions.some(permission => state.permissions.includes(permission));
+      return permissions.some((permission) =>
+        state.permissions.includes(permission),
+      );
     },
-    [state.permissions]
+    [state.permissions],
   );
 
   // 检查是否拥有任一角色
   const hasAnyRole = useCallback(
     (roles: string[]): boolean => {
       if (state.roles.includes("superadmin")) return true;
-      return roles.some(role => state.roles.includes(role));
+      return roles.some((role) => state.roles.includes(role));
     },
-    [state.roles]
+    [state.roles],
   );
 
   // 初始化时恢复认证状态
@@ -259,9 +266,14 @@ export function AuthProvider({ children }: AuthProviderProps) {
     const restoreAuthState = () => {
       try {
         const accessToken = storage.getItem<string>(STORAGE_KEYS.ACCESS_TOKEN);
-        const refreshToken = storage.getItem<string>(STORAGE_KEYS.REFRESH_TOKEN);
-        const userInfo = storage.getItem<AuthApi.UserInfo>(STORAGE_KEYS.USER_INFO);
-        const permissions = storage.getItem<string[]>(STORAGE_KEYS.PERMISSIONS, []) || [];
+        const refreshToken = storage.getItem<string>(
+          STORAGE_KEYS.REFRESH_TOKEN,
+        );
+        const userInfo = storage.getItem<AuthApi.UserInfo>(
+          STORAGE_KEYS.USER_INFO,
+        );
+        const permissions =
+          storage.getItem<string[]>(STORAGE_KEYS.PERMISSIONS, []) || [];
         const roles = storage.getItem<string[]>(STORAGE_KEYS.ROLES, []) || [];
 
         if (accessToken && userInfo) {
@@ -341,17 +353,19 @@ export function PermissionGuard({
 }: PermissionGuardProps) {
   const { checkPermission, checkRole } = useAuth();
 
-  const hasPermission = permissions.length > 0
-    ? requireAll
-      ? permissions.every(checkPermission)
-      : permissions.some(checkPermission)
-    : true;
+  const hasPermission =
+    permissions.length > 0
+      ? requireAll
+        ? permissions.every(checkPermission)
+        : permissions.some(checkPermission)
+      : true;
 
-  const hasRole = roles.length > 0
-    ? requireAll
-      ? roles.every(checkRole)
-      : roles.some(checkRole)
-    : true;
+  const hasRole =
+    roles.length > 0
+      ? requireAll
+        ? roles.every(checkRole)
+        : roles.some(checkRole)
+      : true;
 
   const canAccess = hasPermission && hasRole;
 
@@ -368,7 +382,7 @@ interface AuthGuardProps {
 export function AuthGuard({
   fallback = <div>请先登录</div>,
   redirectTo,
-  children
+  children,
 }: AuthGuardProps) {
   const { isAuthenticated, isLoading } = useAuth();
 
