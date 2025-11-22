@@ -180,6 +180,9 @@ export function AuthProvider({ children }: AuthProviderProps) {
       // 如果获取用户信息失败，清除已保存的token
       storage.removeItem(STORAGE_KEYS.ACCESS_TOKEN);
       storage.removeItem(STORAGE_KEYS.REFRESH_TOKEN);
+      storage.removeItem(STORAGE_KEYS.USER_INFO);
+      storage.removeItem(STORAGE_KEYS.PERMISSIONS);
+      storage.removeItem(STORAGE_KEYS.ROLES);
 
       const errorMessage =
         error instanceof Error ? error.message : "获取用户信息失败";

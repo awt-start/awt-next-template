@@ -13,6 +13,7 @@ import {
 } from "@tanstack/react-query";
 import { ApiClient, ApiRequestError } from "@/lib/api/client";
 import { queryKeys } from "@/lib/api/query-client";
+import { handleApiError } from "@/lib/api/response-handler";
 
 // 通用API查询参数类型
 export interface ApiQueryParams {
@@ -94,6 +95,7 @@ export function useApiMutation<
 >({
   endpoint,
   method = "POST",
+  onError,
   ...options
 }: UseApiMutationOptions<TData, TError, TVariables>) {
   return useMutation<TData, TError, TVariables>({
@@ -109,6 +111,15 @@ export function useApiMutation<
           return ApiClient.delete<TData>(endpoint);
         default:
           throw new Error(`不支持的HTTP方法: ${method}`);
+      }
+    },
+    onError: (error: TError, variables: TVariables, context) => {
+      // 调用自定义错误处理
+      if (onError) {
+        onError(error, variables, context);
+      } else {
+        // 默认错误处理
+        handleApiError(error);
       }
     },
     ...options,
