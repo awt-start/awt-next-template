@@ -203,6 +203,85 @@ function isNotEmpty(value: any): boolean {
   return !isEmpty(value);
 }
 
+// =============================
+// 🔄 安全的JSON处理
+// =============================
+
+/**
+ * 安全地解析JSON字符串
+ * @param str - 要解析的JSON字符串
+ * @param defaultValue - 解析失败时的默认值
+ * @returns 解析后的对象或默认值
+ */
+function safeJsonParse<T = any>(str: string, defaultValue: T = null as T): T {
+  try {
+    return JSON.parse(str);
+  } catch (error) {
+    console.warn("JSON解析失败:", error);
+    return defaultValue;
+  }
+}
+
+/**
+ * 安全地序列化对象为JSON字符串
+ * @param obj - 要序列化的对象
+ * @returns 序列化后的字符串或null
+ */
+function safeJsonStringify(obj: any): string | null {
+  try {
+    return JSON.stringify(obj);
+  } catch (error) {
+    console.warn("JSON序列化失败:", error);
+    return null;
+  }
+}
+
+// =============================
+// 📋 数据验证工具
+// =============================
+
+/**
+ * 验证邮箱格式
+ */
+function isValidEmail(email: string): boolean {
+  const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+  return emailRegex.test(email);
+}
+
+/**
+ * 验证手机号格式（中国）
+ */
+function isValidPhone(phone: string): boolean {
+  const phoneRegex = /^1[3-9]\d{9}$/;
+  return phoneRegex.test(phone);
+}
+
+// =============================
+// 🎯 数组和对象工具
+// =============================
+
+/**
+ * 从数组中移除重复项
+ */
+function uniqueArray<T>(arr: T[]): T[] {
+  return Array.from(new Set(arr));
+}
+
+/**
+ * 根据指定属性对对象数组进行去重
+ */
+function uniqueBy<T>(arr: T[], key: keyof T): T[] {
+  const seen = new Set();
+  return arr.filter(item => {
+    const value = item[key];
+    if (seen.has(value)) {
+      return false;
+    }
+    seen.add(value);
+    return true;
+  });
+}
+
 function genUUID(): string {
   return "xxxxxxxx-xxxx-4xxx-yxxx-xxxxxxxxxxxx".replace(/[xy]/g, function (c) {
     const r = (Math.random() * 16) | 0;
@@ -226,4 +305,10 @@ export {
   imageUrl,
   isEmpty,
   isNotEmpty,
+  safeJsonParse,
+  safeJsonStringify,
+  isValidEmail,
+  isValidPhone,
+  uniqueArray,
+  uniqueBy,
 };

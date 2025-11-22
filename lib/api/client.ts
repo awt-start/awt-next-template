@@ -71,7 +71,7 @@ export class ApiRequestError extends Error {
  * 构建查询参数字符串
  */
 function buildQueryString(
-  params: Record<string, string | number | boolean>,
+  params: Record<string, string | number | boolean | undefined | null>,
 ): string {
   const searchParams = new URLSearchParams();
 
@@ -140,12 +140,19 @@ async function handleResponse<T>(response: Response): Promise<T> {
   // 处理HTTP错误状态
   if (!response.ok) {
     const errorMessage =
-      isJson && data && typeof data === "object" && "msg" in data
+      isJson && 
+      data && 
+      typeof data === "object" && 
+      "msg" in data && 
+      typeof (data as { msg?: unknown }).msg === "string"
         ? (data as { msg: string }).msg
         : `HTTP错误: ${response.status} ${response.statusText}`;
 
     const errorCode =
-      isJson && data && typeof data === "object" && "code" in data
+      isJson && 
+      data && 
+      typeof data === "object" && 
+      "code" in data
         ? (data as { code: string | number }).code
         : response.status;
 
@@ -199,6 +206,11 @@ async function request<T>(
   const timeoutController = createTimeoutController(timeout);
 
   try {
+    // 记录请求日志（仅在开发环境）
+    if (process.env.NODE_ENV === "development") {
+      console.log(`[API] ${restConfig.method || "GET"} ${url}`, { headers, params, body: restConfig.body });
+    }
+
     const response = await fetch(url, {
       ...restConfig,
       headers,
@@ -207,14 +219,19 @@ async function request<T>(
 
     return await handleResponse<T>(response);
   } catch (error) {
+    // 记录错误日志
+    if (process.env.NODE_ENV === "development") {
+      console.error(`[API Error] ${restConfig.method || "GET"} ${url}`, error);
+    }
+
     // 处理中止错误（超时）
     if (error instanceof Error && error.name === "AbortError") {
-      throw new ApiRequestError("请求超时", 408, "TIMEOUT", { timeout });
+      throw new ApiRequestError("请求超时", 408, "TIMEOUT", { timeout, url });
     }
 
     // 处理网络错误
     if (error instanceof TypeError) {
-      throw new ApiRequestError("网络连接失败", 0, "NETWORK_ERROR", error);
+      throw new ApiRequestError("网络连接失败", 0, "NETWORK_ERROR", { url, error });
     }
 
     // 重新抛出API错误
@@ -223,7 +240,7 @@ async function request<T>(
     }
 
     // 处理其他未知错误
-    throw new ApiRequestError("请求失败", 500, "UNKNOWN_ERROR", error);
+    throw new ApiRequestError("请求失败", 500, "UNKNOWN_ERROR", { url, error });
   }
 }
 
