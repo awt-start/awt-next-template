@@ -4,7 +4,7 @@
  */
 
 import { toast } from "sonner";
-import { ApiRequestError } from "./client";
+import { ApiRequestError, ApiResult } from "./client";
 
 /**
  * 处理API响应结果
@@ -171,4 +171,33 @@ export async function retryApiCall<T>(
   }
 
   throw lastError;
+}
+
+/**
+ * 封装API响应结果
+ * @param data - 数据
+ * @param success - 是否成功
+ * @param message - 消息
+ * @param code - 代码
+ */
+export function createApiResult<T>(
+  data: T,
+  success: boolean = true,
+  message?: string,
+  code?: string | number
+): ApiResult<T> {
+  return {
+    success,
+    data,
+    message,
+    code,
+  };
+}
+
+/**
+ * 检查API响应是否成功
+ * @param result - API响应结果
+ */
+export function isApiSuccess<T>(result: ApiResult<T>): boolean {
+  return result.success && result.code === undefined;
 }

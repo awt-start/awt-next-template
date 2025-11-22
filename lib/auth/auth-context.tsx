@@ -12,11 +12,13 @@ import {
   useEffect,
   ReactNode,
   useCallback,
+  useMemo,
 } from "react";
 import { AuthApi } from "@/apis/auth/auth-type";
 import { storage, STORAGE_KEYS } from "@/lib/storage";
 import { useApiQuery } from "../api";
 import { ApiClient } from "../api/client";
+import { safeApiCall } from "../api/response-handler";
 
 // 认证状态类型定义
 interface AuthState {
@@ -164,9 +166,19 @@ export function AuthProvider({ children }: AuthProviderProps) {
       dispatch({ type: "LOGIN_SUCCESS", payload: { tokens: result } });
 
       // 2. 调用获取用户信息接口
-      const userInfoResponse = await ApiClient.get<AuthApi.UserInfoResult>(
-        "/system/user/getInfo",
+      const userInfoResponse = await safeApiCall(() => 
+        ApiClient.get<AuthApi.UserInfoResult>(
+          "/system/user/getInfo",
+        ),
+        {
+          defaultMessage: "获取用户信息失败",
+          showDefaultError: false, // 我们自己处理错误
+        }
       );
+
+      if (!userInfoResponse) {
+        throw new Error("获取用户信息失败");
+      }
 
       // 3. 保存用户信息到 storage 并更新状态
       storage.setItem(STORAGE_KEYS.USER_INFO, userInfoResponse.user);
@@ -175,9 +187,9 @@ export function AuthProvider({ children }: AuthProviderProps) {
 
       dispatch({ type: "SET_USER_INFO", payload: userInfoResponse });
     } catch (error) {
-      console.error("获取用户信息失败:", error);
+      console.error("登录失败:", error);
 
-      // 如果获取用户信息失败，清除已保存的token
+      // 如果登录失败，清除已保存的token
       storage.removeItem(STORAGE_KEYS.ACCESS_TOKEN);
       storage.removeItem(STORAGE_KEYS.REFRESH_TOKEN);
       storage.removeItem(STORAGE_KEYS.USER_INFO);
@@ -185,7 +197,7 @@ export function AuthProvider({ children }: AuthProviderProps) {
       storage.removeItem(STORAGE_KEYS.ROLES);
 
       const errorMessage =
-        error instanceof Error ? error.message : "获取用户信息失败";
+        error instanceof Error ? error.message : "登录失败";
       dispatch({ type: "LOGIN_FAILURE", payload: errorMessage });
 
       throw error; // 重新抛出错误，让调用方知道登录失败
@@ -224,45 +236,41 @@ export function AuthProvider({ children }: AuthProviderProps) {
     dispatch({ type: "UPDATE_USER", payload: user });
   }, []);
 
-  // 权限检查函数
-  const checkPermission = useCallback(
-    (permission: string): boolean => {
+  // 权限检查函数 - 使用 useMemo 优化性能
+  const checkPermission = useMemo(() => {
+    return (permission: string): boolean => {
       return (
         state.permissions.includes(permission) ||
         state.permissions.includes("*:*:*")
       );
-    },
-    [state.permissions],
-  );
+    };
+  }, [state.permissions]);
 
-  // 角色检查函数
-  const checkRole = useCallback(
-    (role: string): boolean => {
+  // 角色检查函数 - 使用 useMemo 优化性能
+  const checkRole = useMemo(() => {
+    return (role: string): boolean => {
       if (state.roles.includes("superadmin")) return true;
       return state.roles.includes(role);
-    },
-    [state.roles],
-  );
+    };
+  }, [state.roles]);
 
-  // 检查是否拥有任一权限
-  const hasAnyPermission = useCallback(
-    (permissions: string[]): boolean => {
+  // 检查是否拥有任一权限 - 使用 useMemo 优化性能
+  const hasAnyPermission = useMemo(() => {
+    return (permissions: string[]): boolean => {
       if (state.permissions.includes("*:*:*")) return true;
       return permissions.some((permission) =>
         state.permissions.includes(permission),
       );
-    },
-    [state.permissions],
-  );
+    };
+  }, [state.permissions]);
 
-  // 检查是否拥有任一角色
-  const hasAnyRole = useCallback(
-    (roles: string[]): boolean => {
+  // 检查是否拥有任一角色 - 使用 useMemo 优化性能
+  const hasAnyRole = useMemo(() => {
+    return (roles: string[]): boolean => {
       if (state.roles.includes("superadmin")) return true;
       return roles.some((role) => state.roles.includes(role));
-    },
-    [state.roles],
-  );
+    };
+  }, [state.roles]);
 
   // 初始化时恢复认证状态
   useEffect(() => {
