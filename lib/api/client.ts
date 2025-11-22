@@ -12,6 +12,7 @@ export interface ApiResponse<T = unknown> {
   data: T;
   msg?: string;
   code?: string | number;
+  success?: boolean;
 }
 
 // API错误类型
@@ -22,9 +23,17 @@ export interface ApiError {
   details?: unknown;
 }
 
+// API响应包装器
+export interface ApiResult<T> {
+  success: boolean;
+  data: T;
+  message?: string;
+  code?: string | number;
+}
+
 // 请求配置类型
 export interface RequestConfig extends RequestInit {
-  params?: Record<string, string | number | boolean>;
+  params?: Record<string, string | number | boolean | undefined | null>;
   timeout?: number;
   skipAuth?: boolean;
 }
@@ -119,6 +128,17 @@ function getDefaultHeaders(skipAuth = false): HeadersInit {
 }
 
 /**
+ * 检查响应是否为标准API格式
+ */
+function isStandardApiResponse(response: unknown): response is ApiResponse<unknown> {
+  return (
+    response !== null &&
+    typeof response === "object" &&
+    "data" in response
+  );
+}
+
+/**
  * 处理响应数据
  */
 async function handleResponse<T>(response: Response): Promise<T> {
@@ -139,29 +159,20 @@ async function handleResponse<T>(response: Response): Promise<T> {
 
   // 处理HTTP错误状态
   if (!response.ok) {
-    const errorMessage =
-      isJson && 
-      data && 
-      typeof data === "object" && 
-      "msg" in data && 
-      typeof (data as { msg?: unknown }).msg === "string"
-        ? (data as { msg: string }).msg
-        : `HTTP错误: ${response.status} ${response.statusText}`;
+    const errorMessage = isStandardApiResponse(data) && data.msg
+      ? data.msg
+      : `HTTP错误: ${response.status} ${response.statusText}`;
 
-    const errorCode =
-      isJson && 
-      data && 
-      typeof data === "object" && 
-      "code" in data
-        ? (data as { code: string | number }).code
-        : response.status;
+    const errorCode = isStandardApiResponse(data) && data.code
+      ? data.code
+      : response.status;
 
     throw new ApiRequestError(errorMessage, response.status, errorCode, data);
   }
 
   // 如果响应是标准API格式，返回data字段
-  if (isJson && data && typeof data === "object" && "data" in data) {
-    return (data as ApiResponse<T>).data;
+  if (isStandardApiResponse(data)) {
+    return data.data as T;
   }
 
   return data as T;
@@ -192,7 +203,7 @@ async function request<T>(
   } = config;
 
   // 构建完整URL
-  const baseUrl = process.env.NEXT_PUBLIC_API_URL || "/api";
+  const baseUrl = process.env.NEXT_PUBLIC_API_URL || getEnv().NEXT_PUBLIC_API_URL || "/api";
   const queryString = params ? buildQueryString(params) : "";
   const url = `${baseUrl}${endpoint}${queryString}`;
 

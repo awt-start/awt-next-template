@@ -14,6 +14,7 @@
 
 import { type ClassValue, clsx } from "clsx";
 import { twMerge } from "tailwind-merge";
+import { useState, useEffect } from 'react';
 
 /**
  * 合并多个类名，自动处理 Tailwind 冲突
@@ -32,6 +33,40 @@ function cn(...inputs: ClassValue[]): string {
 // ⏱️ 防抖 Hook（客户端专用）
 // =============================
 
+/**
+ * 防抖 Hook
+ * @param value - 需要防抖的值
+ * @param delay - 延迟时间（毫秒）
+ * @returns 防抖后的值
+ */
+function useDebounce<T>(value: T, delay: number): T {
+  const [debouncedValue, setDebouncedValue] = useState<T>(value);
+
+  useEffect(() => {
+    const timer = setTimeout(() => setDebouncedValue(value), delay);
+    return () => clearTimeout(timer);
+  }, [value, delay]);
+
+  return debouncedValue;
+}
+
+/**
+ * 防抖函数
+ * @param func - 需要防抖的函数
+ * @param delay - 延迟时间（毫秒）
+ * @returns 防抖后的函数
+ */
+function debounce<T extends (...args: any[]) => any>(func: T, delay: number): T {
+  let timeoutId: NodeJS.Timeout | null = null;
+
+  return function (...args: any[]) {
+    if (timeoutId) {
+      clearTimeout(timeoutId);
+    }
+    timeoutId = setTimeout(() => func.apply(this, args), delay);
+  } as T;
+}
+
 // =============================
 // 🌐 客户端检测（通用）
 // =============================
@@ -41,6 +76,11 @@ function cn(...inputs: ClassValue[]): string {
  * 用于 SSR 安全判断，避免在服务端访问 window/document
  */
 const isClient = typeof window !== "undefined";
+
+/**
+ * 判断是否在服务器端运行
+ */
+const isServer = !isClient;
 
 // =============================
 // 💰 货币格式化（支持国际化）
@@ -108,6 +148,31 @@ function formatRelativeTime(date: Date | string): string {
   if (diffDay === 1) return "昨天";
   if (diffDay < 7) return `${diffDay}天前`;
   return target.toLocaleDateString("zh-CN");
+}
+
+/**
+ * 格式化日期为指定格式
+ * @param date - Date 对象或 ISO 字符串
+ * @param format - 格式字符串，如 'YYYY-MM-DD HH:mm:ss'
+ * @returns 格式化后的日期字符串
+ */
+function formatDate(date: Date | string, format: string = 'YYYY-MM-DD'): string {
+  const d = new Date(date);
+  
+  const year = d.getFullYear();
+  const month = String(d.getMonth() + 1).padStart(2, '0');
+  const day = String(d.getDate()).padStart(2, '0');
+  const hours = String(d.getHours()).padStart(2, '0');
+  const minutes = String(d.getMinutes()).padStart(2, '0');
+  const seconds = String(d.getSeconds()).padStart(2, '0');
+  
+  return format
+    .replace('YYYY', String(year))
+    .replace('MM', month)
+    .replace('DD', day)
+    .replace('HH', hours)
+    .replace('mm', minutes)
+    .replace('ss', seconds);
 }
 
 // =============================
